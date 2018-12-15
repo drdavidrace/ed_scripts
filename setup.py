@@ -13,6 +13,6 @@ setup(name='ed_scripts',
       description='routines to convert Colaboratory forms input strings to arrays of floats or ints',
       long_description=' ',
       license='GNU General Public License',
-      packages=['ed_scripts'],
+      packages=['in_array'],
       zip_safe=False
      )
