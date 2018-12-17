@@ -60,13 +60,12 @@ def array_float_np(in_val=None):
 	"""
 	assert in_val is not None
 	in_data = None
-	try:
-		in_data = [e for e in in_val]
-	except TypeError:
-		if isinstance(in_val,str):
-			in_data = [in_val]
-			pass
-		else:
+	if isinstance(in_val, str):
+		return(str_array_floats(in_val))
+	else:
+		try:
+			in_data = [e for e in in_val]
+		except TypeError:
 			return None
 	res_data = []
 	for r in in_data:
@@ -198,13 +197,12 @@ def array_int_np(in_val=None):
 	"""
 	assert in_val is not None
 	in_data = None
-	try:
-		in_data = [e for e in in_val]
-	except TypeError:
-		if isinstance(in_val,str):
-			in_data = [in_val]
-			pass
-		else:
+	if isinstance(in_val, str):
+		return(str_array_ints(in_val))
+	else:
+		try:
+			in_data = [e for e in in_val]
+		except TypeError:
 			return None
 	res_data = []
 	for r in in_data:

@@ -131,6 +131,13 @@ class SympyArrayIntTest(unittest.TestCase):
         str3 = '1 2, 3, -4, a'
         res = str_array_ints(str3)
         self.assertIsNone(res)
+    def test_array_int_np(self):
+        str1 = '1 2, ,3,, -4'
+        res = array_int_np(str1)
+        self.assertIsNotNone(res)
+        r = [isinstance(x,np.int64) for x in res]
+        r = reduce(lambda x,y: x and y, r)
+
     def test_two_dim_array_int_syp(self):
         a1 = ['1 2, 3, -4','1 2, -3, -4']
         a = array_int_syp(a1)
