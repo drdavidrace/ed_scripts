@@ -65,6 +65,9 @@ def array_float_np(in_val=None):
 	else:
 		try:
 			in_data = [e for e in in_val]
+			are_floats = _is_iter_float_(in_data)
+			if are_floats:
+				return np.array([float(t) for t in in_data])
 		except TypeError:
 			return None
 	res_data = []
@@ -123,6 +126,24 @@ def _is_float_(in_str=None):
   except:
     ret_val = False
   return ret_val
+
+def _is_iter_float_(in_iter=None):
+	'''
+	Purpose:  An internal routine just to check if a string can be converted to a float
+
+	Input:  in_str - an input string
+
+	Output:  True/False based upon the conversion
+	'''
+	assert in_iter is not None
+	ret_val = None
+	try:
+		[float(t) for t in in_iter]
+		ret_val = True
+	except:
+		ret_val = False
+		pass
+	return ret_val
 
 def _str_check_floats_(row_vals=None):
 	'''
@@ -202,6 +223,11 @@ def array_int_np(in_val=None):
 	else:
 		try:
 			in_data = [e for e in in_val]
+			is_iter_int = _is_iter_int_(in_data)
+			if is_iter_int:
+				return np.array([int(t) for t in in_data])
+			elif (not is_iter_int) and (_is_convert_iter_int_(in_data)):
+				return None
 		except TypeError:
 			return None
 	res_data = []
@@ -250,6 +276,48 @@ def _is_int_(in_str=None):
 	ret_val = None
 	try:
 		int(in_str)
+		ret_val = True
+	except:
+		ret_val = False
+	return ret_val
+
+def _is_iter_int_(in_iter=None):
+	'''
+	Purpose:  Takes in a string and check if it can be converted to an int
+
+	Keyword Arguments:
+		in_str {string} -- the string to check for valid conversion (default: {None})
+	
+	Returns:
+		True if the conversion is successful
+		False otherwise
+	'''
+
+	assert in_iter is not None
+	ret_val = None
+	try:
+		[int(t) for t in in_iter]
+		ret_val = all([float(int(t)) == float(t) for t in in_iter])
+	except:
+		ret_val = False
+	return ret_val
+
+def _is_convert_iter_int_(in_iter=None):
+	'''
+	Purpose:  Takes in a string and check if it can be converted to an int
+
+	Keyword Arguments:
+		in_str {string} -- the string to check for valid conversion (default: {None})
+	
+	Returns:
+		True if the conversion is successful
+		False otherwise
+	'''
+
+	assert in_iter is not None
+	ret_val = None
+	try:
+		[int(t) for t in in_iter]
 		ret_val = True
 	except:
 		ret_val = False

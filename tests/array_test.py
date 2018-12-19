@@ -145,10 +145,10 @@ class SympyArrayIntTest(unittest.TestCase):
         b = syp.Array([[1,2,3,-4],[1,2,-3,-4]])
         a_n = np.array(a).astype(np.int64).reshape(a_shape)
         b_n = np.array(b).astype(np.int64).reshape(a_shape)
-        self.assertTrue(np.any(np.equal(a_n,b_n)))
+        self.assertTrue(np.array_equal(a_n,b_n))
         a_shape = np.array(a_n.shape)
         t_shape = np.array((2,4))
-        self.assertTrue(np.any(np.equal(a_shape,t_shape)))
+        self.assertTrue(np.array_equal(a_shape,t_shape))
 
     def test_multi_dim_array_syp(self):
         a1 = ['1 2, 3, -4','1 2, -3, -4']
@@ -158,10 +158,10 @@ class SympyArrayIntTest(unittest.TestCase):
         a_shape = a.shape
         b = array_int_np(aa)
         a_n = np.array(a).astype(np.int64).reshape(a_shape)
-        self.assertTrue(np.any(np.equal(a_n,b)))
+        self.assertTrue(np.array_equal(a_n,b))
         a_shape = np.array(a.shape)
         t_shape = np.array((2,2,4))
-        self.assertTrue(np.any(np.equal(a_shape,t_shape)))
+        self.assertTrue(np.array_equal(a_shape,t_shape))
 
     def test_bad_np(self):
         a1 = ['1 2, 3, a','1 2, -3, -4']
@@ -185,10 +185,10 @@ class SympyMatrixIntTest(unittest.TestCase):
         b = syp.Matrix([[1,2,3,-4],[1,2,-3,-4]])
         a_n = np.array(a).astype(np.int64).reshape(a_shape)
         b_n = np.array(b).astype(np.int64).reshape(a_shape)
-        self.assertTrue(np.any(np.equal(a_n,b_n)))
+        self.assertTrue(np.array_equal(a_n,b_n))
         a_shape = np.array(a_n.shape)
         t_shape = np.array((2,4))
-        self.assertTrue(np.any(np.equal(a_shape,t_shape)))
+        self.assertTrue(np.array_equal(a_shape,t_shape))
 
     def test_bad_matrix_syp(self):
         a1 = ['1 2, 3, -4','1 2, -3, -4']
@@ -196,3 +196,63 @@ class SympyMatrixIntTest(unittest.TestCase):
         aa = [a1,a2]
         a = matrix_int_syp(aa)
         self.assertIsNone(a)
+
+class IterableFloatTest(unittest.TestCase):
+
+    def test_array(self):
+        a = [1.0, 2.0, 3.0, 4]
+        b = np.array(a)
+        b_shape = b.shape
+        a_vals = array_float_np(a)
+        a_vals_shape = a_vals.shape
+        self.assertTrue(np.array_equal(a_vals_shape,b_shape))
+        self.assertTrue(np.array_equal(a_vals,b))
+
+    def test_tuple(self):
+        a = (1.0, 2.0, 3.0, 4)
+        b = np.array(a)
+        b_shape = b.shape
+        a_vals = array_float_np(a)
+        a_vals_shape = a_vals.shape
+        self.assertTrue(np.array_equal(a_vals_shape,b_shape))
+        self.assertTrue(np.array_equal(a_vals,b))
+
+class IterableIntTest(unittest.TestCase):
+
+    def test_array_true(self):
+        a = [1, 2, 3, 4]
+        b = np.array(a)
+        b_shape = b.shape
+        a_vals = array_int_np(a)
+        a_vals_shape = a_vals.shape
+        self.assertTrue(np.array_equal(a_vals_shape,b_shape))
+        self.assertTrue(np.array_equal(a_vals,b))
+
+    def test_array_false_1(self):
+        a = [1, 2.1, 3, 4]
+        a_vals = array_int_np(a)
+        self.assertIsNone(a_vals)
+
+    def test_array_false_2(self):
+        a = [1, 'a', 3, 4]
+        a_vals = array_int_np(a)
+        self.assertIsNone(a_vals)
+
+    def test_tuple_true(self):
+        a = (1, 2, 3, -4)
+        b = np.array(a)
+        b_shape = b.shape
+        a_vals = array_int_np(a)
+        a_vals_shape = a_vals.shape
+        self.assertTrue(np.array_equal(a_vals_shape,b_shape))
+        self.assertTrue(np.array_equal(a_vals,b))
+
+    def test_tuple_false_1(self):
+        a = (1, 2.1, 3, 4)
+        a_vals = array_int_np(a)
+        self.assertIsNone(a_vals)
+
+    def test_tuple_false_2(self):
+        a = (1, 'a', 3, 4)
+        a_vals = array_int_np(a)
+        self.assertIsNone(a_vals)

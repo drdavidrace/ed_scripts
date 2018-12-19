@@ -1,4 +1,2 @@
-./.egg
-./tests/__pycache__*
-./in_array/__pycache__*
-./ed_scripts.egg-info
+.egg
+ed_scripts.egg-info
