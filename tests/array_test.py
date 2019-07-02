@@ -5,6 +5,7 @@ import sympy as syp
 from pprint import pprint
 from functools import reduce
 
+from in_array import in_array
 from in_array.in_array import _is_float_, _is_int_
 from in_array.in_array import str_array_floats, array_float_np, array_float_syp, matrix_float_syp
 from in_array.in_array import str_array_ints, array_int_np, array_int_syp, matrix_int_syp
@@ -14,6 +15,7 @@ class NumpyArrayFloatTest(unittest.TestCase):
     def __init__(self,*args,**kwargs):
         super(NumpyArrayFloatTest,self).__init__(*args, **kwargs)
         self.epsilon = 1e-12
+        pprint(in_array.__version__)
 
     def test_is_float(self):
         str1 = '1. 2, 3.0, -4.0'
