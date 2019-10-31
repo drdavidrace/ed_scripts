@@ -22,6 +22,19 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 
 def set_up_env():
     with GlobalImport() as gi:
+        import torch
+        import sklearn
+        import seaborn
+        import matplotlib
+        import pandas
+        import sympy
+        import scipy
+        import numpy
+        import pprint
+        import in_array
+        import sys
+        import os
+
         import torch as T
         import sklearn as skl
         import seaborn as sb
@@ -33,8 +46,8 @@ def set_up_env():
         import numpy as np
         from pprint import pprint
         from in_array import in_array
-        import sys
-        import os
+        import torch as T
+
         print('Setting the Environment Libraries')
         global py_version, np_version, skl_version, pd_version, mpl_version, torch_version, in_array_version
         py_version = sys.version_info
