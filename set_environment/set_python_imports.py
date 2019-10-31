@@ -12,6 +12,8 @@ import numpy as np
 from pprint import pprint
 import sys
 import os
+import pkg_resources
+__version__ = pkg_resources.require('ed_scripts')[0].version
 
 
 def set_up_env():
@@ -23,7 +25,7 @@ def set_up_env():
     pd_version = pd.__version__
     mpl_version = mpl.__version__
     torch_version = T.__version__
-    in_array_version = in_array.__version__
+    in_array_version = in_array.in_array.__version__
 
     #  Checks
     print("Python Major Version: {}".format(py_version.major))
