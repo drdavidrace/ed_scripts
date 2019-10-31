@@ -10,6 +10,7 @@ import sympy as sp
 import scipy as scp
 import numpy as np
 from pprint import pprint
+from in_array import in_array
 import sys
 import os
 import pkg_resources
@@ -25,7 +26,7 @@ def set_up_env():
     pd_version = pd.__version__
     mpl_version = mpl.__version__
     torch_version = T.__version__
-    in_array_version = in_array.in_array.__version__
+    in_array_version = in_array.__version__
 
     #  Checks
     print("Python Major Version: {}".format(py_version.major))
