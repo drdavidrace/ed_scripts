@@ -19,6 +19,7 @@ def matheq_show(left, right):
     """
     Purpose:  Display the left and right side of an equation in a compute cell
     
+    
     Arguments:
         left {type: str} -- A string containing the left side  of the equation in latex
         right {type:string} -- A string containing the right side of the equation in latex
