@@ -1,5 +1,4 @@
-from IPython.display import Math, HTML
-from IPython import display
+from IPython.display import display, Math, HTML
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 
@@ -14,7 +13,7 @@ def load_mathjax_in_cell_output():
     display(HTML("<script src='https://www.gstatic.com/external_hosted/"
                 "mathjax/latest/MathJax.js?config=default'></script>"))
                
-get_ipython().events.register('pre_run_cell', load_mathjax_in_cell_output)
+
 
 def matheq_show(left, right):
     """
