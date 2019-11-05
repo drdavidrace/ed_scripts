@@ -2,16 +2,16 @@ from IPython.display import display, Math, HTML
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 
-def load_mathjax_in_cell_output():
-    """
-    Purpose:  Set up the Colaboratory compute cell to use mathjax display latex
+# def load_mathjax_in_cell_output():
+#     """
+#     Purpose:  Set up the Colaboratory compute cell to use mathjax display latex
 
-    Input:  None
+#     Input:  None
 
-    Output None
-    """
-    display(HTML("<script src='https://www.gstatic.com/external_hosted/"
-                "mathjax/latest/MathJax.js?config=default'></script>"))
+#     Output None
+#     """
+#     display(HTML("<script src='https://www.gstatic.com/external_hosted/"
+#                 "mathjax/latest/MathJax.js?config=default'></script>"))
                
 
 
