@@ -1,4 +1,5 @@
 from IPython.display import Math, HTML
+from Ipython import display
 __version__ = pkg_resources.require('ed_scripts')[0].version
 
 def load_mathjax_in_cell_output():
@@ -28,7 +29,7 @@ def matheq_show(left, right):
     display(Math("${} = {}$".format( latex(left),latex(right))))
 
 def label_value_show(label, value):
-        """
+    """
     Purpose:  Display the information in the output of the compute cell in this format:
         label -> value
     
