@@ -11,7 +11,7 @@ def read(fname):
 
 
 setup(name='ed_scripts',
-      version='0.2',
+      version='0.3',
       author='Dr David Race',
       author_email='dr.david.race@gmail.com',
       url='git+https://github.com/drdavidrace/ed_scripts.git',
