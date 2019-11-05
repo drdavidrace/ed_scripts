@@ -1,5 +1,5 @@
 from IPython.display import Math, HTML
-from Ipython import display
+from IPython import display
 __version__ = pkg_resources.require('ed_scripts')[0].version
 
 def load_mathjax_in_cell_output():
