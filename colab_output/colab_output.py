@@ -1,4 +1,6 @@
 from IPython.display import display, Math, HTML
+import sympy
+from sympy import *
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 
