@@ -1,5 +1,5 @@
 from IPython.display import display, Math, HTML
-import sympy as sp
+import sympy as syp
 from sympy import *
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
@@ -16,7 +16,7 @@ def matheq_show(left, right):
     Output:
         The equation is displayed in the output area of a cell
     """
-    display(Math("${} = {}$".format(sp.latex(left),sp.latex(right))))
+    display(Math("${} = {}$".format(syp.latex(left),syp.latex(right))))
 
 def label_value_show(label, value):
     """
@@ -31,4 +31,4 @@ def label_value_show(label, value):
         The labelled output is displayed in the output area of a cell
     """
     label1 = "\;".join(label.split())
-    display(Math("${} {} {}$".format( sp.latex(label1),sp.latex('\\rightarrow'),sp.latex(value))))
+    display(Math("${} {} {}$".format( syp.latex(label1),sp.latex('\\rightarrow'),syp.latex(value))))
