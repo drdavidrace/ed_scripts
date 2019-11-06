@@ -16,7 +16,7 @@ def matheq_show(left, right):
     Output:
         The equation is displayed in the output area of a cell
     """
-    display(Math("${} = {}$".format( latex(left),latex(right))))
+    display(Math("${} = {}$".format(sp.latex(left),sp.latex(right))))
 
 def label_value_show(label, value):
     """
@@ -31,4 +31,4 @@ def label_value_show(label, value):
         The labelled output is displayed in the output area of a cell
     """
     label1 = "\;".join(label.split())
-    display(Math("${} {} {}$".format( latex(label1),latex('\\rightarrow'),latex(value))))
+    display(Math("${} {} {}$".format( sp.latex(label1),sp.latex('\\rightarrow'),sp.latex(value))))
