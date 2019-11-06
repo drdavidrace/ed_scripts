@@ -1,6 +1,6 @@
+#!/usr/bin/env python3
 from IPython.display import display, Math, HTML
 import sympy as syp
-from sympy import *
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 
@@ -14,7 +14,7 @@ def matheq_show(left, right):
         right {type:string} -- A string containing the right side of the equation in latex
 
     Output:
-        The equation is displayed in the output area of a cell
+        The equation is displayed in the output area of a cell 
     """
     display(Math("${} = {}$".format(syp.latex(left),syp.latex(right))))
 
