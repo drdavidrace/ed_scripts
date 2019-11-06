@@ -31,4 +31,4 @@ def label_value_show(label, value):
         The labelled output is displayed in the output area of a cell
     """
     label1 = "\;".join(label.split())
-    display(Math("${} {} {}$".format( syp.latex(label1),sp.latex('\\rightarrow'),syp.latex(value))))
+    display(Math("${} {} {}$".format( syp.latex(label1),syp.latex('\\rightarrow'),syp.latex(value))))
