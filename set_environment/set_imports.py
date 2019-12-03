@@ -27,6 +27,9 @@ from pprint import pprint
 from in_array import in_array
 import torch as T
 #
+import pkg_resources
+__version__ = pkg_resources.require('ed_scripts')[0].version
+#
 def set_up_globals():
     print('Setting the Environment Libraries')
     global py_version, np_version, skl_version, pd_version, mpl_version, torch_version, in_array_version
