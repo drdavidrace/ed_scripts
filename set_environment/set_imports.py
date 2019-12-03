@@ -30,35 +30,35 @@ import torch as T
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 #
-def set_up_globals():
-    print('Setting the Environment Libraries')
-    global py_version, np_version, skl_version, pd_version, mpl_version, torch_version, in_array_version
-    py_version = sys.version_info
-    np_version = np.__version__
-    skl_version = skl.__version__
-    pd_version = pd.__version__
-    mpl_version = mpl.__version__
-    torch_version = T.__version__
-    in_array_version = in_array.__version__
-    #  Checks
-    print("Python Major Version: {}".format(py_version.major))
-    print("Python Minor Version: {}".format(py_version.minor))
-    if (py_version.major < 3):
-        print("This code required Python 3")
-    elif (py_version.major > 3):
-        print("This code was built with Python 3, but this may work since the major version is higher.")
-    elif (py_version.minor < 6):
-        print("This code was built with Python 3.6, but this may work.  You might want to upgrade to version 3.6 or higher.")
-    else:
-        print("This code should work.")
-    # Information
-    print("This code was built with numpy version 1.16, you are using {}".format(np_version))
-    print("This code was built with Scikit Learn version 0.21, you are using {}".format(
-        skl_version))
-    print("This code was built with Pandas version 0.24, you are using {}".format(
-        pd_version))
-    print("This code was built with Matplotlib version 3.0, you are using {}".format(
-        mpl_version))
-    print("This code was built with PyTorch version:  {}".format(torch_version))
-    print("This notebook uses in_array version: {}".format(in_array_version))
-    print("Finished Setting the Environment Libraries") 
+#def set_up_globals():
+print('Setting the Environment Libraries')
+global py_version, np_version, skl_version, pd_version, mpl_version, torch_version, in_array_version
+py_version = sys.version_info
+np_version = np.__version__
+skl_version = skl.__version__
+pd_version = pd.__version__
+mpl_version = mpl.__version__
+torch_version = T.__version__
+in_array_version = in_array.__version__
+#  Checks
+print("Python Major Version: {}".format(py_version.major))
+print("Python Minor Version: {}".format(py_version.minor))
+if (py_version.major < 3):
+    print("This code required Python 3")
+elif (py_version.major > 3):
+    print("This code was built with Python 3, but this may work since the major version is higher.")
+elif (py_version.minor < 6):
+    print("This code was built with Python 3.6, but this may work.  You might want to upgrade to version 3.6 or higher.")
+else:
+    print("This code should work.")
+# Information
+print("This code was built with numpy version 1.16, you are using {}".format(np_version))
+print("This code was built with Scikit Learn version 0.21, you are using {}".format(
+    skl_version))
+print("This code was built with Pandas version 0.24, you are using {}".format(
+    pd_version))
+print("This code was built with Matplotlib version 3.0, you are using {}".format(
+    mpl_version))
+print("This code was built with PyTorch version:  {}".format(torch_version))
+print("This notebook uses in_array version: {}".format(in_array_version))
+print("Finished Setting the Environment Libraries") 
