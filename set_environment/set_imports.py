@@ -57,4 +57,4 @@ print("This code was built with Matplotlib version 3.0, you are using {}".format
     mpl_version))
 print("This code was built with PyTorch version:  {}".format(torch_version))
 print("This notebook uses in_array version: {}".format(in_array_version))
-print("Finished Setting the Environment Libraries")
+print("Finished Setting the Environment Libraries") 
