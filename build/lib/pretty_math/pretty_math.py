@@ -18,7 +18,8 @@ def display_sympy(left_side = "A = ", input_sympy = None) -> None:
         [type] -- [description]
     """
     assert input_sympy is not None
-    print(isinstance(input_sympy,'sympy'))
+    print(input_sympy.__class__)
+    #print(isinstance(input_sympy.__class__,sympy))
     display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
     enhance_left = left_side.replace(" ","\\,")
     latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
