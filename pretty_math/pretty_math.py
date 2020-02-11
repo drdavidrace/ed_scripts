@@ -8,7 +8,7 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 #  Routines for displaying information in either a Colaboratory notebook or in a .tex file that will be converted to 
 #  a pdf file for viewing
 #
-def display_sympy(left_side = "A = ", input_sympy = None) -> None:
+def display_sympy(left_side = "", input_sympy = None) -> None:
     """This routine displays a matrix in Colab from a code cell
     
     Keyword Arguments:
@@ -19,7 +19,6 @@ def display_sympy(left_side = "A = ", input_sympy = None) -> None:
         [type] -- [description]
     """
     assert input_sympy is not None
-    print(isinstance(input_sympy,sympy.matrices))
     display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
     enhance_left = left_side.replace(" ","\\,")
     latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
