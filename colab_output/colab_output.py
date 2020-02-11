@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from IPython.display import Math, Latex
+from IPython.display import HTML, Math, Latex
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 def display_matrix(left_side = "A = ", input_sympy = None) -> None:
