@@ -1,4 +1,5 @@
 .eggs
 ed_scripts.egg-info
+ed_scripts.egg-info/*
 .vscode
 .vscode/*
