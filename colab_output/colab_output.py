@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
-from IPython.display import display, Math, HTML
+from IPython.display import Math, Latex
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
+def display_matrix(left_side = "A = ", input_sympy = None) -> None:
+    display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
+    enhance_left = left_side.replace(" ","\\,")
+    latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
+    full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+    display(Math(full_sentence))
+    return None
+#from IPython.display import display, Math, HTML
+#import pkg_resources
+#__version__ = pkg_resources.require('ed_scripts')[0].version
 
 def matheq_show(left, right):
     """
