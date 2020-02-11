@@ -21,7 +21,7 @@ setup(name='ed_scripts',
       license='GNU General Public License',
       packages=['in_array', 'colab_output', 'set_environment', 'tests'],
       install_requires=['numpy', 'scipy', 'sympy', 'pandas',
-                        'matplotlib', 'seaborn', 'sklearn', 'torch'],
+                        'matplotlib', 'seaborn', 'sklearn', 'torch','IPython'],
       test_suite='tests',
       zip_safe=False
       )

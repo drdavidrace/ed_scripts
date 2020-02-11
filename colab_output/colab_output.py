@@ -3,16 +3,29 @@ from IPython.display import HTML, Math, Latex
 import sympy as sp
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
-def display_matrix(left_side = "A = ", input_sympy = None) -> None:
+#
+#  Routines for displaying information in either a Colaboratory notebook or in a .tex file that will be converted to 
+#  a pdf file for viewing
+#
+def display_sympy(left_side = "A = ", input_sympy = None) -> None:
+    """This routine displays a matrix in Colab from a code cell
+    
+    Keyword Arguments:
+        left_side {str} -- Defines a simple left side for the output (default: {"A = "})
+        input_sympy {A sympy object} -- Uses sympy to get the latex version of the sympy statement (default: {None})
+    
+    Returns:
+        [type] -- [description]
+    """
+    assert input_sympy is not None
+    print(type(input_sympy))
     display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
     enhance_left = left_side.replace(" ","\\,")
     latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
     full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+    #Use display(Math) to output the sympy expression to the output of a compute cell
     display(Math(full_sentence))
     return None
-#from IPython.display import display, Math, HTML
-#import pkg_resources
-#__version__ = pkg_resources.require('ed_scripts')[0].version
 
 def matheq_show(left, right):
     """
