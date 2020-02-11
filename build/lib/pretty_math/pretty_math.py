@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from IPython.display import HTML, Math, Latex
+import sympy
 import sympy as sp
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
@@ -18,7 +19,6 @@ def display_sympy(left_side = "A = ", input_sympy = None) -> None:
         [type] -- [description]
     """
     assert input_sympy is not None
-    print(input_sympy.__class__)
     print(isinstance(input_sympy,tuple(sympy.core.all_classes)))
     display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
     enhance_left = left_side.replace(" ","\\,")
