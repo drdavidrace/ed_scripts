@@ -9,7 +9,7 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 #  Routines for displaying information in either a Colaboratory notebook or in a .tex file that will be converted to 
 #  a pdf file for viewing
 #
-def display_sympy(left_side = None, input_sympy = None) -> [int, str]:
+def display_sympy(left_side = None, input_sympy = None) -> int:
     """This routine displays a matrix in Colab from a code cell
     
     Keyword Arguments:
@@ -21,21 +21,32 @@ def display_sympy(left_side = None, input_sympy = None) -> [int, str]:
     
     Returns:
         int -- status for process, since this uses a call to an outside site (mathjax) it may not be 100% accurate
-        str -- a text message explaining any error to the best of our ability
+        
+    Side Effects:
+        This routine prints a message if there is a failure.  It is assumed to be in a display environment, so this methodology
+        seems to be a good trade-off since we don't want to do error checking as part of the educational code.
     """
     #
     status = 0
-    return_str = ""
     #
     try:
         assert left_side is not None
         assert input_sympy is not None
     except:
         status = 1
-        return_str = "Both of the inputs must be provided.  This is a right and left requirement."
-        return status, return_str
+        print("Both of the inputs must be provided.  This is a left_side and right_side requirement.")
+        print("Left Side: {}".format(left_side))
+        print("Right Side: {}".format(input_sympy))
+        return status
     #
-    print(input_sympy.has(Basic))
+    try:
+        assert input_sympy.has(Basic)
+    except:
+        status = 2
+        print("The right side must be a sympy expression.")
+        print("The right side type: {}".format(type(input_sympy)))
+        return status
+    #Main body of work
     try:
         display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         enhance_left = left_side.replace(" ","\\,")
@@ -43,11 +54,11 @@ def display_sympy(left_side = None, input_sympy = None) -> [int, str]:
         full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
         #Use display(Math) to output the sympy expression to the output of a compute cell
         display(Math(full_sentence))
-    except:
-        status = 2
-        return_str = "Something went amiss with the mathjax process."
-        return status, return_str
-    return status, return_str
+    except Exception as e:
+        status = 4
+        print("Something went amiss with the mathjax process.  Details: {}".format(e))
+        return status
+    return status
 
 def matheq_show(left, right):
     """
