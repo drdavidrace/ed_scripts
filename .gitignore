@@ -5,5 +5,3 @@ ed_scripts.egg-info/*
 .vscode/*
 ./build
 ./build/*
-./dist
-./dist/*
