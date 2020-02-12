@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from IPython.display import HTML, Math, Latex
+from IPython.display import display, HTML, Math, Latex
 import sympy
 from sympy import *
 import sympy as sp
@@ -9,8 +9,41 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 #  Routines for displaying information in either a Colaboratory notebook or in a .tex file that will be converted to 
 #  a pdf file for viewing
 #
+def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
+    """Internal routine to get the latex for for a sympy element using MathJax
+    
+    Keyword Arguments:
+        left_side {str} -- Defines a simple left side for the output (default: {None})
+          NOTE:  The left_side is meant to be discriptive, so an = is not included.  The user can use =, but
+          there are usually better ways to convey the message.
+          NOTE:  If the intent is an equation, then it is better to use display_equation
+        input_sympy {A sympy object} -- Uses sympy to get the latex version of the sympy statement (default: {None})
+    
+    Returns:
+        str -- The latex string if there is one; otherwise None
+    """
+    #  These data checks don't need to be here now, but this will be used in other places so
+    #  a few extra data checks doesn't hurt
+    try:
+        assert left_side is not None
+        assert input_sympy is not None
+    except:
+        return None   
+    try:
+        assert input_sympy.has(Basic)
+    except:
+        return None
+    try:
+        display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
+        enhance_left = left_side.replace(" ","\\,")
+        latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
+        full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+        return full_sentence
+    except:
+        return None
+#     
 def display_sympy(left_side = None, input_sympy = None) -> int:
-    """This routine displays a matrix in Colab from a code cell
+    """This routine displays a sympy element in Colab from a code cell
     
     Keyword Arguments:
         left_side {str} -- Defines a simple left side for the output (default: {None})
@@ -48,10 +81,11 @@ def display_sympy(left_side = None, input_sympy = None) -> int:
         return status
     #Main body of work
     try:
-        display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
-        enhance_left = left_side.replace(" ","\\,")
-        latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
-        full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+        # display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
+        # enhance_left = left_side.replace(" ","\\,")
+        # latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
+        # full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+        full_sentence = _get_latex_sympy_(left_side,input_sympy)
         #Use display(Math) to output the sympy expression to the output of a compute cell
         display(Math(full_sentence))
     except Exception as e:
