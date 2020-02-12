@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from IPython.display import HTML, Math, Latex
 import sympy
+from sympy import *
 import sympy as sp
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
@@ -33,6 +34,8 @@ def display_sympy(left_side = None, input_sympy = None) -> [int, str]:
         status = 1
         return_str = "Both of the inputs must be provided.  This is a right and left requirement."
         return status, return_str
+    #
+    print(input_sympy.has(Basic))
     try:
         display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         enhance_left = left_side.replace(" ","\\,")
