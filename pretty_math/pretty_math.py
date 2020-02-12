@@ -34,7 +34,6 @@ def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
     except:
         return None
     try:
-        display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         enhance_left = left_side.replace(" ","\\,")
         latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
         full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
@@ -81,7 +80,7 @@ def display_sympy(left_side = None, input_sympy = None) -> int:
         return status
     #Main body of work
     try:
-        # display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
+        display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         # enhance_left = left_side.replace(" ","\\,")
         # latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
         # full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
