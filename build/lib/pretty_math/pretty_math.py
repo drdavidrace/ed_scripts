@@ -42,7 +42,7 @@ def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
         return None
 #     
 def display_sympy(left_side = None, input_sympy = None) -> int:
-    """This routine displays a sympy element in Colab from a code cell
+    """This routine displays a sympy element in Jupyter as the output from a code cell
     
     Keyword Arguments:
         left_side {str} -- Defines a simple left side for the output (default: {None})
@@ -81,11 +81,9 @@ def display_sympy(left_side = None, input_sympy = None) -> int:
     #Main body of work
     try:
         display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
-        # enhance_left = left_side.replace(" ","\\,")
-        # latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
-        # full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+        #Obtain the latex
         full_sentence = _get_latex_sympy_(left_side,input_sympy)
-        #Use display(Math) to output the sympy expression to the output of a compute cell
+        #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
         display(Math(full_sentence))
     except Exception as e:
         status = 4
