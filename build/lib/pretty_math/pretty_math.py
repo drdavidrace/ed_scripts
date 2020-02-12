@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from IPython.display import HTML, Math, Latex
 import sympy
+from sympy import *
 import sympy as sp
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
@@ -8,24 +9,45 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 #  Routines for displaying information in either a Colaboratory notebook or in a .tex file that will be converted to 
 #  a pdf file for viewing
 #
-def display_sympy(left_side = "", input_sympy = None) -> None:
+def display_sympy(left_side = None, input_sympy = None) -> [int, str]:
     """This routine displays a matrix in Colab from a code cell
     
     Keyword Arguments:
-        left_side {str} -- Defines a simple left side for the output (default: {"A = "})
+        left_side {str} -- Defines a simple left side for the output (default: {None})
+          NOTE:  The left_side is meant to be discriptive, so an = is not included.  The user can use =, but
+          there are usually better ways to convey the message.
+          NOTE:  If the intent is an equation, then it is better to use display_equation
         input_sympy {A sympy object} -- Uses sympy to get the latex version of the sympy statement (default: {None})
     
     Returns:
-        [type] -- [description]
+        int -- status for process, since this uses a call to an outside site (mathjax) it may not be 100% accurate
+        str -- a text message explaining any error to the best of our ability
     """
-    assert input_sympy is not None
-    display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
-    enhance_left = left_side.replace(" ","\\,")
-    latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
-    full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
-    #Use display(Math) to output the sympy expression to the output of a compute cell
-    display(Math(full_sentence))
-    return None
+    #
+    status = 0
+    return_str = ""
+    #
+    try:
+        assert left_side is not None
+        assert input_sympy is not None
+    except:
+        status = 1
+        return_str = "Both of the inputs must be provided.  This is a right and left requirement."
+        return status, return_str
+    #
+    print(input_sympy.has(Basic))
+    try:
+        display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
+        enhance_left = left_side.replace(" ","\\,")
+        latex_sentence = "{}{}".format(enhance_left, sp.latex(input_sympy,mode='plain'))
+        full_sentence = "\\begin{multline*}  " + latex_sentence + " \\end{multline*}"
+        #Use display(Math) to output the sympy expression to the output of a compute cell
+        display(Math(full_sentence))
+    except:
+        status = 2
+        return_str = "Something went amiss with the mathjax process."
+        return status, return_str
+    return status, return_str
 
 def matheq_show(left, right):
     """
