@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Running the tests"
-tests=("array_test" "unit_test" "status_test")
+tests=("array_test" "unit_test" "status_unit_test" "pretty_math_test")
 test_dir="./tests"
 for t in "${tests[@]}";
 do

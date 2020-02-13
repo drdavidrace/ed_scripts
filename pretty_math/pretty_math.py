@@ -1,13 +1,147 @@
-#!/usr/bin/env python3
+##############################################################
+#  Purpose:  This set of routines moves away from overloading "print" to
+#   a display capability.  As a rule, display seems to be a better verb to
+#   describe mathematics presentation since print evolved from the concept
+#   associated with output to terminals.  
+#
+#  This will support display to terminals; however, the display will generally
+#   be considered more "complex" than simple line oriented output.
+#
+#  Theory:  This set of functions will be function oriented rather than object
+#   oriented so that the input is more similar to print.  As a rule, these routines
+#   use a good bit of str.format() functionality to build lines of output, then display
+#   the output as appropriate to the output
+#
+#  The main interfaces will be:
+#   display_lp - display in latex for output to a file
+#       NOTE:  Ordinarily the latex output will be converted to pdf for review
+#   display_t - display to a terminal
+#       NOTE:  This is not considered very good output, but rather just a "summary"
+#       that is not very enticing.  When used with output to a terminal (vs Jupyter)
+#       this should be coupled with output to latex that is then converted to pdf
+#   display_j - display to jupyter (colab) using mathjax
+#
+#  Input Format:
+#   The main input format will be a list of items to display on a line.  The output
+#   is concatenated together with a space between to better display information.
+#
+#  Main Libraries
+#   sympy - sympy has a lot of flexibility for doing mathematics; therefore,
+#   it is the foundation for most of the output.  It has a very powerful mathematics
+#   management engine that does automatic converstion from math to latex.
+##################################################################
+#
 from IPython.display import display, HTML, Math, Latex
+import numbers
 import sympy
+import numpy
 from sympy import *
 import sympy as sp
+import numpy as np
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
+#default numpy types
+np_arrays = (np.ndarray)
 #
-#  Routines for displaying information in either a Colaboratory notebook or in a .tex file that will be converted to 
-#  a pdf file for viewing
+#  Public facing routines
+#
+def display_l(in_list: list = None, f = None) -> (int, str):
+    """Create the output for latex output
+
+       Caveat:  It is assumed that the printing of the output to the file
+       is handled separately from this function.
+    
+    Keyword Arguments:
+        in_list {list} -- The list of items to display (default: {None})
+    
+    Returns:
+        int -- the status of the processing
+        str -- the latex string to output
+
+    Assumptions:
+        Currently only strings, numbers, numpy.arrays and sympy expressions are allowed as inputs in the list.
+
+        These are converted to sympy expressions for the last three and output using latex math
+    """
+    status = 0
+    output = None
+    try:
+        assert in_list is not None
+    except:
+        status = 1
+        output = "The input must not be None."
+        return status, output
+    try:
+        assert f is not None
+    except:
+        status = 2
+        output = "The output must not be None.  It should be a file-like object"
+        return status, output
+    try:
+        assert type(in_list) == list
+        work_list = in_list
+    except:
+        work_list = [in_list]
+    #  If we reach this point, we should have a list
+    status, message = _create_latex_sentence_(in_list)
+    #Write the output
+    if status > 0:
+        status = 4
+        return status, message
+    else:
+        message += "\n"
+        try:
+            p.write(out_str)
+        except:
+            status = 8
+            message = "The output must point to a file-like object that works with write: {}".format(p)
+    return status, message
+
+#
+#  Private routines
+#
+def _create_latex_sentence_(input_val: list = None) -> (int, str):
+    """
+    Internal routine to create a latex sentence from components of a list or tuple
+    
+    Keyword Arguments:
+        input_array {list, tuple} -- a list or tuple of elements to create a latex sentence (default: {None})
+    
+    Returns:
+        int - status of the processing
+        str - the latex output of the list in the form of a string
+    """
+    work = []
+    try:
+        if isinstance(input_val, list):
+            work = input_val
+        else:
+            work = list(input_val)
+    except:
+        status = 1
+        message = "The input must be able to be turned into a list"
+        return status, message
+    status = 0
+    out_str = ""
+    for v in work:
+        if isinstance(v,str):
+            out_str += (" " + v)
+        elif isinstance(v,numbers.Number):  #This works for numpy numbers also
+            out_str += (" {}".format(v))
+        elif isinstance(v, np_arrays):
+            x = sp.symbols('x')
+            x = sp.Matrix(v)
+            out_str += (" $" + sp.latex(x,mode='plain') + "$")
+        else:
+            try:
+                assert v.has(Basic)
+                out_str += (" $" + sp.latex(v,mode='plain') + "$")
+            except:
+                status = 2
+                message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
+                return status, message
+    message = out_str
+    return status, message
 #
 def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
     """Internal routine to get the latex for for a sympy element using MathJax
@@ -40,7 +174,18 @@ def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
         return full_sentence
     except:
         return None
-#     
+#
+def display_j(left_side = None, right_side=None) -> int:
+    """This routine displays
+    
+    Keyword Arguments:
+        left_side {[type]} -- [description] (default: {None})
+        right_side {[type]} -- [description] (default: {None})
+    
+    Returns:
+        int -- [description]
+    """
+#
 def display_sympy(left_side = None, input_sympy = None) -> int:
     """This routine displays a sympy element in Jupyter as the output from a code cell
     

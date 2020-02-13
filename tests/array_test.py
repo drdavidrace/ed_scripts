@@ -2,6 +2,7 @@
 import unittest
 import numpy as np
 import sympy as syp
+import sympy
 from pprint import pprint
 from functools import reduce
 
@@ -145,24 +146,24 @@ class SympyArrayIntTest(unittest.TestCase):
         a = array_int_syp(a1)
         a_shape = a.shape
         b = syp.Array([[1,2,3,-4],[1,2,-3,-4]])
-        a_n = np.array(a).astype(np.int64).reshape(a_shape)
-        b_n = np.array(b).astype(np.int64).reshape(a_shape)
+        a_n = (np.array(a.tolist()).astype(np.int64).flatten()).reshape(a_shape)
+        b_n = (np.array(b.tolist()).astype(np.int64).flatten()).reshape(a_shape)
         self.assertTrue(np.array_equal(a_n,b_n))
         a_shape = np.array(a_n.shape)
         t_shape = np.array((2,4))
         self.assertTrue(np.array_equal(a_shape,t_shape))
 
     def test_multi_dim_array_syp(self):
-        a1 = ['1 2, 3, -4','1 2, -3, -4']
-        a2 = ['1 2, 3, -4','1 2, -3, -4']
-        aa = [a1,a2]
+        a1 =[['1 2, 3, -4'],['1 2, -3, -4']]
+        a3 = [['1 2, 3, -4'],['1 2, -3, -4']]
+        aa = [a1,a3]
         a = array_int_syp(aa)
         a_shape = a.shape
         b = array_int_np(aa)
-        a_n = np.array(a).astype(np.int64).reshape(a_shape)
+        a_n = (np.array(a.tolist()).astype(np.int64)).flatten().reshape(a_shape)
         self.assertTrue(np.array_equal(a_n,b))
         a_shape = np.array(a.shape)
-        t_shape = np.array((2,2,4))
+        t_shape = np.array((2,2,1,4))
         self.assertTrue(np.array_equal(a_shape,t_shape))
 
     def test_bad_np(self):
