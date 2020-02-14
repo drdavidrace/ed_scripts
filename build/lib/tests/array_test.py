@@ -16,7 +16,7 @@ class NumpyArrayFloatTest(unittest.TestCase):
     def __init__(self,*args,**kwargs):
         super(NumpyArrayFloatTest,self).__init__(*args, **kwargs)
         self.epsilon = 1e-12
-        pprint(in_array.__version__)
+        pprint('NumpyArrayFloatTest')
 
     def test_is_float(self):
         str1 = '1. 2, 3.0, -4.0'
@@ -59,6 +59,11 @@ class NumpyArrayFloatTest(unittest.TestCase):
 
 class NumpyArrayIntTest(unittest.TestCase):
 
+    def __init__(self,*args,**kwargs):
+        super(NumpyArrayIntTest,self).__init__(*args, **kwargs)
+        self.epsilon = 1e-12
+        pprint('NumpyArrayIntTest')
+
     def test_is_int(self):
         str1 = '1 2, 3, -4'
         res = str_array_ints(str1)
@@ -79,6 +84,7 @@ class NumpyArrayIntTest(unittest.TestCase):
         str3 = '1 2, 3, -4, a'
         res = str_array_ints(str3)
         self.assertIsNone(res)
+
     def test_two_dim_array_int(self):
         a1 = ['1 2, 3, -4','1 2, -3, -4']
         a = array_int_np(a1)
@@ -113,6 +119,11 @@ class NumpyArrayIntTest(unittest.TestCase):
         self.assertIsNone(a)
 
 class SympyArrayIntTest(unittest.TestCase):
+
+    def __init__(self,*args,**kwargs):
+        super(SympyArrayIntTest,self).__init__(*args, **kwargs)
+        self.epsilon = 1e-12
+        pprint('SympyArrayIntTest')
 
     def test_is_int(self):
         str1 = '1 2, 3, -4'
