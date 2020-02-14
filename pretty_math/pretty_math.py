@@ -35,7 +35,7 @@ from IPython.display import display, HTML, Math, Latex
 import numbers
 import sympy
 import numpy
-from sympy import *
+#from sympy import *
 import sympy as sp
 import numpy as np
 import pkg_resources
@@ -115,6 +115,12 @@ def _create_latex_sentence_(input_val: list = None) -> (int, str):
     try:
         if isinstance(input_val, list):
             work = input_val
+        elif isinstance(input_val, str):
+            work = [input_val]
+        elif isinstance(input_val,numbers.Number):
+            work = [input_val]
+        elif isinstance(input_val,sp.Basic):
+            work = [input_val]
         else:
             work = list(input_val)
     except:
@@ -134,7 +140,7 @@ def _create_latex_sentence_(input_val: list = None) -> (int, str):
             out_str += (" $" + sp.latex(x,mode='plain') + "$")
         else:
             try:
-                assert v.has(Basic)
+                assert v.has(sp.Basic)
                 out_str += (" $" + sp.latex(v,mode='plain') + "$")
             except:
                 status = 2
@@ -164,7 +170,7 @@ def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
     except:
         return None   
     try:
-        assert input_sympy.has(Basic)
+        assert input_sympy.has(sp.Basic)
     except:
         return None
     try:
@@ -217,7 +223,7 @@ def display_sympy(left_side = None, input_sympy = None) -> int:
         return status
     #
     try:
-        assert input_sympy.has(Basic)
+        assert input_sympy.has(sp.Basic)
     except:
         status = 2
         print("The right side must be a sympy expression.")
