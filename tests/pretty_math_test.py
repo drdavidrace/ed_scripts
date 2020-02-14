@@ -8,15 +8,15 @@ from pprint import pprint
 from functools import reduce
 
 from pretty_math import pretty_math
-from pretty_math.pretty_math import _create_latex_sentence_
+from pretty_math.pretty_math import _create_latex_sentence_, _display_l_
 
 
 class BasicDisplayLatexTest(unittest.TestCase):
 
     def __init__(self,*args,**kwargs):
-        super(NumpyArrayLatexTest,self).__init__(*args, **kwargs)
+        super(BasicDisplayLatexTest,self).__init__(*args, **kwargs)
         self.epsilon = 1e-12
-        pprint(pretty_math.__version__)
+        pprint('BasicDisplayLatexTest')
 
     def test_latex_str(self):
         str1 = '1. 2, 3.0, -4.0'
@@ -58,5 +58,18 @@ class BasicDisplayLatexTest(unittest.TestCase):
         in_array = ["f(x,y) = ", s]
         x_str = " f(x,y) = "+ " " + "$2.0 x - 1.0 \\cos{\\left(x y \\right)}$"  #The \\ are because this is a python string
         status,res = _create_latex_sentence_(in_array)
+        self.assertTrue(status == 0)
+        self.assertTrue(res == x_str)
+
+    def test_latex_sympy_sentence(self):
+        x = sp.symbols('x')
+        y = sp.symbols('y')
+        s = sp.Function('Slope')(x,y)
+        s = 2.0 * x + -1.0 * sp.cos( x * y)
+        in_array = ["f(x,y) = ", s]
+        x_str = "\\begin{multline*}  " + " f(x,y) = " + " " \
+            + "$2.0 x - 1.0 \\cos{\\left(x y \\right)}$" + \
+                " \\end{multline*}"  #The \\ are because this is a python string
+        status,res = _display_l_(in_array)
         self.assertTrue(status == 0)
         self.assertTrue(res == x_str)

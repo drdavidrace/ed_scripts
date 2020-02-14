@@ -42,21 +42,27 @@ import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 #default numpy types
 np_arrays = (np.ndarray)
+#  sentence elements
+_begin_mult_sentence_ = "\\begin{multline*}  "
+_end_mult_sentence_ = " \\end{multline*}"
 #
-#  Public facing routines
+#  Private routines
 #
-def display_l(in_list: list = None, f = None) -> (int, str):
-    """Create the output for latex output
+def _display_l_(in_list: list = None) -> (int, str):
+    """Create the output for latex version of output that is suitable for display by higher level
+        routines
 
        Caveat:  It is assumed that the printing of the output to the file
        is handled separately from this function.
     
     Keyword Arguments:
         in_list {list} -- The list of items to display (default: {None})
+        f {file-like object}  --  If f is None, then the result is returned to the caller
+            If f is not None, then the result is written to f
     
     Returns:
         int -- the status of the processing
-        str -- the latex string to output
+        str -- the latex string to output that is suitable for multiline output
 
     Assumptions:
         Currently only strings, numbers, numpy.arrays and sympy expressions are allowed as inputs in the list.
@@ -71,34 +77,21 @@ def display_l(in_list: list = None, f = None) -> (int, str):
         status = 1
         output = "The input must not be None."
         return status, output
+    work = []
     try:
-        assert f is not None
+        assert isinstance(in_list, list)
+        work = in_list
     except:
-        status = 2
-        output = "The output must not be None.  It should be a file-like object"
-        return status, output
-    try:
-        assert type(in_list) == list
-        work_list = in_list
-    except:
-        work_list = [in_list]
+        work = [in_list]
     #  If we reach this point, we should have a list
-    status, message = _create_latex_sentence_(in_list)
+    status, message = _create_latex_sentence_(work)
     #Write the output
-    if status > 0:
-        status = 4
+    if (status > 0) or (len(message) == 0):
+        status = 2
         return status, message
     else:
-        message += "\n"
-        try:
-            p.write(out_str)
-        except:
-            status = 8
-            message = "The output must point to a file-like object that works with write: {}".format(p)
-    return status, message
-
-#
-#  Private routines
+        display_message = _begin_mult_sentence_ + message + _end_mult_sentence_
+        return status, display_message
 #
 def _create_latex_sentence_(input_val: list = None) -> (int, str):
     """
