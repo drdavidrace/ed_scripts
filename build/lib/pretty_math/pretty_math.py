@@ -69,11 +69,9 @@ def display_j(in_list: list = None) -> int:
         display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         #Obtain the latex
         status, full_sentence = _display_l_d_(in_list)
-        print(status)
-        print(full_sentence)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
         display(Math(full_sentence))
-        return full_sentence
+        return status
     except Exception as e:
         status = 2
         print("Something went amiss with the mathjax process.  Details: {}".format(e))
