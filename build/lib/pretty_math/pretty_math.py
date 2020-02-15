@@ -266,7 +266,7 @@ def _create_latex_sentence_d_(input_val: list = None) -> (int, str):
                 status = 2
                 message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
                 return status, message
-    message = out_str.replace(" ","\\,")
+    message = out_str
     return status, message
 #
 def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
