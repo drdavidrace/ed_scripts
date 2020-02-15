@@ -68,7 +68,7 @@ def display_j(in_list: list = None) -> int:
     try:
         display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         #Obtain the latex
-        status, full_sentence = _display_l_(in_list)
+        status, full_sentence = _display_l_d_(in_list)
         print(status)
         print(full_sentence)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
@@ -82,9 +82,8 @@ def display_j(in_list: list = None) -> int:
 #
 #  Private routines
 #
-def _display_l_(in_list: list = None) -> (int, str):
-    """Create the output for latex version of output that is suitable for display by higher level
-        routines
+def _display_l_d_(in_list: list = None) -> (int, str):
+    """Create the output for latex version of output that is suitable for output that will be output to jupyter using mathjax
 
        Caveat:  It is assumed that the printing of the output to the file
        is handled separately from this function.
@@ -118,7 +117,7 @@ def _display_l_(in_list: list = None) -> (int, str):
     except:
         work = [in_list]
     #  If we reach this point, we should have a list
-    status, message = _create_latex_sentence_(work)
+    status, message = _create_latex_sentence_d_(work)
     #Write the output
     if (status > 0) or (len(message) == 0):
         status = 2
@@ -127,7 +126,52 @@ def _display_l_(in_list: list = None) -> (int, str):
         display_message = _begin_mult_sentence_ + message + _end_mult_sentence_
         return status, display_message
 #
-def _create_latex_sentence_(input_val: list = None) -> (int, str):
+def _display_l_p_(in_list: list = None) -> (int, str):
+    """Create the output for latex version of output that is suitable for output that will be turned into
+        pdf
+
+       Caveat:  It is assumed that the printing of the output to the file
+       is handled separately from this function.
+    
+    Keyword Arguments:
+        in_list {list} -- The list of items to display (default: {None})
+        f {file-like object}  --  If f is None, then the result is returned to the caller
+            If f is not None, then the result is written to f
+    
+    Returns:
+        int -- the status of the processing
+        str -- the latex string to output that is suitable for multiline output
+
+    Assumptions:
+        Currently only strings, numbers, numpy.arrays and sympy expressions are allowed as inputs in the list.
+
+        These are converted to sympy expressions for the last three and output using latex math
+    """
+    status = 0
+    output = None
+    try:
+        assert in_list is not None
+    except:
+        status = 1
+        output = "The input must not be None."
+        return status, output
+    work = []
+    try:
+        assert isinstance(in_list, list)
+        work = in_list
+    except:
+        work = [in_list]
+    #  If we reach this point, we should have a list
+    status, message = _create_latex_sentence_p_(work)
+    #Write the output
+    if (status > 0) or (len(message) == 0):
+        status = 2
+        return status, message
+    else:
+        display_message = _begin_mult_sentence_ + message + _end_mult_sentence_
+        return status, display_message
+#
+def _create_latex_sentence_p_(input_val: list = None) -> (int, str):
     """
     Internal routine to create a latex sentence from components of a list or tuple
     
@@ -176,6 +220,55 @@ def _create_latex_sentence_(input_val: list = None) -> (int, str):
     message = out_str
     return status, message
 #
+def _create_latex_sentence_d_(input_val: list = None) -> (int, str):
+    """
+    Internal routine to create a latex sentence from components of a list or tuple suitable for display in 
+    
+    Keyword Arguments:
+        input_array {list, tuple} -- a list or tuple of elements to create a latex sentence (default: {None})
+    
+    Returns:
+        int - status of the processing
+        str - the latex output of the list in the form of a string
+    """
+    work = []
+    try:
+        if isinstance(input_val, list):
+            work = input_val
+        elif isinstance(input_val, str):
+            work = [input_val]
+        elif isinstance(input_val,numbers.Number):
+            work = [input_val]
+        elif isinstance(input_val,sp.Basic):
+            work = [input_val]
+        else:
+            work = list(input_val)
+    except:
+        status = 1
+        message = "The input must be able to be turned into a list"
+        return status, message
+    status = 0
+    out_str = ""
+    for v in work:
+        if isinstance(v,str):
+            out_str += (" " + v)
+        elif isinstance(v,numbers.Number):  #This works for numpy numbers also
+            out_str += (" {}".format(v))
+        elif isinstance(v, np_arrays):
+            x = sp.symbols('x')
+            x = sp.Matrix(v)
+            out_str += (" " + sp.latex(x,mode='plain') + "")
+        else:
+            try:
+                assert v.has(sp.Basic)
+                out_str += (" " + sp.latex(v,mode='plain') + "")
+            except:
+                status = 2
+                message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
+                return status, message
+    message = out_str.replace(" ","\\,")
+    return status, message
+#
 def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
     """Internal routine to get the latex for for a sympy element using MathJax
     
@@ -207,17 +300,6 @@ def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
         return full_sentence
     except:
         return None
-#
-def display_j(left_side = None, right_side=None) -> int:
-    """This routine displays
-    
-    Keyword Arguments:
-        left_side {[type]} -- [description] (default: {None})
-        right_side {[type]} -- [description] (default: {None})
-    
-    Returns:
-        int -- [description]
-    """
 #
 def display_sympy(left_side = None, input_sympy = None) -> int:
     """This routine displays a sympy element in Jupyter as the output from a code cell
@@ -261,6 +343,7 @@ def display_sympy(left_side = None, input_sympy = None) -> int:
         display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         #Obtain the latex
         full_sentence = _get_latex_sympy_(left_side,input_sympy)
+
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
         display(Math(full_sentence))
     except Exception as e:

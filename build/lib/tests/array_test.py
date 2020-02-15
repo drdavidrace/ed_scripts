@@ -1,7 +1,7 @@
 
 import unittest
 import numpy as np
-import sympy as syp
+import sympy as sp
 import sympy
 from pprint import pprint
 from functools import reduce
@@ -105,6 +105,7 @@ class NumpyArrayIntTest(unittest.TestCase):
         a_shape = np.array(a.shape)
         t_shape = np.array((2,2,4))
         self.assertTrue(np.any(np.equal(a_shape,t_shape)))
+
     def test_bad_np(self):
         a1 = ['1 2, 3, a','1 2, -3, -4']
         a = array_int_np(a1)
@@ -117,6 +118,56 @@ class NumpyArrayIntTest(unittest.TestCase):
         aa = [a1,a2]
         a = array_int_np(aa)
         self.assertIsNone(a)
+
+    def test_multi_dim_array_np_2(self):
+        a1 =[['1 2, 3, -4'],['1 2, -3, -4']]
+        a3 = [['1 2, 3, -4'],['1 2, -3, -4']]
+        aa = [a1,a3]
+        a = array_int_np(aa)
+        a_shape = a.shape
+        b = array_int_np(aa)
+        a_n = (np.array(a.tolist()).astype(np.int64)).flatten().reshape(a_shape)
+        self.assertTrue(np.array_equal(a_n,b))
+        a_shape = np.array(a.shape)
+        t_shape = np.array((2,2,1,4))
+        self.assertTrue(np.array_equal(a_shape,t_shape))
+
+    def test_multi_dim_array_np_3(self):
+        a1 =[['1 2, 3, -4','1 2, 3, -4'],['1 2, -3, -4','1 2, -3, -4']]
+        a3 = [['1 2, 3, -4','1 2, 3, -4'],['1 2, -3, -4','1 2, -3, -4']]
+        aa = [a1,a3]
+        a = array_int_np(aa)
+        a_shape = a.shape
+        b = array_int_np(aa)
+        a_n = (np.array(a.tolist()).astype(np.int64)).flatten().reshape(a_shape)
+        self.assertTrue(np.array_equal(a_n,b))
+        a_shape = np.array(a.shape)
+        t_shape = np.array((2,2,2,4))
+        self.assertTrue(np.array_equal(a_shape,t_shape))
+
+    def test_multi_dim_array_np_4(self):
+        a1 =[[1, 2, 3, -4],[1, 2, -3, -4]]
+        a3 = [[1, 2, 3, -4],[1, 2, -3, -4]]
+        aa = [a1,a3]
+        a = array_int_np(aa)
+        a_shape = a.shape
+        b = array_int_np(aa)
+        a_n = (np.array(a.tolist()).astype(np.int64)).flatten().reshape(a_shape)
+        self.assertTrue(np.array_equal(a_n,b))
+        a_shape = np.array(a.shape)
+        t_shape = np.array((2,2,4))
+        self.assertTrue(np.array_equal(a_shape,t_shape))
+
+    def test_multi_dim_array_np_5(self):
+        a1 =[[1, 2, 3 -4],[1, 2, -3, -4]]  #Notice there is no comma between 3 and -4
+            #In this instance python does the arithmetic first, but this tries to
+            #  make and unbalanced matrix.  These routines don't support such matrices
+            #  If you use strings, then the string is split on the spaces and the 
+            #  operation is not done first
+        a3 = [[1, 2, 3, -4],[1, 2, -3, -4]]
+        aa = [a1,a3]
+        a = array_int_np(aa)
+        self.assertTrue(a is None)
 
 class SympyArrayIntTest(unittest.TestCase):
 
@@ -152,11 +203,11 @@ class SympyArrayIntTest(unittest.TestCase):
         r = [isinstance(x,np.int64) for x in res]
         r = reduce(lambda x,y: x and y, r)
 
-    def test_two_dim_array_int_syp(self):
+    def test_two_dim_array_int_sp(self):
         a1 = ['1 2, 3, -4','1 2, -3, -4']
         a = array_int_syp(a1)
         a_shape = a.shape
-        b = syp.Array([[1,2,3,-4],[1,2,-3,-4]])
+        b = sp.Array([[1,2,3,-4],[1,2,-3,-4]])
         a_n = (np.array(a.tolist()).astype(np.int64).flatten()).reshape(a_shape)
         b_n = (np.array(b.tolist()).astype(np.int64).flatten()).reshape(a_shape)
         self.assertTrue(np.array_equal(a_n,b_n))
@@ -192,11 +243,16 @@ class SympyArrayIntTest(unittest.TestCase):
 
 class SympyMatrixIntTest(unittest.TestCase):
 
+    def __init__(self,*args,**kwargs):
+        super(SympyMatrixIntTest,self).__init__(*args, **kwargs)
+        self.epsilon = 1e-12
+        pprint('SympyMatrixIntTest')
+
     def test_two_dim_array_int_syp(self):
         a1 = ['1 2, 3, -4','1 2, -3, -4']
         a = matrix_int_syp(a1)
         a_shape = a.shape
-        b = syp.Matrix([[1,2,3,-4],[1,2,-3,-4]])
+        b = sp.Matrix([[1,2,3,-4],[1,2,-3,-4]])
         a_n = np.array(a).astype(np.int64).reshape(a_shape)
         b_n = np.array(b).astype(np.int64).reshape(a_shape)
         self.assertTrue(np.array_equal(a_n,b_n))
@@ -212,6 +268,11 @@ class SympyMatrixIntTest(unittest.TestCase):
         self.assertIsNone(a)
 
 class IterableFloatTest(unittest.TestCase):
+
+    def __init__(self,*args,**kwargs):
+        super(IterableFloatTest,self).__init__(*args, **kwargs)
+        self.epsilon = 1e-12
+        pprint('SympyMatrixFloatTest')
 
     def test_array(self):
         a = [1.0, 2.0, 3.0, 4]
@@ -232,6 +293,11 @@ class IterableFloatTest(unittest.TestCase):
         self.assertTrue(np.array_equal(a_vals,b))
 
 class IterableIntTest(unittest.TestCase):
+
+    def __init__(self,*args,**kwargs):
+        super(IterableIntTest,self).__init__(*args, **kwargs)
+        self.epsilon = 1e-12
+        pprint('IterableIntTest')
 
     def test_array_true(self):
         a = [1, 2, 3, 4]
