@@ -68,7 +68,9 @@ def display_j(in_list: list = None) -> int:
     try:
         display(HTML(_mathjax_sentence_))
         #Obtain the latex
-        full_sentence = _display_l_(in_list)
+        status, full_sentence = _display_l_(in_list)
+        print(status)
+        print(full_sentence)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
         display(Math(full_sentence))
     except Exception as e:
