@@ -66,7 +66,7 @@ def display_j(in_list: list = None) -> int:
         return status
     #Main body of work
     try:
-        display(HTML(_mathjax_sentence_))
+        display(HTML("<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"))
         #Obtain the latex
         status, full_sentence = _display_l_(in_list)
         print(status)
