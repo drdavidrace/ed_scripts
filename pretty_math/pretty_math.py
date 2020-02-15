@@ -45,6 +45,37 @@ np_arrays = (np.ndarray)
 #  sentence elements
 _begin_mult_sentence_ = "\\begin{multline*}  "
 _end_mult_sentence_ = " \\end{multline*}"
+_mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"
+#
+def display_j(in_list: list = None) -> int:
+    """This is a top level routine which displays output in Jupyter using mathjax
+        NOTE:  This is currently only tested with Google Colaboratory
+    
+    Keyword Arguments:
+        left_side {list} -- The list of stuff to display (default: {None})
+    
+    Returns:
+        int -- discription of the status
+    """
+    status = 0
+    try:
+        assert in_list is not None
+    except:
+        status = 1
+        print("The in_list must not be None.")
+        return status
+    #Main body of work
+    try:
+        display(HTML(_mathjax_sentence_))
+        #Obtain the latex
+        full_sentence = _display_l_(in_list)
+        #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
+        display(Math(full_sentence))
+    except Exception as e:
+        status = 2
+        print("Something went amiss with the mathjax process.  Details: {}".format(e))
+        return status
+    return status
 #
 #  Private routines
 #
