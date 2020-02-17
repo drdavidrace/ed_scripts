@@ -99,7 +99,11 @@ def display_lp(in_list: list = None, f:typing.IO = None) -> int:
         return status
     #Test the output file
     try:
-        assert isinstance(f,)
+        assert hasattr(f,'write')  #Check if it is open for writing
+    except:
+        status = 2
+        print("The input file must be an open file handle for writing.")
+        return status
     #Main body of work
     try:
         display(HTML(_mathjax_sentence_))
@@ -109,7 +113,7 @@ def display_lp(in_list: list = None, f:typing.IO = None) -> int:
         return status
     except Exception as e:
         status = 4
-        print("Something went amiss with the mathjax process.  Details: {}".format(e))
+        print("Something went amiss with the mathjax or write process.  Details: {}".format(e))
         return status
     return status
 #
@@ -191,9 +195,9 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
     out_str = ""
     for v in work:
         if isinstance(v,str):
-            out_str += (" " + v)
+            out_str += ("\\," + v + "\\,")
         elif isinstance(v,numbers.Number):  #This works for numpy numbers also
-            out_str += (" {}".format(v))
+            out_str += ("\\,{}\\,".format(v))
         elif isinstance(v, np_arrays):
             x = sp.symbols('x')
             x = sp.Matrix(v)

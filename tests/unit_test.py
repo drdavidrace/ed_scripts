@@ -2,10 +2,16 @@
 import unittest
 import numpy
 from functools import reduce
+from pprint import pprint
 
 from in_array.in_array import _is_float_, _is_int_
 
 class BaseTest(unittest.TestCase):
+    def __init__(self,*args,**kwargs):
+        super(BaseTest,self).__init__(*args, **kwargs)
+        self.epsilon = 1e-12
+        pprint('BaseTest')
+
     def test_is_float(self):
         str1 = '1.0'
         self.assertTrue(_is_float_(str1))

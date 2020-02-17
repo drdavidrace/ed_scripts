@@ -14,7 +14,7 @@
 #
 #  The main interfaces will be:
 #   display_lp - display in latex for output to a file
-#       NOTE:  Ordinarily the latex output will be converted to pdf for review
+#       NOTE:  Ordinarily the latex output will be converted to pdf for review at the end of a problem
 #   display_t - display to a terminal
 #       NOTE:  This is not considered very good output, but rather just a "summary"
 #       that is not very enticing.  When used with output to a terminal (vs Jupyter)
@@ -32,6 +32,7 @@
 ##################################################################
 #
 from IPython.display import display, HTML, Math, Latex
+import typing
 import numbers
 import sympy
 import numpy
@@ -54,7 +55,7 @@ def display_j(in_list: list = None) -> int:
         NOTE:  This is currently only tested with Google Colaboratory
     
     Keyword Arguments:
-        left_side {list} -- The list of stuff to display (default: {None})
+        in_list {list} -- The list of stuff to display (default: {None})
     
     Returns:
         int -- discription of the status
@@ -68,7 +69,7 @@ def display_j(in_list: list = None) -> int:
         return status
     #Main body of work
     try:
-        display(HTML(_mathjax_sentence_))
+        display(HTML(_mathjax_sentence_))  #This sets up communication with mathjax
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_jup_math_eq_delim_)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
@@ -80,9 +81,8 @@ def display_j(in_list: list = None) -> int:
         return status
     return status
 #
-def display_d(in_list: list = None) -> int:
-    """This is a top level routine which displays output in Jupyter using mathjax
-        NOTE:  This is currently only tested with Google Colaboratory
+def display_lp(in_list: list = None, f:typing.IO = None) -> int:
+    """This is a top level routine which generates the output in latex to be converted to postscript
     
     Keyword Arguments:
         left_side {list} -- The list of stuff to display (default: {None})
@@ -97,17 +97,23 @@ def display_d(in_list: list = None) -> int:
         status = 1
         print("The in_list must not be None.")
         return status
+    #Test the output file
+    try:
+        assert hasattr(f,'write')  #Check if it is open for writing
+    except:
+        status = 2
+        print("The input file must be an open file handle for writing.")
+        return status
     #Main body of work
     try:
         display(HTML(_mathjax_sentence_))
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_pdf_math_eq_delim_)
-        #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
-        display(Math(full_sentence))
+        f.write(full_sentence)
         return status
     except Exception as e:
-        status = 2
-        print("Something went amiss with the mathjax process.  Details: {}".format(e))
+        status = 4
+        print("Something went amiss with the mathjax or write process.  Details: {}".format(e))
         return status
     return status
 #
@@ -158,95 +164,6 @@ def _display_l_(in_list: list = None,eq_delim: str = _jup_math_eq_delim_) -> (in
         display_message = _begin_mult_sentence_ + message + _end_mult_sentence_
         return status, display_message
 #
-# def _display_l_d_(in_list: list = None) -> (int, str):
-#     """Create the output for latex version of output that is suitable for output that will be output to jupyter using mathjax
-
-#        Caveat:  It is assumed that the printing of the output to the file
-#        is handled separately from this function.
-    
-#     Keyword Arguments:
-#         in_list {list} -- The list of items to display (default: {None})
-#         f {file-like object}  --  If f is None, then the result is returned to the caller
-#             If f is not None, then the result is written to f
-    
-#     Returns:
-#         int -- the status of the processing
-#         str -- the latex string to output that is suitable for multiline output
-
-#     Assumptions:
-#         Currently only strings, numbers, numpy.arrays and sympy expressions are allowed as inputs in the list.
-
-#         These are converted to sympy expressions for the last three and output using latex math
-#     """
-#     status = 0
-#     output = None
-#     try:
-#         assert in_list is not None
-#     except:
-#         status = 1
-#         output = "The input must not be None."
-#         return status, output
-#     work = []
-#     try:
-#         assert isinstance(in_list, list)
-#         work = in_list
-#     except:
-#         work = [in_list]
-#     #  If we reach this point, we should have a list
-#     status, message = _create_latex_sentence_d_(work)
-#     #Write the output
-#     if (status > 0) or (len(message) == 0):
-#         status = 2
-#         return status, message
-#     else:
-#         display_message = _begin_mult_sentence_ + message + _end_mult_sentence_
-#         return status, display_message
-#
-# def _display_l_p_(in_list: list = None) -> (int, str):
-#     """Create the output for latex version of output that is suitable for output that will be turned into
-#         pdf
-
-#        Caveat:  It is assumed that the printing of the output to the file
-#        is handled separately from this function.
-    
-#     Keyword Arguments:
-#         in_list {list} -- The list of items to display (default: {None})
-#         f {file-like object}  --  If f is None, then the result is returned to the caller
-#             If f is not None, then the result is written to f
-    
-#     Returns:
-#         int -- the status of the processing
-#         str -- the latex string to output that is suitable for multiline output
-
-#     Assumptions:
-#         Currently only strings, numbers, numpy.arrays and sympy expressions are allowed as inputs in the list.
-
-#         These are converted to sympy expressions for the last three and output using latex math
-#     """
-#     status = 0
-#     output = None
-#     try:
-#         assert in_list is not None
-#     except:
-#         status = 1
-#         output = "The input must not be None."
-#         return status, output
-#     work = []
-#     try:
-#         assert isinstance(in_list, list)
-#         work = in_list
-#     except:
-#         work = [in_list]
-#     #  If we reach this point, we should have a list
-#     status, message = _create_latex_sentence_p_(work)
-#     #Write the output
-#     if (status > 0) or (len(message) == 0):
-#         status = 2
-#         return status, message
-#     else:
-#         display_message = _begin_mult_sentence_ + message + _end_mult_sentence_
-#         return status, display_message
-#
 def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq_delim_) -> (int, str):
     """
     Internal routine to create a latex sentence from components of a list or tuple
@@ -278,9 +195,9 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
     out_str = ""
     for v in work:
         if isinstance(v,str):
-            out_str += (" " + v)
+            out_str += ("\\," + v + "\\,")
         elif isinstance(v,numbers.Number):  #This works for numpy numbers also
-            out_str += (" {}".format(v))
+            out_str += ("\\,{}\\,".format(v))
         elif isinstance(v, np_arrays):
             x = sp.symbols('x')
             x = sp.Matrix(v)
