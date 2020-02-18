@@ -14,7 +14,7 @@
 #
 #  The main interfaces will be:
 #   display_lp - display in latex for output to a file
-#       NOTE:  Ordinarily the latex output will be converted to pdf for review at the end of a problem
+#       NOTE:  Ordinarily the latex output will be converted to pdf for review at t
 #   display_t - display to a terminal
 #       NOTE:  This is not considered very good output, but rather just a "summary"
 #       that is not very enticing.  When used with output to a terminal (vs Jupyter)
@@ -24,6 +24,8 @@
 #  Input Format:
 #   The main input format will be a list of items to display on a line.  The output
 #   is concatenated together with a space between to better display information.
+#       NOTE:  The display_t only takes a single value for output.  This is often
+#       in the form of an equation, so it is reasonable robust.
 #
 #  Main Libraries
 #   sympy - sympy has a lot of flexibility for doing mathematics; therefore,
@@ -49,6 +51,11 @@ _end_mult_sentence_ = " \\end{multline*}"
 _mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"
 _jup_math_eq_delim_ = ""
 _pdf_math_eq_delim_ = "$"
+#Generic Type Definitions
+from typing import TypeVar
+term_type_set = {str, numbers.Number, sp.Basic, np_arrays}
+TermType = TypeVar('TermType',str, numbers.Number, sp.Basic)
+PrettyType = TypeVar('PrettyType',list, str, numbers.Number, sp.Basic)
 #
 def display_j(in_list: list = None) -> int:
     """This is a top level routine which displays output in Jupyter using mathjax
@@ -117,7 +124,7 @@ def display_lp(in_list: list = None, f:typing.IO = None) -> int:
         return status
     return status
 #
-def display_t(in_list: list = None) -> (int, str):
+def display_t(in_val: TermType = None) -> (int, str):
     """This is a top level routine which generates the output in latex to be output to the terminal
     using sympy.pprint.  This only goes to stdout
     
@@ -130,50 +137,30 @@ def display_t(in_list: list = None) -> (int, str):
     """
     status = 0
     try:
-        assert in_list is not None
+        assert in_val is not None
     except:
         status = 1
-        print("The in_list must not be None.")
+        print("The in_val must not be None.")
         return status, None
-    work = []
+    work = None
 
     try:
-        if isinstance(in_list, list):
-            work = in_list
-        elif isinstance(in_list, str):
-            work = [in_list]
-        elif isinstance(in_list,numbers.Number):
-            work = [in_list]
-        elif isinstance(in_list,sp.Basic):
-            work = [in_list]
-        else:
-            work = list(in_list)
+        for v in term_type_set: 
+            if isinstance(in_val, v):
+                work = in_val
+        if work is None:
+            status = 1
+            message = "The input must be of type: {}".format(term_type_set)
     except:
-        status = 1
-        message = "The input must be able to be turned into a list"
+        status = 2
+        message = "The input must be of type: {}".format(term_type_set)
         return status, message
-    #Main body of work
+    #Print the value to the terminal
     try:
-        for v in work:
-            if isinstance(v,str):
-                sp.pprint(" " + v,wrap_line=False)
-            elif isinstance(v,numbers.Number):  #This works for numpy numbers also
-                sp.pprint(" {}".format(v),wrap_line = False)
-            elif isinstance(v, np_arrays):
-                x = sp.symbols('x')
-                x = sp.Matrix(v)
-                sp.pprint(x,wrap_line=False)
-            else:
-                try:
-                    assert v.has(sp.Basic)
-                    sp.pprint(v,wrap_line = False,use_unicode=False)
-                except:
-                    status = 2
-                    message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
-                    return status, message
+        sp.pprint(work)
     except Exception as e:
         status = 4
-        print("Something went amiss with the display process.  Details: {}".format(e))
+        print("Something went amiss with the sympy.pprint process.  Details: {}".format(e))
         return status, None
     return status, None
 #

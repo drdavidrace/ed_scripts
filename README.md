@@ -18,6 +18,24 @@ The six main funcations are :
 
 * in_array.matrix_ints_syp - This takes a string _(i.e. from param form using string or raw)_ or iterable and checks that the values can be converted to int.  If not, it returns a **None** for the data; otherwise, a sympy matrix of the correct shape.  If the input does not meet the shape requirements for a sympy.Matrix, then it returns **None**.  See the code for the details.
 
-## Notes
+### Notes
 
-* It is preferred to use _raw_ input with comma seperated values.  The _raw_ input fails without the commas, but it is a much more natural way to input the values.
+>* It is preferred to use _raw_ input with comma seperated values.  The _raw_ input fails without the commas, but it is a much more natural way to input the values.
+
+## Pretty Displays
+
+Mathematics has an elegant language; however, it is not particularily conducive to display in a terminal.  With the need for better display, this package provides some basic display capabilities for Jupyter/Colaboratory, Latex/pdf, and terminal output.  The basic functions for these packages are summarized in the following paragraphs.
+
+### Jupyter/Colaboratory Display
+
+These functions work with Jupyter/Colaboratory in conjunction with MathJax to display rather complex mathematics.  There are two primary functions:
+
+#### display_header_j(str)
+
+This displays a standard header on the output to help keep the python code small.  The input string is optional.
+
+#### display_j(list)
+
+This uses mathjax to display a complex list of values that are output.  The values can be sympy expressions, strings, numbers, or numpy arrays.  This is the primary way the nicer mathematics is displayed in Jupyter or Colaboratory.  
+
+>NOTE:  This is currently only tested with Colaboratory,.

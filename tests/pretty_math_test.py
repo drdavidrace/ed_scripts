@@ -6,6 +6,7 @@ import numpy as np
 import sympy as sp
 from pprint import pprint
 from functools import reduce
+from sympy.abc import phi
 
 from pretty_math import pretty_math
 import pretty_math.pretty_math as p_m
@@ -130,13 +131,10 @@ class Phase1DisplayLatexTest(unittest.TestCase):
     def test_latex_sentence_to_stdout(self):
         x = sp.symbols('x')
         y = sp.symbols('y')
-        s = sp.Function('Slope')(x,y)
-        s = 2.0 * x + -1.0 * sp.cos( x * y)
-        in_array = ["f(x,y) = ", s]
-        x_str = "\\begin{multline*}  " + "\\,f(x,y) = " + "\\, " \
-            + "$2.0 x - 1.0 \\cos{\\left(x y \\right)}$" + \
-                " \\end{multline*}"  #The \\ are because this is a python string
+        phiprime = sp.symbols('phiprime')
+        s = sp.Function(phiprime)(x,y)
+        rs = 2.0 * x + -1.0 * sp.cos( x * y)
+        in_val = sp.Eq(s,rs)
         #open the file
-        status = p_m.display_t(in_array)
-        print(status)
-        self.assertTrue(x_str == status)
+        status,_ = p_m.display_t(in_val)
+        self.assertTrue(status == 0)
