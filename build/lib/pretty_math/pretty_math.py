@@ -96,7 +96,7 @@ def display_j(in_list: list = None) -> int:
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
         #print(Math(full_sentence))
         display(Math(full_sentence))
-        return status
+        return None
     except Exception as e:
         status = 2
         print("Something went amiss with the mathjax process.  Details: {}".format(e))
