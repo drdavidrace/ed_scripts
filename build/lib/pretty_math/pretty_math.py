@@ -58,8 +58,18 @@ from typing import TypeVar
 term_type_set = {str, numbers.Number, sp.Basic, np_arrays}
 TermType = TypeVar('TermType',str, numbers.Number, sp.Basic)
 PrettyType = TypeVar('PrettyType',list, str, numbers.Number, sp.Basic)
-def enable_sympy_in_cell():
-  display(HTML(_mathjax_sentence_))
+def _enable_sympy_in_cell_():
+    """Borrowed from colab.research.google.com
+
+        NOTE:  The hook_sympy_cells must run first
+    """
+    display(HTML(_mathjax_sentence_))
+def hook_sympy_cells():
+    """Hook the mathjax to the cells before use
+
+        NOTE:  
+    """
+    get_ipython().events.register('pre_run_cell', _enable_sympy_in_cell_)
 #
 def display_j(in_list: list = None) -> int:
     """This is a top level routine which displays output in Jupyter using mathjax
