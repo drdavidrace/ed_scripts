@@ -268,7 +268,7 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
     for v in work:
         if isinstance(v,str):
             w = v.replace(" ","\\,")
-            out_str += ("\\," + v + "\\,")
+            out_str += ("\\," + w + "\\,")
         elif isinstance(v,numbers.Number):  #This works for numpy numbers also
             out_str += ("\\,{}\\,".format(v))
         elif isinstance(v, np_arrays):
