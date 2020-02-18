@@ -85,7 +85,8 @@ def display_lp(in_list: list = None, f:typing.IO = None) -> int:
     """This is a top level routine which generates the output in latex to be converted to postscript
     
     Keyword Arguments:
-        left_side {list} -- The list of stuff to display (default: {None})
+        in_list {list} -- The list of stuff to display (default: {None})
+        f {file-like object} -- The file to use for the display output (default: {None})
     
     Returns:
         int -- discription of the status
@@ -106,16 +107,75 @@ def display_lp(in_list: list = None, f:typing.IO = None) -> int:
         return status
     #Main body of work
     try:
-        display(HTML(_mathjax_sentence_))
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_pdf_math_eq_delim_)
-        f.write(full_sentence)
+        f.write(full_sentence+"\n")
         return status
     except Exception as e:
         status = 4
         print("Something went amiss with the mathjax or write process.  Details: {}".format(e))
         return status
     return status
+#
+def display_t(in_list: list = None) -> (int, str):
+    """This is a top level routine which generates the output in latex to be output to the terminal
+    using sympy.pprint.  This only goes to stdout
+    
+    Keyword Arguments:
+        left_side {list} -- The list of stuff to display (default: {None})
+    
+    Returns:
+        int -- discription of the status
+        str -- the latex string
+    """
+    status = 0
+    try:
+        assert in_list is not None
+    except:
+        status = 1
+        print("The in_list must not be None.")
+        return status, None
+    work = []
+
+    try:
+        if isinstance(in_list, list):
+            work = in_list
+        elif isinstance(in_list, str):
+            work = [in_list]
+        elif isinstance(in_list,numbers.Number):
+            work = [in_list]
+        elif isinstance(in_list,sp.Basic):
+            work = [in_list]
+        else:
+            work = list(in_list)
+    except:
+        status = 1
+        message = "The input must be able to be turned into a list"
+        return status, message
+    #Main body of work
+    try:
+        for v in work:
+            if isinstance(v,str):
+                sp.pprint(" " + v,wrap_line=False)
+            elif isinstance(v,numbers.Number):  #This works for numpy numbers also
+                sp.pprint(" {}".format(v),wrap_line = False)
+            elif isinstance(v, np_arrays):
+                x = sp.symbols('x')
+                x = sp.Matrix(v)
+                sp.pprint(x,wrap_line=False)
+            else:
+                try:
+                    assert v.has(sp.Basic)
+                    sp.pprint(v,wrap_line = False,use_unicode=False)
+                except:
+                    status = 2
+                    message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
+                    return status, message
+    except Exception as e:
+        status = 4
+        print("Something went amiss with the display process.  Details: {}".format(e))
+        return status, None
+    return status, None
 #
 #  Private routines
 #

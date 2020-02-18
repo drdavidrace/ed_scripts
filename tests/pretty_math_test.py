@@ -96,3 +96,47 @@ class Phase1DisplayLatexTest(unittest.TestCase):
                 " \\end{multline*}"  #The \\ are because this is a python string
         _, res = _display_l_(in_array, p_m._pdf_math_eq_delim_)
         self.assertTrue(res == x_str)
+
+    def test_latex_sentence_to_disk(self):
+        x = sp.symbols('x')
+        y = sp.symbols('y')
+        s = sp.Function('Slope')(x,y)
+        s = 2.0 * x + -1.0 * sp.cos( x * y)
+        in_array = ["f(x,y) = ", s]
+        x_str = "\\begin{multline*}  " + "\\,f(x,y) = " + "\\, " \
+            + "$2.0 x - 1.0 \\cos{\\left(x y \\right)}$" + \
+                " \\end{multline*}"  #The \\ are because this is a python string
+        #get a file ready for open
+        cur_dir = os.getcwd()
+        file_name = "test_latex_sentence_to_disk.pdf"
+        out_file = os.path.join(*[cur_dir, file_name])
+        try:
+            os.remove(out_file)
+        except:
+            pass
+        #open the file
+        fh = open(out_file,'w')
+        _ = p_m.display_lp(in_array, fh)
+        fh.close()
+        ih = open(out_file,'r')
+        in_line = ih.readline().strip()
+        ih.close()
+        self.assertTrue(in_line == x_str)
+        try:
+            os.remove(out_file)
+        except:
+            pass
+
+    def test_latex_sentence_to_stdout(self):
+        x = sp.symbols('x')
+        y = sp.symbols('y')
+        s = sp.Function('Slope')(x,y)
+        s = 2.0 * x + -1.0 * sp.cos( x * y)
+        in_array = ["f(x,y) = ", s]
+        x_str = "\\begin{multline*}  " + "\\,f(x,y) = " + "\\, " \
+            + "$2.0 x - 1.0 \\cos{\\left(x y \\right)}$" + \
+                " \\end{multline*}"  #The \\ are because this is a python string
+        #open the file
+        status = p_m.display_t(in_array)
+        print(status)
+        self.assertTrue(x_str == status)
