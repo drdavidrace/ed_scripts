@@ -51,6 +51,8 @@ _end_mult_sentence_ = " \\end{multline*}"
 _mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"
 _jup_math_eq_delim_ = ""
 _pdf_math_eq_delim_ = "$"
+#default headder element
+_header_element_ = "############################################################"
 #Generic Type Definitions
 from typing import TypeVar
 term_type_set = {str, numbers.Number, sp.Basic, np_arrays}
@@ -87,6 +89,29 @@ def display_j(in_list: list = None) -> int:
         print("Something went amiss with the mathjax process.  Details: {}".format(e))
         return status
     return status
+#
+def display_header_j(in_val: str = None) -> int:
+    """Display a basic header (fundamentally a set of strings)
+    
+    Keyword Arguments:
+        in_val {str} -- A string to display using sp.pprint (default: {None})
+    
+    Returns:
+        int -- status
+    """
+    status = 0
+    try:
+        if in_val is None:
+            sp.pprint(_header_element_)
+        else:
+            sp.pprint(_header_element_)
+            sp.pprint(in_val)
+            sp.pprint(_header_element_)
+        return status
+    except:
+        status = 1
+        return status
+
 #
 def display_lp(in_list: list = None, f:typing.IO = None) -> int:
     """This is a top level routine which generates the output in latex to be converted to postscript
