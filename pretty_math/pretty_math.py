@@ -48,7 +48,7 @@ np_arrays = (np.ndarray)
 #  sentence elements
 _begin_mult_sentence_ = "\\begin{multline*}  "
 _end_mult_sentence_ = " \\end{multline*}"
-_mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.1/latest.js?config=default'></script>"
+_mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"
 _jup_math_eq_delim_ = ""
 _pdf_math_eq_delim_ = "$"
 #default headder element
@@ -78,10 +78,11 @@ def display_j(in_list: list = None) -> int:
         return status
     #Main body of work
     try:
-        #display(HTML(_mathjax_sentence_))  #This sets up communication with mathjax
+        display(HTML(_mathjax_sentence_))  #This sets up communication with mathjax
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_jup_math_eq_delim_)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
+        print(Math(full_sentence))
         display(Math(full_sentence))
         return status
     except Exception as e:
