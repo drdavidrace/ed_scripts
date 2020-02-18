@@ -78,7 +78,7 @@ def display_j(in_list: list = None) -> int:
         return status
     #Main body of work
     try:
-        display(HTML(_mathjax_sentence_))  #This sets up communication with mathjax
+        #display(HTML(_mathjax_sentence_))  #This sets up communication with mathjax
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_jup_math_eq_delim_)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
