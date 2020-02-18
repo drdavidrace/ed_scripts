@@ -90,11 +90,9 @@ def display_j(in_list: list = None) -> int:
         return status
     #Main body of work
     try:
-        #display(HTML(_mathjax_sentence_))  #This sets up communication with mathjax
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_jup_math_eq_delim_)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
-        #print(Math(full_sentence))
         display(Math(full_sentence))
         return None
     except Exception as e:
@@ -120,7 +118,7 @@ def display_header_j(in_val: str = None) -> int:
             sp.pprint(_header_element_)
             sp.pprint(in_val)
             sp.pprint(_header_element_)
-        return status
+        return None
     except:
         status = 1
         return status
