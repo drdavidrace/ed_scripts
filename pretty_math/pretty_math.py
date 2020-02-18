@@ -58,6 +58,8 @@ from typing import TypeVar
 term_type_set = {str, numbers.Number, sp.Basic, np_arrays}
 TermType = TypeVar('TermType',str, numbers.Number, sp.Basic)
 PrettyType = TypeVar('PrettyType',list, str, numbers.Number, sp.Basic)
+def enable_sympy_in_cell():
+  display(HTML(_mathjax_sentence_))
 #
 def display_j(in_list: list = None) -> int:
     """This is a top level routine which displays output in Jupyter using mathjax
