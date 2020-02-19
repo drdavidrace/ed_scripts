@@ -314,7 +314,7 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
 #
 #  Pretty Table Output
 #
-def pretty_display_table(xVals, yVals, xHeading='X', yHeading='Y',title='XY Data',start_row=0):
+def display_table_j(xVals, yVals, xHeading='X', yHeading='Y',title='XY Data',start_row=0):
     '''
     Purpose:
         Display the x and y values in a nice graph format using panda
