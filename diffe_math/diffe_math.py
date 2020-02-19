@@ -29,7 +29,7 @@ def hVal(start:float = None , end:float = None, N:int = None) -> float:
     except:
         return None
 #
-def xVals(start:float = None, end:float = None, N:int = None) -> np.narray:
+def xVals(start:float = None, end:float = None, N:int = None) -> np.ndarray:
     """Compute the endpoints for the evenly spaced intervals 
     
     Keyword Arguments:
@@ -38,7 +38,7 @@ def xVals(start:float = None, end:float = None, N:int = None) -> np.narray:
         N {int} -- the number of evenly sized intervals in [start, end]
     
     Returns:
-        np.narray -- The np.narray of the end points for the given number of 
+        np.ndarray -- The np.narray of the end points for the given number of 
             intervals in [start, end]
         None -- It there is a problem with the inputs
 
