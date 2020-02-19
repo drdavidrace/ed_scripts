@@ -299,7 +299,7 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
         else:
             try:
                 assert v.has(sp.Basic)
-                out_str += (" "+ eq_delim + sp.latex(v,mode='plain') + eq_delim)
+                out_str += (" "+ eq_delim + sp.latex(v,mode='plain',mul_symbol="dot") + eq_delim)
             except:
                 status = 2
                 message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
