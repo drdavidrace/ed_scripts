@@ -36,11 +36,16 @@
 from IPython.display import display, HTML, Math, Latex
 import typing
 import numbers
+#From sympy and numpy
 import sympy
 import numpy
-#from sympy import *
 import sympy as sp
 import numpy as np
+#From pandas
+import pandas as pd
+from pandas import DataFrame
+from pprint import pprint, pformat
+#Packaging
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
 #default numpy types
@@ -307,103 +312,35 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
     message = out_str
     return status, message
 #
-# def _create_latex_sentence_p_(input_val: list = None) -> (int, str):
-#     """
-#     Internal routine to create a latex sentence from components of a list or tuple
-    
-#     Keyword Arguments:
-#         input_array {list, tuple} -- a list or tuple of elements to create a latex sentence (default: {None})
-    
-#     Returns:
-#         int - status of the processing
-#         str - the latex output of the list in the form of a string
-#     """
-#     work = []
-#     try:
-#         if isinstance(input_val, list):
-#             work = input_val
-#         elif isinstance(input_val, str):
-#             work = [input_val]
-#         elif isinstance(input_val,numbers.Number):
-#             work = [input_val]
-#         elif isinstance(input_val,sp.Basic):
-#             work = [input_val]
-#         else:
-#             work = list(input_val)
-#     except:
-#         status = 1
-#         message = "The input must be able to be turned into a list"
-#         return status, message
-#     status = 0
-#     out_str = ""
-#     for v in work:
-#         if isinstance(v,str):
-#             out_str += (" " + v)
-#         elif isinstance(v,numbers.Number):  #This works for numpy numbers also
-#             out_str += (" {}".format(v))
-#         elif isinstance(v, np_arrays):
-#             x = sp.symbols('x')
-#             x = sp.Matrix(v)
-#             out_str += (" $" + sp.latex(x,mode='plain') + "$")
-#         else:
-#             try:
-#                 assert v.has(sp.Basic)
-#                 out_str += (" $" + sp.latex(v,mode='plain') + "$")
-#             except:
-#                 status = 2
-#                 message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
-#                 return status, message
-#     message = out_str
-#     return status, message
-# #
-# def _create_latex_sentence_d_(input_val: list = None) -> (int, str):
-#     """
-#     Internal routine to create a latex sentence from components of a list or tuple suitable for display in 
-    
-#     Keyword Arguments:
-#         input_array {list, tuple} -- a list or tuple of elements to create a latex sentence (default: {None})
-    
-#     Returns:
-#         int - status of the processing
-#         str - the latex output of the list in the form of a string
-#     """
-#     work = []
-#     try:
-#         if isinstance(input_val, list):
-#             work = input_val
-#         elif isinstance(input_val, str):
-#             work = [input_val]
-#         elif isinstance(input_val,numbers.Number):
-#             work = [input_val]
-#         elif isinstance(input_val,sp.Basic):
-#             work = [input_val]
-#         else:
-#             work = list(input_val)
-#     except:
-#         status = 1
-#         message = "The input must be able to be turned into a list"
-#         return status, message
-#     status = 0
-#     out_str = ""
-#     for v in work:
-#         if isinstance(v,str):
-#             out_str += (" " + v)
-#         elif isinstance(v,numbers.Number):  #This works for numpy numbers also
-#             out_str += (" {}".format(v))
-#         elif isinstance(v, np_arrays):
-#             x = sp.symbols('x')
-#             x = sp.Matrix(v)
-#             out_str += (" " + sp.latex(x,mode='plain') + "")
-#         else:
-#             try:
-#                 assert v.has(sp.Basic)
-#                 out_str += (" " + sp.latex(v,mode='plain') + "")
-#             except:
-#                 status = 2
-#                 message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
-#                 return status, message
-#     message = out_str
-#     return status, message
+#  Pretty Table Output
+#
+def pretty_display_table(xVals, yVals, xHeading='X', yHeading='Y',title='XY Data',start_row=0):
+    '''
+    Purpose:
+        Display the x and y values in a nice graph format using panda
+        
+    Inputs:
+        xVals - The x values of the (x,y) pair to plot
+        yVals - The y values of the (x,y) pair to plot
+        xHeading - optional, sometimes the independent variable is not labeled x, so this allows the user to change the heading
+        yHeading - optional, sometimes the dependent variable is not labeled y, so this allows the user to change the heading
+        title - A title for the display table
+        start_row - indicates where to start the table row.  Sometimes the interesting data isn't at the first value
+    '''
+    max_rows = 25 # number of items to display in the tabel
+    x =np.array(xVals)
+    y = np.array(yVals)
+    dta = {xHeading: x,yHeading: y}
+    cols=[xHeading, yHeading]
+    pData = DataFrame(dta)
+    pData = pData[cols]
+    display(HTML('<b>'+title+'</b>'))
+    if start_row + max_rows > x.size:
+        display(HTML(pData[-max_rows:].to_html()))
+    else:
+        display(HTML(pData[start_row:start_row + max_rows].to_html()))
+#
+#  Old stuff to remove later
 #
 def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
     """Internal routine to get the latex for for a sympy element using MathJax
