@@ -101,7 +101,7 @@ def display_j(in_list: list = None) -> int:
         return status
     return status
 #
-def display_header_j(in_val: str = None) -> int:
+def display_header_j(in_val: str = None, include_top: bool = True, include_bot: bool = True) -> int:
     """Display a basic header (fundamentally a set of strings)
     
     Keyword Arguments:
@@ -115,9 +115,11 @@ def display_header_j(in_val: str = None) -> int:
         if in_val is None:
             sp.pprint(_header_element_)
         else:
-            sp.pprint(_header_element_)
+            if include_top:
+                sp.pprint(_header_element_)
             sp.pprint(in_val)
-            sp.pprint(_header_element_)
+            if include_bot:
+                sp.pprint(_header_element_)
         return None
     except:
         status = 1
