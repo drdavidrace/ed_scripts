@@ -368,7 +368,7 @@ def _display_table_j_(vals:list = None, headings: list = None,title:str ='Data T
     if start_row + num_rows > x.size:
         display(HTML(pData[-num_rows:].to_html()))
     else:
-        display(HTML(pData[start_row:start_row + max_rows].to_html()))
+        display(HTML(pData[start_row:start_row + num_rows].to_html()))
 #
 #  Old stuff to remove later
 #
