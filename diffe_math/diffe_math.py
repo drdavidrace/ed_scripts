@@ -29,6 +29,24 @@ def hVal(start:float = None , end:float = None, N:int = None) -> float:
     except:
         return None
 #
+def computeN(start=None,end=None,h=None):
+    '''
+    Purpose:  Define a common way to compute the number of intervals from h
+    
+    Inputs:
+        All inputs default to None; therefore, they all must be provided
+        start:  The start x value
+        end:  The end x value
+        h:  The size of the intervals
+        
+    Output:
+        N - The number of intervals
+    '''
+    try:
+        return int(np.ceil(fabs((float(end) - float(start))/float(h))))
+    except:
+        return None
+#
 def xVals(start:float = None, end:float = None, N:int = None) -> np.ndarray:
     """Compute the endpoints for the evenly spaced intervals 
     
