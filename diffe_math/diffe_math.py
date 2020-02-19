@@ -42,8 +42,10 @@ def computeN(start=None,end=None,h=None):
     Output:
         N - The number of intervals
     '''
+    print(np.fabs((float(end) - float(start))))
+    print((np.fabs((float(end) - float(start))/float(h))))
     try:
-        return int(np.ceil(fabs((float(end) - float(start))/float(h))))
+        return int(np.ceil(np.fabs((float(end) - float(start))/float(h))))
     except:
         return None
 #
