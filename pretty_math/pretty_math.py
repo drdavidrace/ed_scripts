@@ -340,6 +340,36 @@ def display_table_j(xVals, yVals, xHeading='X', yHeading='Y',title='XY Data',sta
     else:
         display(HTML(pData[start_row:start_row + max_rows].to_html()))
 #
+def _display_table_j_(vals:list = None, headings: list = None,title:str ='Data Table',start_row:int = 0, num_rows:int = 25):
+    '''
+    Purpose:
+        Display a table of values in a nice graph format using panda
+        
+    Inputs:
+        vals - a list of vectors of values to display
+        headings - a list of string to use for titles of the table columns
+        title - A title for the display table
+        start_row - indicates where to start the table row.  Sometimes the interesting data isn't at the first value
+        num_rows {int} -- The number of rows to display
+    '''
+    status = 0
+    #Build the data
+    dta = {}
+    num_cols = len(vals)
+    num_titles = len(headings)
+    if num_cols != num_titles:
+        return None
+    for i in range(num_cols):
+        dta[headings[i]] = vals[i]
+    cols=headings
+    pData = DataFrame(dta)
+    pData = pData[cols]
+    display(HTML('<b>'+title+'</b>'))
+    if start_row + num_rows > x.size:
+        display(HTML(pData[-num_rows:].to_html()))
+    else:
+        display(HTML(pData[start_row:start_row + max_rows].to_html()))
+#
 #  Old stuff to remove later
 #
 def _get_latex_sympy_(left_side = None, input_sympy = None) -> str:
