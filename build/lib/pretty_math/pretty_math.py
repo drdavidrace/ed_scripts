@@ -356,6 +356,7 @@ def _display_table_j_(vals:list = None, headings: list = None,title:str ='Data T
     #Build the data
     dta = {}
     num_cols = len(vals)
+    num_vals = vals[0].size
     num_titles = len(headings)
     if num_cols != num_titles:
         return None
@@ -365,7 +366,7 @@ def _display_table_j_(vals:list = None, headings: list = None,title:str ='Data T
     pData = DataFrame(dta)
     pData = pData[cols]
     display(HTML('<b>'+title+'</b>'))
-    if start_row + num_rows > x.size:
+    if start_row + num_rows > num_vals:
         display(HTML(pData[-num_rows:].to_html()))
     else:
         display(HTML(pData[start_row:start_row + num_rows].to_html()))
