@@ -284,6 +284,10 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
             out_str += ("\\,{}\\,".format(v))
         elif isinstance(v, np_arrays):
             x = sp.symbols('x')
+            if x.ndim == 1:
+                #shape an array so it prints out in a row vs column
+                x_dim = x.shape[0]
+                v = np.reshape(v,(1,x_dim))
             x = sp.Matrix(v)
             out_str += (" " + eq_delim + sp.latex(x,mode='plain') + eq_delim)
         elif isinstance(v, tuple) or isinstance(v,list) or isinstance(v,dict):
