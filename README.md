@@ -28,7 +28,11 @@ Mathematics has an elegant language; however, it is not particularily conducive 
 
 ### Jupyter/Colaboratory Display
 
-These functions work with Jupyter/Colaboratory in conjunction with MathJax to display rather complex mathematics.  There are two primary functions:
+These functions work with Jupyter/Colaboratory in conjunction with MathJax to display rather complex mathematics.  
+
+**NOTE:**  _There is a general incompatability between graphics output (matplotlib and bokeh) and the pretty display of comments, mathematics and data.  There is no current fix; therefore, the work-around is having separate output cells for these types of outputs.  This is no real handicap and probably makes the output more readable by having the separate functionality._
+
+The primary functions:
 
 #### display_header_j(str)
 
@@ -37,5 +41,9 @@ This displays a standard header on the output to help keep the python code small
 #### display_j(list)
 
 This uses mathjax to display a complex list of values that are output.  The values can be sympy expressions, strings, numbers, or numpy arrays.  This is the primary way the nicer mathematics is displayed in Jupyter or Colaboratory.  
+
+#### display_table_j(<parameters>)
+
+This uses mathjax to display a table of values.  The output is attractive and easy to view for data.  The data input is assumed to be a list of data.  This keeps the input generic.  This uses Pandas for output.
 
 >NOTE:  This is currently only tested with Colaboratory,.

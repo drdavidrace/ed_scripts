@@ -29,7 +29,7 @@ def hVal(start:float = None , end:float = None, N:int = None) -> float:
     except:
         return None
 #
-def computeN(start=None,end=None,h=None):
+def computeNI(start=None,end=None,h=None):
     '''
     Purpose:  Define a common way to compute the number of intervals from h
     
@@ -44,6 +44,24 @@ def computeN(start=None,end=None,h=None):
     '''
     try:
         return int(np.ceil(np.fabs((float(end) - float(start))/float(h))))
+    except:
+        return None
+#
+def computeNP(start=None,end=None,h=None):
+    '''
+    Purpose:  Define a common way to compute the number of intervals from h
+    
+    Inputs:
+        All inputs default to None; therefore, they all must be provided
+        start:  The start x value
+        end:  The end x value
+        h:  The size of the intervals
+        
+    Output:
+        N - The number of intervals
+    '''
+    try:
+        return computeNI(start, end, h) + 1
     except:
         return None
 #
