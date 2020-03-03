@@ -325,7 +325,7 @@ def display_table_j(vals:list = None, headings: list = None,title:str ='Data Tab
         num_rows {int} -- The number of rows to display
     '''
     status = 0
-    #Build the data
+    #Build the data 
     dta = {}
     num_cols = len(vals)
     num_vals = vals[0].size
