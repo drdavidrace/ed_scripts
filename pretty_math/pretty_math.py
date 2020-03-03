@@ -312,34 +312,6 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
     message = out_str
     return status, message
 #
-#  Pretty Table Output
-#
-# def display_table_j(xVals, yVals, xHeading='X', yHeading='Y',title='XY Data',start_row=0):
-#     '''
-#     Purpose:
-#         Display the x and y values in a nice graph format using panda
-        
-#     Inputs:
-#         xVals - The x values of the (x,y) pair to plot
-#         yVals - The y values of the (x,y) pair to plot
-#         xHeading - optional, sometimes the independent variable is not labeled x, so this allows the user to change the heading
-#         yHeading - optional, sometimes the dependent variable is not labeled y, so this allows the user to change the heading
-#         title - A title for the display table
-#         start_row - indicates where to start the table row.  Sometimes the interesting data isn't at the first value
-#     '''
-#     max_rows = 25 # number of items to display in the tabel
-#     x =np.array(xVals)
-#     y = np.array(yVals)
-#     dta = {xHeading: x,yHeading: y}
-#     cols=[xHeading, yHeading]
-#     pData = DataFrame(dta)
-#     pData = pData[cols]
-#     display(HTML('<b>'+title+'</b>'))
-#     if start_row + max_rows > x.size:
-#         display(HTML(pData[-max_rows:].to_html()))
-#     else:
-#         display(HTML(pData[start_row:start_row + max_rows].to_html()))
-#
 def display_table_j(vals:list = None, headings: list = None,title:str ='Data Table',start_row:int = 0, num_rows:int = 25):
     '''
     Purpose:
