@@ -80,6 +80,6 @@ def xVals(start:float = None, end:float = None, N:int = None) -> np.ndarray:
 
     """
     try:
-        return np.linspace(start,end,N+1)
+        return np.linspace(start,end,N)
     except:
         return None
