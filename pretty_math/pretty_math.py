@@ -102,6 +102,7 @@ def _typeset_():
       })();
       </script>
       '''))
+      
 def hook_sympy_cells():
     """Hook the mathjax to the cells before use
 
