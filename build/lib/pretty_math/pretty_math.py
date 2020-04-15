@@ -70,7 +70,7 @@ PrettyType = TypeVar('PrettyType',list, str, numbers.Number, sp.Basic)
 #     """
 #     display(HTML(_mathjax_sentence_))
 
-def _typeset_():
+def typeset():
   """MathJax initialization for the current cell.
   
   This installs and configures MathJax for the current output.
@@ -102,13 +102,14 @@ def _typeset_():
       })();
       </script>
       '''))
+    return None
       
 def hook_sympy_cells():
     """Hook the mathjax to the cells before use
 
         NOTE:  
     """
-    get_ipython().events.register('pre_run_cell', _typeset_)
+    get_ipython().events.register('pre_run_cell', typeset)
 #
 def display_j(in_list: list = None) -> int:
     """This is a top level routine which displays output in Jupyter using mathjax
