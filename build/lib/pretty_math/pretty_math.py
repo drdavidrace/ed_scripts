@@ -63,18 +63,52 @@ from typing import TypeVar
 term_type_set = {str, numbers.Number, sp.Basic, np_arrays}
 TermType = TypeVar('TermType',str, numbers.Number, sp.Basic)
 PrettyType = TypeVar('PrettyType',list, str, numbers.Number, sp.Basic)
-def _enable_sympy_in_cell_():
-    """Borrowed from colab.research.google.com
+# def _enable_sympy_in_cell_():
+#     """Borrowed from colab.research.google.com
 
-        NOTE:  The hook_sympy_cells must run first
-    """
-    display(HTML(_mathjax_sentence_))
+#         NOTE:  The hook_sympy_cells must run first
+#     """
+#     display(HTML(_mathjax_sentence_))
+
+def _typeset_():
+  """MathJax initialization for the current cell.
+  
+  This installs and configures MathJax for the current output.
+  """
+  display(HTML('''
+      <script src="https://www.gstatic.com/external_hosted/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full,Safe&delayStartupUntil=configured"></script>
+      <script>
+        (() => {
+          const mathjax = window.MathJax;
+          mathjax.Hub.Config({
+          'tex2jax': {
+            'inlineMath': [['$', '$'], ['\\(', '\\)']],
+            'displayMath': [['$$', '$$'], ['\\[', '\\]']],
+            'processEscapes': true,
+            'processEnvironments': true,
+            'skipTags': ['script', 'noscript', 'style', 'textarea', 'code'],
+            'displayAlign': 'center',
+          },
+          'HTML-CSS': {
+            'styles': {'.MathJax_Display': {'margin': 0}},
+            'linebreaks': {'automatic': true},
+            // Disable to prevent OTF font loading, which aren't part of our
+            // distribution.
+            'imageFont': null,
+          },
+          'messageStyle': 'none'
+        });
+        mathjax.Hub.Configured();
+      })();
+      </script>
+      '''))
+      
 def hook_sympy_cells():
     """Hook the mathjax to the cells before use
 
         NOTE:  
     """
-    get_ipython().events.register('pre_run_cell', _enable_sympy_in_cell_)
+    get_ipython().events.register('pre_run_cell', _typeset_)
 #
 def display_j(in_list: list = None) -> int:
     """This is a top level routine which displays output in Jupyter using mathjax
