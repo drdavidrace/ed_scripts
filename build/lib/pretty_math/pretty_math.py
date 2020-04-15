@@ -53,7 +53,7 @@ np_arrays = (np.ndarray)
 #  sentence elements
 _begin_mult_sentence_ = "\\begin{multline*}  "
 _end_mult_sentence_ = " \\end{multline*}"
-_mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"
+# _mathjax_sentence_ = "<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=default'></script>"
 _jup_math_eq_delim_ = ""
 _pdf_math_eq_delim_ = "$"
 #default headder element
