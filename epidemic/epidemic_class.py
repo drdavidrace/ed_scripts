@@ -89,7 +89,6 @@ class epidemic():
     #####################################################
     #  Public action functions
     #####################################################
-    def
     #
     #  Define a function for a single time step
     #
