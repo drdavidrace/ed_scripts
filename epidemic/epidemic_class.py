@@ -255,31 +255,3 @@ class epidemic():
         else:
             work_indices = ()
         return work_indices  
-#
-#  Create Population
-#
-def create_population(n_dim = None, total_pop = None,num_concurrent = 1):
-    """  Creates the city population and initialize to the s_state
-
-    Inputs:
-        n_dim - number of dimensions of the lattice
-        total_pop - Approximate number of people
-
-    Outputs:
-        computed_pop - computed number of people to use
-        edge_size - The length of each edge in the lattice
-        pop_lattice - the state lattice
-    """
-    lattice_dim = np.int(n_dim)
-    edge_size = np.int(np.float64(N)**(1./lattice_dim) + .5)
-    computed_pop = edge_size ** lattice_dim
-    if num_concurrent == 1:
-        lattice_struct = tuple([edge_size for i in range(lattice_dim)])
-    else:
-        lattice_struct = [edge_size for i in range(lattice_dim)]
-        lattice_struct.append(num_concurrent)
-        lattice_stuct = tuple(lattice_struct)
-        print(lattice_struct)
-    pop_lattice = np.zeros(lattice_struct).astype(int)  
-    pop_lattice.fill(s_state)
-    return computed_pop, edge_size, pop_lattice 
