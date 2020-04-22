@@ -45,7 +45,7 @@ class epidemic():
         self.prob_local_infect = prob_local_infect
         self.prob_long_dist_infect = prob_long_dist_infect
         #
-        self.max_time_steps = max_time_steps if max_time_steps is not None
+        self.max_time_steps = max_time_steps if not (max_time_steps is None)
         self.d = d
         #build the coordinate list
         self.coord_list = self._generate_coordinate_list_(self.dim, self.d)
