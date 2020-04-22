@@ -45,7 +45,7 @@ class epidemic():
         self.prob_local_infect = prob_local_infect
         self.prob_long_dist_infect = prob_long_dist_infect
         #
-        self.max_time_steps = max_time_steps if not (max_time_steps is None)
+        self.max_time_steps = max_time_steps if (not (max_time_steps is None)) else 200
         self.d = d
         #build the coordinate list
         self.coord_list = self._generate_coordinate_list_(self.dim, self.d)
@@ -82,7 +82,7 @@ class epidemic():
     def toggle_verbose(self):
         self.VERBOSE = not self.VERBOSE
     def set_verbose(self, inVal = None):
-        is inVal is None:
+        if inVal is None:
             self.toggle_verbose()
         else:
             self.VERBOSE = inVal
