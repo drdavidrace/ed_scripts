@@ -189,7 +189,7 @@ class epidemic():
         if dim == 1:
             n_dist = int(dist)
             list_index = [[i] for i in range(-n_dist, n_dist + 1,1)]
-            return =  list_index
+            return list_index
         else:
             n_dist = int(dist)
             lower_list = generate_coordinate_list(dim - 1, dist)
