@@ -14,11 +14,15 @@ class epidemic():
     """
     #
     def __init__(self,max_time_steps = None, dim = 2, d = None,
-    target_size = None, 
+    target_size = None, I_0 = None,
     prob_recover = None, prob_local_infect = None,
     prob_long_dist_infect = None,
     ):
+        """
+        To Do:  Add ability to pass in a random number seed
+        """
         assert d is not None
+        assert I_0 is not None
         assert isinstance(dim, int)
         assert dim == 2  #Right now this is only a 2D model
         assert target_size is not None
@@ -31,6 +35,7 @@ class epidemic():
         self.S = np.int(0)  #susceptible state
         self.I = np.int(1)  #infected state
         self.R = np.int(2)  #recovered state
+        self.I_0 = np.int(I_0)
         self.current_time = 0
         self.max_time = int(max_time_steps)
         self.VERBOSE = False
@@ -53,6 +58,12 @@ class epidemic():
         self.coord_list = self._generate_coordinate_list_(self.dim, self.d)
         #build the initial state
         self.pop_size, self.edge_size, self.people_state = self._create_population_(self.dim, target_size)
+        #set the initial random number
+        np.random.seed(0)
+        #set the number infected
+        start_infection_indices = np.random.randint(self.edge_size, size = (self.I_0, self.dim))
+        location_tuple = tuple([start_infection_indices[:,i] for i in range(self.dim)])
+        self.people_state[location_tuple] = self.I
     ######################################################
     #  The public functions that are accessors for the public
     ######################################################
