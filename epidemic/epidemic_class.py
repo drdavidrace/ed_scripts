@@ -212,7 +212,7 @@ class epidemic():
     #
     #  The wrap function
     #
-    def _wrap_(max_val = None, indices = None):
+    def _wrap_(self, max_val = None, indices = None):
         """  This wraps the values so there are no negative indices or huge indices
             NOTE:  This is the helper function that hides the multiple indices
 
