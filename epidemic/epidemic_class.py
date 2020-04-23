@@ -52,7 +52,7 @@ class epidemic():
         #build the coordinate list
         self.coord_list = self._generate_coordinate_list_(self.dim, self.d)
         #build the initial state
-        self.pop_size, self.edge_size, self.people_state = self.create_population_(self.dim, target_size)
+        self.pop_size, self.edge_size, self.people_state = self._create_population_(self.dim, target_size)
     ######################################################
     #  The public functions that are accessors for the public
     ######################################################
