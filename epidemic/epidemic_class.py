@@ -192,7 +192,7 @@ class epidemic():
             return list_index
         else:
             n_dist = int(dist)
-            lower_list = generate_coordinate_list(dim - 1, dist)
+            lower_list = self._generate_coordinate_list_(dim - 1, dist)
             t_list = [ l + [i] for l in lower_list for i in range(-n_dist, n_dist + 1,1)]
             list_index = [l for l in t_list if np.linalg.norm(np.array(l)) <= dist]
             return  list_index
