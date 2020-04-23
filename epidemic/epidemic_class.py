@@ -138,7 +138,7 @@ class epidemic():
             s_state_indices = np.where(self.person_state[parallel_indices] ==  self.S)
             s_state_indices = s_state_indices[0]
             if len(s_state_indices) > 0:
-                update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(lattice_dim)])
+                update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(self.dim)])
                 person_state[update_indices] = self.I
         person_state[recovered_indices] =  self.R
     #
@@ -157,7 +157,7 @@ class epidemic():
             pop_lattice - the state lattice
         """
         lattice_dim = np.int(n_dim)
-        edge_size = np.int(np.float64(self.pop_size)**(1./lattice_dim) + .5)
+        edge_size = np.int(np.float64(total_pop)**(1./lattice_dim) + .5)
         computed_pop = edge_size ** lattice_dim
         lattice_struct = tuple([edge_size for i in range(lattice_dim)])
         pop_lattice = np.zeros(lattice_struct).astype(int)  
