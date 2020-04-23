@@ -141,7 +141,7 @@ class epidemic():
                 new_infections_indices = tuple([infected_indices[i][s_state_indices] for i in range(self.dim)])
                 self.people_state[new_infections_indices] = self.I
         #Try long distance infections
-        rand_long_indices = np.random.randint(edge_size,size=(num_infected,self.dim))
+        rand_long_indices = np.random.randint(self.edge_size,size=(num_infected,self.dim))
         rand_choose = np.where(np.random.uniform(size = num_infected) < self.prob_long_dist_infect)
         rand_long_indices = rand_long_indices[rand_choose]
         if len(rand_choose) > 0:
