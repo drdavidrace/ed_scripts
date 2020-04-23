@@ -9,6 +9,8 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 class epidemic():
     """  This class handles all of the operations for an epidemic model
 
+    Inputs -
+        max_time_steps - the maximum number of time steps to run
     """
     #
     def __init__(self,max_time_steps = None, dim = 2, d = None,
