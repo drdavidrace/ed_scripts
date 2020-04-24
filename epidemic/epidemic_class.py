@@ -7,19 +7,35 @@ __version__ = pkg_resources.require('ed_scripts')[0].version
 #  The epidemic class
 #
 class epidemic():
-    """  This class handles all of the operations for an epidemic model
+    """  This class handles all of the operations for a single time step of an
+    epidemic model
 
     Inputs -
-        max_time_steps - the maximum number of time steps to run
+        dim - Sets the dimension of the lattice of the problem, currently must be 2
+        d - distance used for defining friends in the lattice
+        target_size - the target size of the whole population
+            NOTE:  the actual size will not necessarily be this size since the
+            dimension requires it to be a power of the edge size
+        I_0 - The number of infected at the start of the model
+            NOTE:  These are randomly placed
+        prob_recover - The probability that an infected moves to recovered in a 
+        time step
+        prob_local_infect - The probability that an infected person will infect
+        a susceptible friend
+        prob_long_dist_infect - The probability that an infected person will 
+        infect someone not in the friend circle (kinda)
+        seed - If not none, then it sets the numpy random number seed
     """
     #
-    def __init__(self,max_time_steps = None, dim = 2, d = None,
+    def __init__(self, dim = 2, d = None,
     target_size = None, I_0 = None,
     prob_recover = None, prob_local_infect = None,
-    prob_long_dist_infect = None,
+    prob_long_dist_infect = None, 
+    seed = None, verbose = None
     ):
         """
-        To Do:  Add ability to pass in a random number seed
+        
+        
         """
         assert d is not None
         assert I_0 is not None
@@ -37,9 +53,7 @@ class epidemic():
         self.R = np.int(2)  #recovered state
         self.I_0 = np.int(I_0)
         self.current_time = 0
-        self.max_time = int(max_time_steps)
-        self.VERBOSE = False
-        self.max_time_steps = 200  #The maximum time steps
+        self.VERBOSE = verbose if not(verbose is None) else False
         self.dim = 2  #The number of dimensions to use
         self.d = -1.0 #This is a place holder
         self.coord_list = None
@@ -52,14 +66,16 @@ class epidemic():
         self.prob_local_infect = prob_local_infect
         self.prob_long_dist_infect = prob_long_dist_infect
         #
-        self.max_time_steps = max_time_steps if (not (max_time_steps is None)) else 200
         self.d = d
+        #  The status queue
+        self.exec_status = []  #  This should be a list of strings for the operating status
         #build the coordinate list
         self.coord_list = self._generate_coordinate_list_(self.dim, self.d)
         #build the initial state
         self.pop_size, self.edge_size, self.people_state = self._create_population_(self.dim, target_size)
         #set the initial random number
-        np.random.seed(0)
+        if (not (seed is None)) and isinstance(seed, int):
+            np.random.seed(see)
         #set the number infected
         start_infection_indices = np.random.randint(self.edge_size, size = (self.I_0, self.dim))
         location_tuple = tuple([start_infection_indices[:,i] for i in range(self.dim)])
@@ -82,13 +98,17 @@ class epidemic():
     def get_prob_long_dist_infect(self):
         return self.prob_long_dist_infect
     def get_number_recovered(self):
-        return len(np.where(self.people_state == self.R)[0])
+        return self._get_number_recovered_()
     def get_number_infected(self):
-        return len(np.where(self.people_state == self.I)[0])
+        return self._get_number_infected_()
     def get_number_susceptible(self):
-        return len(np.where(self.people_state == self.S)[0])
+        return self._get_number_susceptible_()
+    def get_people_states(self):
+        return self._get_people_states_()
     def get_verbose(self):
         return self.VERBOSE
+    def get_exec_status(self):
+        return self.exec_status
     #####################################################
     #  Public setter functions
     #####################################################
@@ -111,6 +131,17 @@ class epidemic():
     #  The private functions that will only be called internally
     ######################################################  
     #
+    #  Simple internal functions that have public interfaces
+    #
+    def _get_number_recovered_(self):
+        return len(np.where(self.people_state == self.R)[0])
+    def _get_number_infected_(self):
+        return len(np.where(self.people_state == self.I)[0])
+    def _get_number_susceptible_(self):
+        return len(np.where(self.people_state == self.S)[0])
+    def _get_people_states_(self):
+        return self._get_number_susceptible_(), self._get_number_infected_(), self._get_number_recovered_()
+    #
     #  simple range checker for probabilities
     #
     def _check_prob_(self, in_val = None):
@@ -124,12 +155,17 @@ class epidemic():
             return False
         return True
     def _single_time_step_(self):
+        self.exec_status.append("Current Time: {}\n".format(self.current_time))
         # print(i_state)
         if self.VERBOSE:
             print("Current Time: {}".format(self.current_time))
+        num_infected = self._get_number_infected_()
+        if num_infected == 0:
+            #This model doesn't spontaneously create infected people
+            self.exec_status.append("\tNumber Infected is 0.\n")
+            return
         infected_persons = np.where(self.people_state == self.I)
-        num_infected = len(infected_persons[0])
-        # print(num_infected)
+        #
         rand_to_recover = np.random.uniform(size=num_infected)
         recovered = np.where(rand_to_recover < self.prob_recover)
         recovered_indices = tuple([infected_persons[i][recovered] for i in range(self.dim)])
@@ -152,6 +188,8 @@ class epidemic():
                 update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(self.dim)])
                 self.people_state[update_indices] = self.I
         self.people_state[recovered_indices] =  self.R
+        self.current_time += 1
+        return
     #
     #  Create Population  -  We always create a population with the approximate size
     #
