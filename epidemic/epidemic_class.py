@@ -61,6 +61,7 @@ class epidemic():
         self.pop_size = None
         self.edge_size = None
         self.people_state = None
+        
         #  These are the state transition probabilities
         self.prob_recover = prob_recover
         self.prob_local_infect = prob_local_infect
