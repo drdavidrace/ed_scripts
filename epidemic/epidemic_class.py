@@ -166,7 +166,7 @@ class epidemic():
             self.exec_status.append("\tNumber Infected is 0.\n")
             return
         infected_persons = np.where(self.people_state == self.I)
-        
+        print(num_infected)
         rand_to_recover = np.random.uniform(size=num_infected) #rand_to_recover is a 1 dim tuple
         recovered = np.where(rand_to_recover < self.prob_recover)  
         recovered_indices = tuple([infected_persons[i][recovered] for i in range(self.dim)])
