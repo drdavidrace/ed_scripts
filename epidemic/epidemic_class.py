@@ -165,7 +165,7 @@ class epidemic():
             #This model doesn't spontaneously create infected people
             self.exec_status.append("\tNumber Infected is 0.\n")
             return
-        infected_persons = np.where(self.people_state == self.I)
+         infected_persons = np.where(self.people_state == self.I)
         #
         rand_to_recover = np.random.uniform(size=num_infected)
         recovered = np.where(rand_to_recover < self.prob_recover)
@@ -190,6 +190,7 @@ class epidemic():
                 self.people_state[update_indices] = self.I
         self.people_state[recovered_indices] =  self.R
         self.current_time += 1
+        
         return
     #
     #  Create Population  -  We always create a population with the approximate size
