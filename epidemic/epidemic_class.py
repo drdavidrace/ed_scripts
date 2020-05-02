@@ -203,7 +203,7 @@ class epidemic():
         # # self.people_state[(all_changes_x, all_changes_y)] = self.I
         # self.people_state[recovered_indices] =  self.R
         # self.current_time += 1
-        infected_persons = np.where(self.people_state == self.I)
+        # infected_persons = np.where(self.people_state == self.I)
         #
         rand_to_recover = np.random.uniform(size=num_infected)
         recovered = np.where(rand_to_recover < self.prob_recover)
