@@ -178,7 +178,8 @@ class epidemic():
             if len(infected_indices) > 0:
                 s_state_indices = np.where(self.people_state[infected_indices] == self.S)
                 print(type(s_state_indices))
-                print(len(s_state_indices))
+                print(len(s_state_indices[0]))
+                print(s_state_indices)
                 print(len(infected_indices))
                 all_changes_x = np.concatenate((all_changes_x, infected_indices[0][s_state_indices[0]]))
                 all_changes_y = np.concatenate((all_changes_y, infected_indices[1][s_state_indices[1]]))
