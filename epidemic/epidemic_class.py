@@ -175,6 +175,8 @@ class epidemic():
         for c in self.coord_list:
             c_indices = [self._wrap_(self.edge_size,infected_persons[i] + c[i]) for i in range(self.dim)]
             infected_indices = self._choose_random_indices_(c_indices, self.prob_local_infect)
+            print(infected_indices)
+            print(type(infected_indices))
             if len(infected_indices) > 0:
                 s_state_indices = np.where(self.people_state[infected_indices] == self.S)
                 print(s_state_indices)
