@@ -170,8 +170,8 @@ class epidemic():
         rand_to_recover = np.random.uniform(size=num_infected)
         recovered = np.where(rand_to_recover < self.prob_recover)
         recovered_indices = tuple([infected_persons[i][recovered] for i in range(self.dim)])
-        all_changes_x = np.empty((0))
-        all_changes_y = np.empty((0))
+        # all_changes_x = np.empty((0))
+        # all_changes_y = np.empty((0))
         for c in self.coord_list:
             c_indices = [self._wrap_(self.edge_size,infected_persons[i] + c[i]) for i in range(self.dim)]
             infected_indices = self._choose_random_indices_(c_indices, self.prob_local_infect)
@@ -196,11 +196,11 @@ class epidemic():
             s_state_indices = np.where(self.people_state[parallel_indices] ==  self.S)
             s_state_indices = s_state_indices[0]
             if len(s_state_indices) > 0:
-                # update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(self.dim)])
-                all_changes_x = np.concatenate((all_changes_x, rand_long_indices[:,0][s_state_indices]))
-                all_changes_y = np.concatenate((all_changes_y, rand_long_indices[:,1][s_state_indices]))
-                # self.people_state[update_indices] = self.I
-        self.people_state[(all_changes_x, all_changes_y)] = self.I
+                update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(self.dim)])
+                # all_changes_x = np.concatenate((all_changes_x, rand_long_indices[:,0][s_state_indices]))
+                # all_changes_y = np.concatenate((all_changes_y, rand_long_indices[:,1][s_state_indices]))
+                self.people_state[update_indices] = self.I
+        # self.people_state[(all_changes_x, all_changes_y)] = self.I
         self.people_state[recovered_indices] =  self.R
         self.current_time += 1
         return
