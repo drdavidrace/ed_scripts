@@ -175,18 +175,25 @@ class epidemic():
         # for c in self.coord_list:
         #     c_indices = [self._wrap_(self.edge_size,infected_persons[i] + c[i]) for i in range(self.dim)]
         #     infected_indices = self._choose_random_indices_(c_indices, self.prob_local_infect)
-        #     # print(infected_indices)
-        #     # print(type(infected_indices))
         #     if len(infected_indices) > 0:
         #         s_state_indices = np.where(self.people_state[infected_indices] == self.S)
-        #     #     print(s_state_indices)
-        #         # print(len(s_state_indices[0]))
-        #         # print(s_state_indices)
-        #         # print(len(infected_indices))
-        #         # all_changes_x = np.concatenate((all_changes_x, infected_indices[0][s_state_indices[0]]))
-        #         # all_changes_y = np.concatenate((all_changes_y, infected_indices[1][s_state_indices[1]]))
-        #         new_infections_indices = tuple([infected_indices[i][s_state_indices[i]] for i in range(self.dim)])
+        #         new_infections_indices = tuple([infected_indices[i][s_state_indices] for i in range(self.dim)])
         #         self.people_state[new_infections_indices] = self.I
+        for c in self.coord_list:
+            c_indices = [self._wrap_(self.edge_size,infected_persons[i] + c[i]) for i in range(self.dim)]
+            infected_indices = self._choose_random_indices_(c_indices, self.prob_local_infect)
+            print(infected_indices)
+            print(type(infected_indices))
+            # if len(infected_indices) > 0:
+                # s_state_indices = np.where(self.people_state[infected_indices] == self.S)
+            #     print(s_state_indices)
+                # print(len(s_state_indices[0]))
+                # print(s_state_indices)
+                # print(len(infected_indices))
+                # all_changes_x = np.concatenate((all_changes_x, infected_indices[0][s_state_indices[0]]))
+                # all_changes_y = np.concatenate((all_changes_y, infected_indices[1][s_state_indices[1]]))
+                # new_infections_indices = tuple([infected_indices[i][s_state_indices[i]] for i in range(self.dim)])
+                # self.people_state[new_infections_indices] = self.I
         # #Try long distance infections
         # rand_long_indices = np.random.randint(self.edge_size,size=(num_infected,self.dim))
         # rand_choose = np.where(np.random.uniform(size = num_infected) < self.prob_long_dist_infect)
