@@ -185,7 +185,7 @@ class epidemic():
                 # print(len(infected_indices))
                 # all_changes_x = np.concatenate((all_changes_x, infected_indices[0][s_state_indices[0]]))
                 # all_changes_y = np.concatenate((all_changes_y, infected_indices[1][s_state_indices[1]]))
-                new_infections_indices = tuple([infected_indices[i][s_state_indices] for i in range(self.dim)])
+                new_infections_indices = tuple([infected_indices[i][s_state_indices[i]] for i in range(self.dim)])
                 self.people_state[new_infections_indices] = self.I
         #Try long distance infections
         rand_long_indices = np.random.randint(self.edge_size,size=(num_infected,self.dim))
