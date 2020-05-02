@@ -170,13 +170,17 @@ class epidemic():
         rand_to_recover = np.random.uniform(size=num_infected)
         recovered = np.where(rand_to_recover < self.prob_recover)
         recovered_indices = tuple([infected_persons[i][recovered] for i in range(self.dim)])
+        all_changes_x = np.array([])
+        all_changes_y = np.array([])
         for c in self.coord_list:
             c_indices = [self._wrap_(self.edge_size,infected_persons[i] + c[i]) for i in range(self.dim)]
             infected_indices = self._choose_random_indices_(c_indices, self.prob_local_infect)
             if len(infected_indices) > 0:
                 s_state_indices = np.where(self.people_state[infected_indices] == self.S)
-                new_infections_indices = tuple([infected_indices[i][s_state_indices] for i in range(self.dim)])
-                self.people_state[new_infections_indices] = self.I
+                all_changes_x = np.concatenate((all_changes_x, s_state_indices[0]))
+                all_changes_y = np.concatenate((all_changes_y, s_state_indices[1]))
+                # new_infections_indices = tuple([infected_indices[i][s_state_indices] for i in range(self.dim)])
+                # self.people_state[new_infections_indices] = self.I
         #Try long distance infections
         rand_long_indices = np.random.randint(self.edge_size,size=(num_infected,self.dim))
         rand_choose = np.where(np.random.uniform(size = num_infected) < self.prob_long_dist_infect)
@@ -186,8 +190,11 @@ class epidemic():
             s_state_indices = np.where(self.people_state[parallel_indices] ==  self.S)
             s_state_indices = s_state_indices[0]
             if len(s_state_indices) > 0:
-                update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(self.dim)])
-                self.people_state[update_indices] = self.I
+                # update_indices = tuple([rand_long_indices[:,i][s_state_indices] for i in range(self.dim)])
+                all_changes_x = np.concatenate((all_changes_x, rand_long_indices[:,0][s_state_indices]))
+                all_changes_y = np.concatenate((all_changes_y, rand_long_indices[:,1][s_state_indices]))
+                # self.people_state[update_indices] = self.I
+        self.people_state[(all_changes_x, all_changes_y)] = self.I
         self.people_state[recovered_indices] =  self.R
         self.current_time += 1
         return
@@ -269,7 +276,8 @@ class epidemic():
         assert max_val > 0
         assert indices is not None
         assert isinstance(indices,np.ndarray)
-        #
+        #  Usually the number of indices >= max_val or < 0 is small so
+        #  this is faster than using np.mod
         w_indices = np.copy(indices)
         large_indices = np.where(w_indices >= max_val)
         w_indices[large_indices] = w_indices[large_indices] - max_val
