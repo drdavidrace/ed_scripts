@@ -172,6 +172,7 @@ class epidemic():
         recovered_indices = tuple([infected_persons[i][recovered] for i in range(self.dim)])
         all_changes_x = np.empty((0))
         all_changes_y = np.empty((0))
+        print(self.coord_list)
         # for c in self.coord_list:
         #     c_indices = [self._wrap_(self.edge_size,infected_persons[i] + c[i]) for i in range(self.dim)]
         #     infected_indices = self._choose_random_indices_(c_indices, self.prob_local_infect)
