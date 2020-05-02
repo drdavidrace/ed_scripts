@@ -219,8 +219,8 @@ class epidemic():
         if len(rand_choose) > 0:
             parallel_indices = tuple([rand_long_indices[:,i] for i in range(self.dim)])
             s_state_indices = np.where(self.people_state[parallel_indices] ==  self.S)
-            s_state_indices = s_state_indices[0]
-            if len(s_state_indices) > 0:
+            # s_state_indices = s_state_indices[0]
+            if len(s_state_indices[0]) > 0:
                 update_indices = tuple([rand_long_indices[:,i][s_state_indices[i]] for i in range(self.dim)])
                 self.people_state[update_indices] = self.I
         self.people_state[recovered_indices] =  self.R
