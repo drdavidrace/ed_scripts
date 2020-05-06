@@ -1,5 +1,15 @@
 #
 #
+import sys, os
+import numpy as np  
+import scipy as scp
+import sympy as sp
+import pandas as pd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sb
+import sklearn as skl
+import torch as T
 #
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
