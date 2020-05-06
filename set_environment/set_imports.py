@@ -38,9 +38,8 @@ def show_environment():
     print("This code uses PyTorch version:  {}".format(T.__version__))
     print("This notebook uses in_array version: {}".format(in_array.__version__))
 #
-def set_up_gpu():
-    global use_double, device, float_dtype, int_dtype
-    use_double = None
+def set_up_gpu(in_use_double = True):
+    use_double = in_use_double
     device = None
     float_dtype = None
     int_dtype = None
@@ -59,8 +58,8 @@ def set_up_gpu():
         T.set_default_dtype(float_dtype)
         print("Verifying the default dtype is 64 bit: {}".format(T.get_default_dtype()))
         print("Verifying the default device: {}".format(T.cuda.current_device()))
-        return True
+        return True, device, float_dtype, int_dtype
     else:
         print("The environment is not using a gpu.")
-        return False
+        return False, device, float_dtype, int_dtype
 
