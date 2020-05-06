@@ -44,7 +44,7 @@ def set_up_gpu():
     device = None
     float_dtype = None
     int_dtype = None
-    if T.cuda_is_available():
+    if T.cuda.is_available():
         device = 'cuda' if T.cuda.is_available() else 'cpu'
         float_dtype = T.double if use_double else T.float
         int_dtype = T.long if use_double else T.int
