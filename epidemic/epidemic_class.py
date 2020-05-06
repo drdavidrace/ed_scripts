@@ -76,7 +76,7 @@ class epidemic():
         self.pop_size, self.edge_size, self.people_state = self._create_population_(self.dim, target_size)
         #set the initial random number
         if (not (seed is None)) and isinstance(seed, int):
-            np.random.seed(see)
+            np.random.seed(seed)
         #set the number infected
         start_infection_indices = np.random.randint(self.edge_size, size = (self.I_0, self.dim))
         location_tuple = tuple([start_infection_indices[:,i] for i in range(self.dim)])
