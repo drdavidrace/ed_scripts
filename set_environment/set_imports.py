@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sb
 import sklearn as skl
 import torch as T
+from in_array import in_array
 #
 import pkg_resources
 __version__ = pkg_resources.require('ed_scripts')[0].version
