@@ -61,5 +61,6 @@ def set_up_gpu():
         print("Verifying the default device: {}".format(T.cuda.current_device()))
         return True
     else:
+        print("The environment is not using a gpu.")
         return False
 
