@@ -181,7 +181,7 @@ def display_header_pj(in_val: str = None, include_top: bool = True, include_bot:
         else:
             if include_top:
                 sp.pprint(_header_element_)
-            status, full_sentence = _display_l_([in_val], _jup_math_eq_delim_)
+            status, full_sentence = _display_l_(in_val, _jup_math_eq_delim_)
             display(Math(full_sentence))
             if include_bot:
                 sp.pprint(_header_element_)
@@ -344,8 +344,9 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
     out_str = ""
     for v in work:
         if isinstance(v,str):
-            w = v.replace(" ","\\,")
-            out_str += ("\\," + w + "\\,")
+            # w = v.replace(" ","\\,")
+            print(v)
+            out_str += ("\\," + v + "\\,")
         elif isinstance(v,numbers.Number):  #This works for numpy numbers also
             out_str += ("\\,{}\\,".format(v))
         elif isinstance(v, np_arrays):
