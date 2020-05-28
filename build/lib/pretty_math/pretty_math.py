@@ -356,7 +356,7 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
                 v = np.reshape(v,(1,x_dim))
             x = sp.Matrix(v)
             out_str += (" " + eq_delim + sp.latex(x,mode='plain') + eq_delim)
-        elif isinstance(v, tuple) or isinstance(v,list) or isinstance(v,dict):
+        elif isinstance(v, tuple) or isinstance(v,list) or isinstance(v,dict) or isinstance(v,set):
             x = sp.symbols('x')
             x = v
             out_str += (" " + eq_delim + sp.latex(x,mode='plain') + eq_delim)
