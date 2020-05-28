@@ -20,6 +20,8 @@
 #       that is not very enticing.  When used with output to a terminal (vs Jupyter)
 #       this should be coupled with output to latex that is then converted to pdf
 #   display_j - display to jupyter (colab) using mathjax
+#   display_header_j - Uses sp.pprint to display a text string
+#   display_header_pj - Uses the latex to display a text string
 #
 #  Input Format:
 #   The main input format will be a list of items to display on a line.  The output
@@ -163,7 +165,30 @@ def display_header_j(in_val: str = None, include_top: bool = True, include_bot: 
     except:
         status = 1
         return status
-
+def display_header_pj(in_val: str = None, include_top: bool = True, include_bot: bool = True) -> int:
+    """Display a basic header (fundamentally a set of strings, but the input text is displayed using latex)
+    
+    Keyword Arguments:
+        in_val {str} -- A string to display using display (default: {None})
+    
+    Returns:
+        int -- status
+    """
+    status = 0
+    try:
+        if in_val is None:
+            sp.pprint(_header_element_)
+        else:
+            if include_top:
+                sp.pprint(_header_element_)
+            status, full_sentence = _display_l_([in_val], _jup_math_eq_delim_)
+            display(Math(full_sentence))
+            if include_bot:
+                sp.pprint(_header_element_)
+        return None
+    except:
+        status = 1
+        return status
 #
 def display_lp(in_list: list = None, f:typing.IO = None) -> int:
     """This is a top level routine which generates the output in latex to be converted to postscript
@@ -340,9 +365,7 @@ def _create_latex_sentence_(input_val: list = None, eq_delim: str = _jup_math_eq
                 assert v.has(sp.Basic)
                 out_str += (" "+ eq_delim + sp.latex(v,mode='plain',mul_symbol="dot") + eq_delim)
             except:
-                status = 2
-                message = "The inputs must be a str, number, np number, np.array or sympy expression: {}".format(v)
-                return status, message
+                out_str += (" "+ eq_delim + sp.latex(v,mode='plain',mul_symbol="dot") + eq_delim)
     message = out_str
     return status, message
 #
