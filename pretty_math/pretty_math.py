@@ -36,6 +36,7 @@
 ##################################################################
 #
 from IPython.display import display, HTML, Math, Latex
+from IPython import get_ipython
 import typing
 import numbers
 #From sympy and numpy
