@@ -27,6 +27,7 @@ def get_default_var_names(num_variables:int = 5, start_char:str = "a") -> List:
     assert isinstance(num_variables, int)
     assert isinstance(start_char, str)
     assert len(start_char) == 1
+    print(start_char.islower())
     if start_char.islower():
         assert ord(start_char) + num_variables <= ord('z') + 1
     elif start_char.isupper():
