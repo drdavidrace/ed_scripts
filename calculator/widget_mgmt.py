@@ -27,5 +27,11 @@ def get_default_var_names(num_variables:int = 5, start_char:str = "a") -> List:
     assert isinstance(num_variables, int)
     assert isinstance(start_char, str)
     assert len(start_char) == 1
-    assert ord(start_char) + num_variables <= 27
+    if start_char.islower():
+        assert ord(start_char) + num_variables <= ord('z') + 1
+    elif start_char.isupper():
+        assert ord(start_char) + num_variables <= ord('Z') + 1
+    else:
+        print("{} must be a lower case or upper case character".format(start_char))
+        assert False
     return [str(chr(i)) for i in range(ord(start_char), ord(start_char) + num_variables)]
