@@ -23,11 +23,23 @@ def set_default_numeric_values(num_variables:int = 5) ->  Tuple:
     assert isinstance(num_variables, int)
     return (sp.S(i) for i in range(num_variables))
 #
+def set_default_matrix_values(num_variables:int = 5) ->  Tuple:
+    """Returns a default list of variables to help keep the code clean
+
+    Inputs:
+    num_variables:  The number of variables to return
+
+    Output:
+    A list of the sympy values for that number of variables where the
+    default values are 0 to num_variables - 1.
+    """
+    assert isinstance(num_variables, int)
+    return (sp.Matrix([[i]]) for i in range(num_variables))
+#
 def get_default_var_names(num_variables:int = 5, start_char:str = "a") -> List:
     assert isinstance(num_variables, int)
     assert isinstance(start_char, str)
     assert len(start_char) == 1
-    print(start_char.islower())
     if start_char.islower():
         assert ord(start_char) + num_variables <= ord('z') + 1
     elif start_char.isupper():
