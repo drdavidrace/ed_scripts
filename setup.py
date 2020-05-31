@@ -11,7 +11,7 @@ def read(fname):
 
 
 setup(name='ed_scripts',
-      version='0.6',
+      version='0.7',
       author='Dr David Race',
       author_email='dr.david.race@gmail.com',
       url='git+https://github.com/drdavidrace/ed_scripts.git',
@@ -19,7 +19,7 @@ setup(name='ed_scripts',
           'routines to make using Colaboratory scripts easier for the classroom'),
       long_description=read('README.md'),
       license='GNU General Public License',
-      packages=['in_array', 'pretty_math', 'diffe_math', 'epidemic','set_environment','tests'],
+      packages=['in_array', 'pretty_math', 'diffe_math', 'epidemic','set_environment','calculator','tests'],
       install_requires=['numpy', 'scipy', 'sympy', 'pandas',
                         'matplotlib', 'seaborn', 'sklearn', 'torch','IPython'],
       test_suite='tests',
