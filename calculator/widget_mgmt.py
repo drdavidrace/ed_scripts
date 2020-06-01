@@ -101,7 +101,11 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     print(grid_template_rows)
     print(pos_names)
     #display the inputs
-    matrix_grid = GridspecLayout(num_row+1, num_col+1)
+    matrix_grid = GridspecLayout(num_row+1, num_col+1, 
+        layout=Layout(
+            width="75%"
+            )
+    )
     for i in range(num_row+1):
         for j in range(num_col+1):
             matrix_grid[i,j] = inputs[i][j]
