@@ -93,7 +93,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
             children.append(inputs[i][j])
         pos_names = pos_names + row_pos_names + "\n"
     #Build the Display
-    grid_template_rows = ["auto " for i in range(num_row + 1)]
+    grid_template_rows = "".join(["auto " for i in range(num_row + 1)])
     width_column = int(100//num_col)
     width_first_col = 100 - width_column * num_col
     grid_template_columns = "{}% ".format(width_first_col) + "".join(["{}%".format(width_column) for i in range(num_col)])
