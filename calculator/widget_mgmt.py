@@ -60,7 +60,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     for i in range(num_row+1):
         row_list = [None for j in range(num_col+1)]
         inputs.append(row_list)
-    pos_names = "\'"
+    pos_names = "\'\'\'"
     children = []
     #Build the inputs
     for i in range(num_row + 1):
@@ -92,7 +92,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
                 row_pos_names = row_pos_names + pos_i_j + " "
             children.append(inputs[i][j])
         pos_names = pos_names + '"' + row_pos_names + '"' + "\n"
-    pos_names += "\'"
+    pos_names += "\'\'\'"
     #Build the Display
     grid_template_rows = '"' + " ".join(["auto " for i in range(num_row + 1)]) + '"'
     width_column = int(96//num_col)
