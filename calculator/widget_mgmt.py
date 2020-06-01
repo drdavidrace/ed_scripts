@@ -21,7 +21,7 @@ def set_default_numeric_values(num_variables:int = 5) ->  Tuple:
     default values are 0 to num_variables - 1.
     """
     assert isinstance(num_variables, int)
-    return (sp.S(i) for i in range(num_variables))
+    return (sp.Integer(i) for i in range(num_variables))
 #
 def set_default_matrix_values(num_variables:int = 5) ->  Tuple:
     """Returns a default list of variables to help keep the code clean
