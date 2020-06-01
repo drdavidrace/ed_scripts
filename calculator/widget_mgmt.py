@@ -76,19 +76,19 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
                         print("")
                 else:
                     pos_i_j = "pos_{}_{}".format(i,j)
-                    inputs[i][j] = Output(layout=Layout(width='32',grid_area = pos_i_j))
+                    inputs[i][j] = Output(layout=Layout(width='32%',grid_area = pos_i_j))
                     with inputs[i][j]:
                         print("       {}       ".format(j))
                 row_pos_names = row_pos_names + pos_i_j + " "
             else:
                 if j == 0:
                     pos_i_j = "pos_{}_{}".format(i,j)
-                    inputs[i][j] = Output(layout=Layout(width='4',grid_area=pos_i_j))
+                    inputs[i][j] = Output(layout=Layout(width='4%',grid_area=pos_i_j))
                     with inputs[i][j]:
                         print(" {} ".format(i))
                 else:
                     pos_i_j = "pos_{}_{}".format(i,j)
-                    inputs[i][j] = FloatText(value=0.,disabled=False,layout=Layout(width='32',grid_area=pos_i_j))
+                    inputs[i][j] = FloatText(value=0.,disabled=False,layout=Layout(width='32%',grid_area=pos_i_j))
                 row_pos_names = row_pos_names + pos_i_j + " "
             children.append(inputs[i][j])
         pos_names = pos_names + '"' + row_pos_names + '"' + " "
