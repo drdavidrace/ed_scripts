@@ -103,7 +103,9 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     #display the inputs
     matrix_grid = GridspecLayout(num_row+1, num_col+1, 
         layout=Layout(
-            width="75%"
+            width="75%",
+            grid_template_rows = """ + grid_template_rows """,
+            grid_template_columns = """ grid_template_columns"""
             )
     )
     for i in range(num_row+1):
