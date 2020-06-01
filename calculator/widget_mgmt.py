@@ -91,7 +91,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
                     inputs[i][j] = FloatText(value=0.,disabled=False,layout=Layout(width='auto',grid_area=pos_i_j))
                 row_pos_names = row_pos_names + pos_i_j + " "
             children.append(inputs[i][j])
-        pos_names = pos_names + """ + row_pos_names + """ + "\n"
+        pos_names = pos_names + '"' + row_pos_names + '"' + "\n"
     #Build the Display
     grid_template_rows = " ".join(["auto " for i in range(num_row + 1)])
     width_column = int(96//num_col)
