@@ -6,7 +6,7 @@ they work with
 """
 from IPython.display import display
 import ipywidgets as iwidgets
-from ipywidgets import Button, GridBox, Layout, ButtonStyle, IntText, FloatText, Output
+from ipywidgets import Button, GridBox, GridspecLayout, Layout, ButtonStyle, IntText, FloatText, Output
 from typing import Dict, Tuple, List
 import sympy as sp
 #
@@ -91,7 +91,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
                     inputs[i][j] = FloatText(value=0.,disabled=False,layout=Layout(width='auto',grid_area=pos_i_j))
                 row_pos_names = row_pos_names + pos_i_j + " "
             children.append(inputs[i][j])
-        pos_names = pos_names + '"' + row_pos_names + '"' + "\n"
+        pos_names = pos_names + '"' + row_pos_names + '"' + " "
     #Build the Display
     grid_template_rows = '"' + " ".join(["auto " for i in range(num_row + 1)]) + '"'
     width_column = int(96//num_col)
@@ -101,14 +101,18 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     print(grid_template_rows)
     print(pos_names)
     #display the inputs
-    matrix_grid = GridBox(children=children,
-        layout = Layout(
-            width="75%",
-            grid_template_rows = """ + grid_template_rows """,
-            grid_template_columns = """ grid_template_columns""",
-            grid_template_areas = '\'\'\'' + pos_names + '\'\'\''
-            )
-        )
+    matrix_grid = GridspecLayout(num_row+1, num_col+1)
+    for i in range(num_row+1):
+        for j in range(num_col+1):
+            matrix_grid[i,j] = inputs[i][j]
+    # matrix_grid = GridBox(children=children,
+    #     layout = Layout(
+    #         width="75%",
+    #         grid_template_rows = """ + grid_template_rows """,
+    #         grid_template_columns = """ grid_template_columns""",
+    #         grid_template_areas = '\'\'\'' + pos_names + '\'\'\''
+    #         )
+    #     )
     # display(matrix_grid)
     #
     return matrix_grid, children, inputs, grid_template_rows, grid_template_columns, pos_names
