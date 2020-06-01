@@ -57,8 +57,8 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     assert isinstance(num_col, int)
     assert num_col >= 1 and num_col <= 10
     inputs = []
-    for i in range(num_row):
-        row_list = [None for j in range(num_col)]
+    for i in range(num_row+1):
+        row_list = [None for j in range(num_col+1)]
         inputs.append(row_list)
     pos_names = ""
     children = []
