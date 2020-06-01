@@ -97,6 +97,9 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     width_column = int(100//num_col)
     width_first_col = 100 - width_column * num_col
     grid_template_columns = "{}% ".format(width_first_col) + "".join(["{}%".format(width_column) for i in range(num_col)])
+    print(grid_template_columns)
+    print(grid_template_rows)
+    print(pos_names)
     #display the inputs
     matrix_grid = GridBox(children=children,
         layout = Layout(
@@ -106,6 +109,6 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
             grid_template_areas = pos_names
             )
         )
-    display(matrix_grid)
+    # display(matrix_grid)
     #
-    return inputs
+    return matrix_grid, inputs
