@@ -179,11 +179,13 @@ class calculator():
     def _on_plus_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command += "+"
-        self.output_cell.append_stdout(self.cur_command)
+        with self.output_cell:
+            print(self.cur_command)
     def _on_minus_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command += "-"
-        self.output_cell.append_stdout(self.cur_command)
+        with self.output_cell:
+            print(self.cur_command)
 
     #Define the calculator interface
     def build_interface(self):
@@ -203,7 +205,7 @@ class calculator():
         self.plus_cell = Button(description="+")
         self.calculator[1,self.num_cols-1]=self.plus_cell
         self.plus_cell.on_click(self._on_plus_clicked_)
-        self.minus_cell = Button(description="+")
+        self.minus_cell = Button(description="-")
         self.calculator[2,self.num_cols-1]=self.minus_cell
         self.minus_cell.on_click(self._on_minus_clicked_)
         #Display the calculator
