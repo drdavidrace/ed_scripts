@@ -119,4 +119,4 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     #     )
     # display(matrix_grid)
     #
-    return inputs
+    return inputs, matrix_grid
