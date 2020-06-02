@@ -164,7 +164,7 @@ def build_calculator():
     """
     #  On click actions
     def on_clr_clicked(b):
-        output_cell.clear_output
+        output_cell.clear_output()
     #Very detailed setting this up since all of the buttons must be built
     num_rows = 7
     num_cols = 7
