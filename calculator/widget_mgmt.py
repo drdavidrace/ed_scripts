@@ -93,12 +93,6 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
             children.append(inputs[i][j])
         pos_names = pos_names + '"' + row_pos_names + '"' + " "
     #Build the Display
-    # grid_template_rows = '"' + " ".join(["auto " for i in range(num_row + 1)]) + '"'
-    width_column = int(96//num_col)
-    width_first_col = 100 - width_column * num_col
-    # grid_template_columns = '"' + "{}% ".format(width_first_col) + " ".join(["{}%".format(width_column) for i in range(num_col)]) + '"'
-    work_width = None
-    # print(""" str(50) + "%" + """)
     matrix_grid = None
     if num_col <= 3:
         matrix_grid = GridspecLayout(num_row+1, num_col+1, 
@@ -106,7 +100,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
                 width="50%"
                 )
         )
-    elif num_col <= 6:
+    elif num_col <= 5:
         matrix_grid = GridspecLayout(num_row+1, num_col+1, 
             layout=Layout(
                 width="75%"
@@ -117,7 +111,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     for i in range(num_row+1):
         for j in range(num_col+1):
             matrix_grid[i,j] = inputs[i][j]
- 
+    #  Display the 
     display(matrix_grid)
     #
     return inputs
