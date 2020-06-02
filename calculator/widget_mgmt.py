@@ -170,6 +170,8 @@ class calculator():
         self.output_cell = None
         self.exe_cell = None
         self.clr_cell = None
+        self.plus_cell = None
+        self.minus_cell = None
         self.build_interface()
         display(self.calculator)
     #  On click actions
