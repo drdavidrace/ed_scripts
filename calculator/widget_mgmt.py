@@ -164,7 +164,7 @@ def build_calculator():
     """
     #  On click actions
     def on_clr_clicked(b):
-        output_cell.value = "asdf"
+        output_cell.clear_output
     #Very detailed setting this up since all of the buttons must be built
     num_rows = 7
     num_cols = 7
@@ -174,7 +174,7 @@ def build_calculator():
     output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
     for i in range(num_cols-1):
         calculator[num_rows-1,i] = output_cell
-    output_cell.value = "Use the buttons to enter the command to execute."
+    output_cell.append_stdout("Use the buttons to enter the command to execute.")
     #Define the exe button
     # exe_area = "exe"
     exe_cell = Button(description="exe")
