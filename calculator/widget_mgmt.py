@@ -93,30 +93,28 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
             children.append(inputs[i][j])
         pos_names = pos_names + '"' + row_pos_names + '"' + " "
     #Build the Display
-    grid_template_rows = '"' + " ".join(["auto " for i in range(num_row + 1)]) + '"'
+    # grid_template_rows = '"' + " ".join(["auto " for i in range(num_row + 1)]) + '"'
     width_column = int(96//num_col)
     width_first_col = 100 - width_column * num_col
     # grid_template_columns = '"' + "{}% ".format(width_first_col) + " ".join(["{}%".format(width_column) for i in range(num_col)]) + '"'
-
-    #display the inputs
+    work_width = None
+    if num_col <= 3:
+        work_width = '"{}%"'.format(50)
+    elif num_col <= 6:
+        work_width = '"{}%"'.format(75)
+    else:
+        work_width = '"{}%"'.format(100)
 
     matrix_grid = GridspecLayout(num_row+1, num_col+1, 
         layout=Layout(
-            width="75%",
-            width_ratios = [1,3,3,3]
+            width=work_width,
+            width_ratios = "[1,3,3,3]"
             )
     )
     for i in range(num_row+1):
         for j in range(num_col+1):
             matrix_grid[i,j] = inputs[i][j]
-    # matrix_grid = GridBox(children=children,
-    #     layout = Layout(
-    #         width="75%",
-    #         grid_template_rows = """ + grid_template_rows """,
-    #         grid_template_columns = """ grid_template_columns""",
-    #         grid_template_areas = '\'\'\'' + pos_names + '\'\'\''
-    #         )
-    #     )
-    # display(matrix_grid)
+ 
+    display(matrix_grid)
     #
     return inputs, matrix_grid
