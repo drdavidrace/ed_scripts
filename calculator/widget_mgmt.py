@@ -168,7 +168,7 @@ def build_calculator():
     calculator = GridspecLayout(num_rows,num_cols)
     #Define the output area
     # output_area="output"
-    output_cell = Output(layout=Layout(width='auto'))
+    output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
     for i in range(num_cols-1):
         calculator[num_rows-1,i] = output_cell
     with output_cell:
