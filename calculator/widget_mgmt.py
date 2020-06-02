@@ -171,6 +171,8 @@ def build_calculator():
     output_cell = Output(layout=Layout(width='auto'))
     for i in range(num_cols-1):
         calculator[num_rows-1,i] = output_cell
+    with output_cell:
+        print("Use the buttons to enter the command to execute.")
     #Define the exe button
     # exe_area = "exe"
     exe_cell = Button(description="exe")
