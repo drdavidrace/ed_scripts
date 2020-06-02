@@ -173,14 +173,14 @@ class calculator():
         self.build_interface()
         display(self.calculator)
     #  On click actions
-    def _on_clr_clicked_(b):
+    def _on_clr_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command = ""
-    def _on_plus_clicked_(b):
+    def _on_plus_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command += "+"
         self.output_cell.append_stdout(self.cur_command)
-    def _on_minus_clicked_(b):
+    def _on_minus_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command += "-"
         self.output_cell.append_stdout(self.cur_command)
