@@ -162,6 +162,9 @@ def build_calculator():
 
     current_expression and last_result are side effects of calculator.
     """
+    #  On click actions
+    def on_clr_clicked(b):
+        output_cell.value = "asdf"
     #Very detailed setting this up since all of the buttons must be built
     num_rows = 7
     num_cols = 7
@@ -185,7 +188,3 @@ def build_calculator():
     #Display the calculator
     display(calculator)
     return calculator
-#  On click actions
-def on_clr_clicked(b):
-    global calculator
-    calculator.output_cell.value = ""
