@@ -163,7 +163,7 @@ def build_calculator():
     current_expression and last_result are side effects of calculator.
     """
     #Very detailed setting this up since all of the buttons must be built
-    num_rows = 6
+    num_rows = 7
     num_cols = 7
     calculator = GridspecLayout(num_rows,num_cols)
     #Define the output area
@@ -171,13 +171,21 @@ def build_calculator():
     output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
     for i in range(num_cols-1):
         calculator[num_rows-1,i] = output_cell
-    with output_cell:
-        print("Use the buttons to enter the command to execute.")
+    output_cell.value = "Use the buttons to enter the command to execute."
     #Define the exe button
     # exe_area = "exe"
     exe_cell = Button(description="exe")
     calculator[num_rows-1,num_cols-1] = exe_cell
-
+    #Simple operations
+    clr_cell = Button(description="clr")
+    calculator[0,num_cols-1] = clr_cell
+    clr_cell.on_click(on_clr_clicked)
+    plus_cell = Button(description="+")
+    calculator[1,num_cols-1]=plus_cell
     #Display the calculator
     display(calculator)
-    return
+    return calculator
+#  On click actions
+def on_clr_clicked(b):
+    global calculator
+    calculator.output_cell.value = ""
