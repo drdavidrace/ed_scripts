@@ -172,6 +172,16 @@ class calculator():
         self.clr_cell = None
         self.plus_cell = None
         self.minus_cell = None
+        self.A_cell = None
+        self.B_cell = None
+        self.C_cell = None
+        self.D_cell = None
+        self.E_cell = None
+        self.a_cell = None
+        self.b_cell = None
+        self.c_cell = None
+        self.d_cell = None
+        self.e_cell = None
         self.build_interface()
         display(self.calculator)
     #  On click actions
@@ -186,6 +196,11 @@ class calculator():
     def _on_minus_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command += "-"
+        with self.output_cell:
+            print(self.cur_command)
+    def _on_variable_clicked_(self, b):
+        self.output_cell.clear_output()
+        self.cur_command += b.description
         with self.output_cell:
             print(self.cur_command)
 
@@ -210,6 +225,10 @@ class calculator():
         self.minus_cell = Button(description="-")
         self.calculator[2,self.num_cols-1]=self.minus_cell
         self.minus_cell.on_click(self._on_minus_clicked_)
-        #Display the calculator
+        #Define the Matrix Variables
+        self.A_cell = Button(description="A")
+        self.calculator[1,self.num_cols-2] = self.A_cell
+        self.A_cell.on_click(self._on_variable_clicked_)
+
 
    
