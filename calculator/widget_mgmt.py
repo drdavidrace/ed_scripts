@@ -96,16 +96,14 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     grid_template_rows = '"' + " ".join(["auto " for i in range(num_row + 1)]) + '"'
     width_column = int(96//num_col)
     width_first_col = 100 - width_column * num_col
-    grid_template_columns = '"' + "{}% ".format(width_first_col) + " ".join(["{}%".format(width_column) for i in range(num_col)]) + '"'
-    print(grid_template_columns)
-    print(grid_template_rows)
-    print(pos_names)
+    # grid_template_columns = '"' + "{}% ".format(width_first_col) + " ".join(["{}%".format(width_column) for i in range(num_col)]) + '"'
+
     #display the inputs
+
     matrix_grid = GridspecLayout(num_row+1, num_col+1, 
         layout=Layout(
             width="75%",
-            grid_template_rows = """ + grid_template_rows """,
-            grid_template_columns = """ grid_template_columns"""
+            width_ratios = [1,3,3,3]
             )
     )
     for i in range(num_row+1):
@@ -121,4 +119,4 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     #     )
     # display(matrix_grid)
     #
-    return matrix_grid, children, inputs, grid_template_rows, grid_template_columns, pos_names
+    return inputs
