@@ -145,7 +145,7 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     #
     return inputs
 #
-def build_calculator():
+class calculator():
     """  This is the basic calculator interface for the calculator.  It will use
     a set of buttons to build an expression, then execute that using exec.  Not elegant
     yet, but it should be functional.
@@ -162,29 +162,50 @@ def build_calculator():
 
     current_expression and last_result are side effects of calculator.
     """
+    def __init__(self):
+        self.num_rows = 7
+        self.num_cols = 7
+        self.cur_command = ""
+        self.calculator = GridspecLayout(self.num_rows, self.num_cols)
+        self.output_cell = None
+        self.exe_cell = None
+        self.clr_cell = None
+        self.build_interface()
+        display(self.calculator)
     #  On click actions
-    def on_clr_clicked(b):
-        output_cell.clear_output()
-    #Very detailed setting this up since all of the buttons must be built
-    num_rows = 7
-    num_cols = 7
-    calculator = GridspecLayout(num_rows,num_cols)
-    #Define the output area
-    # output_area="output"
-    output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
-    for i in range(num_cols-1):
-        calculator[num_rows-1,i] = output_cell
-    output_cell.append_stdout("Use the buttons to enter the command to execute.")
-    #Define the exe button
-    # exe_area = "exe"
-    exe_cell = Button(description="exe")
-    calculator[num_rows-1,num_cols-1] = exe_cell
-    #Simple operations
-    clr_cell = Button(description="clr")
-    calculator[0,num_cols-1] = clr_cell
-    clr_cell.on_click(on_clr_clicked)
-    plus_cell = Button(description="+")
-    calculator[1,num_cols-1]=plus_cell
-    #Display the calculator
-    display(calculator)
-    return calculator
+    def _on_clr_clicked_(b):
+        self.output_cell.clear_output()
+        self.cur_command = ""
+    def _on_plus_clicked_(b):
+        self.output_cell.clear_output()
+        self.cur_command += "+"
+        self.output_cell.append_stdout(self.cur_command)
+    def _on_minus_clicked_(b):
+        self.output_cell.clear_output()
+        self.cur_command += "-"
+        self.output_cell.append_stdout(self.cur_command)
+
+    #Define the calculator interface
+    def build_interface(self):
+        #Define the output cell
+        self.output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
+        for i in range(self.num_cols-1):
+            self.calculator[self.num_rows-1,i] = self.output_cell
+        self.output_cell.clear_output()
+        self.output_cell.append_stdout(self.cur_command)
+        #Define the exe button
+        self.exe_cell = Button(description="exe")
+        self.calculator[self.num_rows-1,self.num_cols-1] = self.exe_cell
+        #Simple operations
+        self.clr_cell = Button(description="clr")
+        self.calculator[0,self.num_cols-1] = self.clr_cell
+        self.clr_cell.on_click(self._on_clr_clicked_)
+        self.plus_cell = Button(description="+")
+        self.calculator[1,self.num_cols-1]=self.plus_cell
+        self.plus_cell.on_click(self._on_plus_clicked_)
+        self.minus_cell = Button(description="+")
+        self.calculator[2,self.num_cols-1]=self.minus_cell
+        self.minus_cell.on_click(self._on_minus_clicked_)
+        #Display the calculator
+
+   
