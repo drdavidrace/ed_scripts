@@ -99,12 +99,21 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     # grid_template_columns = '"' + "{}% ".format(width_first_col) + " ".join(["{}%".format(width_column) for i in range(num_col)]) + '"'
     work_width = None
     # print(""" str(50) + "%" + """)
-
-    matrix_grid = GridspecLayout(num_row+1, num_col+1, 
-        layout=Layout(
-            width="\"\"\"" + str(50) + "%" + "\"\"\""
-            )
-    )
+    matrix_grid = None
+    if num_col <= 3:
+        matrix_grid = GridspecLayout(num_row+1, num_col+1, 
+            layout=Layout(
+                width="50%"
+                )
+        )
+    elif num_col <= 6:
+        matrix_grid = GridspecLayout(num_row+1, num_col+1, 
+            layout=Layout(
+                width="75%"
+                )
+        )  
+    else:
+        matrix_grid = GridspecLayout(num_row+1, num_col+1)     
     for i in range(num_row+1):
         for j in range(num_col+1):
             matrix_grid[i,j] = inputs[i][j]
