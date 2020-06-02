@@ -14,7 +14,8 @@ def set_default_numeric_values(num_variables:int = 5) ->  Tuple:
     """Returns a default list of variables to help keep the code clean
 
     Inputs:
-    num_variables:  The number of variables to return
+    num_variables:  The number of variables to return.   Defaults to 5 and right now should not be
+    more until we can control the size of the outputs more.
 
     Output:
     A list of the sympy values for that number of variables where the
@@ -27,7 +28,8 @@ def set_default_matrix_values(num_variables:int = 5) ->  Tuple:
     """Returns a default list of variables to help keep the code clean
 
     Inputs:
-    num_variables:  The number of variables to return
+    num_variables:  The number of variables to return.  Defaults to 5 and right now should not be
+    more until we can control the size of the outputs more.
 
     Output:
     A list of the sympy values for that number of variables where the
@@ -37,6 +39,14 @@ def set_default_matrix_values(num_variables:int = 5) ->  Tuple:
     return (sp.Matrix([[i]]) for i in range(num_variables))
 #
 def get_default_var_names(num_variables:int = 5, start_char:str = "a") -> List:
+    """Returns the default variable names starting with start_char
+    Inputs:
+    num_variables:  The number of variable names to return.  Defaults to 5 and right now should not be more
+    until we can control the size of the outputs more.
+
+    Output:
+    A list of the variable names to use in the calculator.
+    """
     assert isinstance(num_variables, int)
     assert isinstance(start_char, str)
     assert len(start_char) == 1
@@ -50,6 +60,25 @@ def get_default_var_names(num_variables:int = 5, start_char:str = "a") -> List:
     return [str(chr(i)) for i in range(ord(start_char), ord(start_char) + num_variables)]
 #
 def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
+    """Builds the window using ipywidgets to input matrix values.
+
+    Inputs:  
+    num_row - The number of rows for the matrix, 1 <= num_row <=10
+    num_col - The number of columns for the matrix, 1 <= num_col <= 10
+
+    (This is a calculator for class work so I don't want large sizes.)
+
+    Outputs:
+
+    matrix_grid -  This is displayed for entry of the values.  This is really a set of widgets so is 
+    interactive.
+
+    inputs - This is the set of actual widgets that the Colaboratory application can use for 
+    reading the input values.
+
+    ToDo:  Pass in a matrix for the default values.
+    """
+
     assert num_row is not None
     assert isinstance(num_row, int)
     assert num_row >= 1 and num_row <= 10
@@ -115,3 +144,38 @@ def build_matrix_input(num_row:int = None, num_col:int = None) ->  List:
     display(matrix_grid)
     #
     return inputs
+#
+def build_calculator():
+    """  This is the basic calculator interface for the calculator.  It will use
+    a set of buttons to build an expression, then execute that using exec.  Not elegant
+    yet, but it should be functional.
+
+    Inputs:  None
+    The calculator face is hard coded in this version.
+
+    Outputs:
+    calculator - This is displayed in colaboratory for building the expression to execute.
+    current_expression - This is the current expression that is built.
+    last_result - When the expression is executed, this will be where the result is stored.
+
+    There is no actual return from this function.
+
+    current_expression and last_result are side effects of calculator.
+    """
+    #Very detailed setting this up since all of the buttons must be built
+    num_rows = 6
+    num_cols = 7
+    calculator = GridspecLayout(num_rows,num_cols)
+    #Define the output area
+    # output_area="output"
+    output_cell = Output(layout=Layout(width='auto'))
+    for i in range(num_cols-1):
+        calculator[num_rows-1,i] = output_cell
+    #Define the exe button
+    # exe_area = "exe"
+    exe_cell = Button(description="exe")
+    calculator[num_rows-1,num_cols-1] = exe_cell
+
+    #Display the calculator
+    display(calculator)
+    return
