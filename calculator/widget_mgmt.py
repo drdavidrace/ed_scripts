@@ -221,8 +221,7 @@ class calculator():
     def build_interface(self):
         #Define the output cell
         self.output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
-        for i in range(self.num_cols-1):
-            self.calculator[self.command_row,i] = self.output_cell
+        self.calculator[self.command_row,0:self.num_cols-1] = self.output_cell
         self.output_cell.clear_output()
         self.output_cell.append_stdout(self.cur_command)
         #Define the exe button
