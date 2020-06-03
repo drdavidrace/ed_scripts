@@ -227,10 +227,10 @@ class calculator():
         self.output_cell.append_stdout(self.cur_command)
         #Define the exe button
         self.exe_cell = Button(description="exe")
-        self.calculator[self.command_row,self.operator_col] = self.exe_cell
+        self.calculator[self.command_row,self.num_cols-1] = self.exe_cell
         #Simple operations
         self.clr_cell = Button(description="clr")
-        self.calculator[0,self.operator_col] = self.clr_cell
+        self.calculator[0,self.num_cols-1] = self.clr_cell
         self.clr_cell.on_click(self._on_clr_clicked_)
         work_col = self.operator_col
         base_row = self.operator_row
@@ -252,11 +252,20 @@ class calculator():
             self.matrix_name_cells[i].on_click(self._on_variable_clicked_)
         #Build the numbers keypad
         start_row = self.numbers_row + 2
+        #numbers 1 - 9
         for i in range(9):
             self.numbers_cells[i] = Button(description = self.numbers[i])
             i_row = start_row - i // 3
             i_col = self.numbers_col + i - 3 * (i // 3)
             self.calculator[i_row,i_col] = self.numbers_cells[i]
             self.numbers_cells[i].on_click(self._on_variable_clicked_)
+        #0 and .
+        self.numbers_cells[10] = Buttone(description = self.numbers[10])
+        self.calculator[start_row + 1, self.numbers_col] = self.numbers_cells[10]
+        self.numbers_cells[10].on_click(self._on_variable_clicked_)
+        self.numbers_cells[11] = Buttone(description = self.numbers[11])
+        self.calculator[start_row + 1, self.numbers_col+1] = self.numbers_cells[11]
+        self.calculator[start_row + 1, self.numbers_col+2] = self.numbers_cells[11]
+        self.numbers_cells[11].on_click(self._on_variable_clicked_)
 
    
