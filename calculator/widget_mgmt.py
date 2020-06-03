@@ -232,7 +232,6 @@ class calculator():
         self.exe_cell = Button(description="exe")
         self.calculator[self.command_row,self.operator_col] = self.exe_cell
         #Simple operations
-        operator_col = self.num_cols - 1
         self.clr_cell = Button(description="clr")
         self.calculator[0,operator_col] = self.clr_cell
         self.clr_cell.on_click(self._on_clr_clicked_)
