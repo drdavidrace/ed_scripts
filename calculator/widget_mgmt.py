@@ -163,10 +163,13 @@ class calculator():
     """
     def __init__(self, numeric_var_names = ["a", "b", "c", "d", "e"], 
         matrix_var_names = ["A", "B", "C", "D", "E"], 
-        operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"="},
+        operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")"},
         numbers = ["1","2","3","4","5","6","7","8","9","0","."] ):
         self.operators = operators
-
+        self.numeric_var_names = numeric_var_names
+        self.matrix_var_names = matrix_var_names
+        self.numbers = numbers
+        #Compute the size
         total_numbers_and_vars = max([len(matrix_var_names) + 4, len(numeric_var_names) + 4])
         base_rows = max([len(numeric_var_names),len(matrix_var_names),len(self.operators), total_numbers_and_vars])
         self.num_rows = base_rows + 3
@@ -232,11 +235,15 @@ class calculator():
             self.operator_cells[i] = Button(description=self.operators_keys[i])
             self.calculator[self.operator_row + i,self.operator_col] = self.operator_cells[i]
             self.operator_cells[i].on_click(self._on_operator_clicked_)
-
-        #Define the Matrix Variables
-        # self.A_cell = Button(description="A")
-        # self.calculator[1,self.num_cols-2] = self.A_cell
-        # self.A_cell.on_click(self._on_variable_clicked_)
+        #Display the variables
+        for i in range(len(self.numeric_var_names)):
+            self.numeric_name_cells[i] = Button(description=self.numeric_var_names[i])
+            self.calculator[self.numeric_names_row + i,self.numeric_names_col] = self.numeric_name_cells[i]
+            self.numeric_name_cells[i].on_click(self._on_variable_clicked_)
+        for i in range(len(self.matrix_var_names)):
+            self.matrix_name_cells[i] = Button(description=self.matrix_var_names[i])
+            self.calculator[self.matrix_names_row + i, self.matrix_names_col] = self.matrix_name_cells[i]
+            self.matrix_name_cells[i].on_click(self._on_variable_clicked_)
 
 
    
