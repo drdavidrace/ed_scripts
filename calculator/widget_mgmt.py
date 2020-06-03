@@ -177,10 +177,10 @@ class calculator():
         #Define the operator keys
         self.operators_keys = [i for i in self.operators.keys()]
         #Define the basic columns
-        self.operator_col = self.num_cols - 1
+        self.operator_col = self.num_cols - 2
         self.numeric_names_col = self.operator_col - 1
         self.matrix_names_col = self.numeric_names_col - 1
-        self.numbers_col = self.matrix_names_col -2
+        self.numbers_col = self.num_cols - 3
         #Define the basic rows
         self.operator_row = 1
         self.numeric_names_row = 1
@@ -198,6 +198,7 @@ class calculator():
         self.operator_cells = [None] * len(self.operators)
         self.matrix_name_cells = [None] * len(matrix_var_names)
         self.numeric_name_cells = [None] * len(numeric_var_names)
+        self.numbers_cells = [None] * len(numbers)
 
         self.build_interface()
         display(self.calculator)
@@ -231,9 +232,14 @@ class calculator():
         self.clr_cell = Button(description="clr")
         self.calculator[0,self.operator_col] = self.clr_cell
         self.clr_cell.on_click(self._on_clr_clicked_)
+        work_col = self.operator_col
+        base_row = self.operator_row
         for i in range(len(self.operators)):
+            if i == len(self.numeric_var_names): #Warning this assume both sets of variables are same length
+                work_col += 1
+                base_row = self.operator_row - len(self.numeric_var_names)
             self.operator_cells[i] = Button(description=self.operators_keys[i])
-            self.calculator[self.operator_row + i,self.operator_col] = self.operator_cells[i]
+            self.calculator[base_row + i,work_col] = self.operator_cells[i]
             self.operator_cells[i].on_click(self._on_operator_clicked_)
         #Display the variables
         for i in range(len(self.numeric_var_names)):
@@ -244,6 +250,13 @@ class calculator():
             self.matrix_name_cells[i] = Button(description=self.matrix_var_names[i])
             self.calculator[self.matrix_names_row + i, self.matrix_names_col] = self.matrix_name_cells[i]
             self.matrix_name_cells[i].on_click(self._on_variable_clicked_)
-
+        #Build the numbers keypad
+        start_row = self.numbers_row + 2
+        for i in range(9):
+            self.numbers_cells[i] = Button(description = self.numbers[i])
+            i_row = start_row - i // 3
+            i_col = self.numbers_col + i - 3 * (i // 3)
+            self.calculator[i_row,i_col] = self.numbers_cells[i]
+            self.numbers_cells[i].on_click(self._on_variable_clicked_)
 
    
