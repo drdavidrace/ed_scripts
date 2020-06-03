@@ -172,7 +172,7 @@ class calculator():
         self.num_rows = base_rows + 3
         self.num_cols = 7
         #Define the operator keys
-        self.operators_keys = self.operators.keys()
+        self.operators_keys = [i for i in self.operators.keys()]
         #Define the basic columns
         self.operator_col = self.num_cols - 1
         self.numeric_names_col = self.operator_col - 1
