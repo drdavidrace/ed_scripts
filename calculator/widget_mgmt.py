@@ -158,20 +158,41 @@ class calculator():
     current_expression - This is the current expression that is built.
     last_result - When the expression is executed, this will be where the result is stored.
 
-    There is no actual return from this function.
 
     current_expression and last_result are side effects of calculator.
     """
-    def __init__(self):
-        self.num_rows = 7
+    def __init__(self, numeric_var_names = ["a", "b", "c", "d", "e"],
+        matrix_var_names = ["A", "B", "C", "D", "E"], 
+        operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"="},
+        numbers = {"1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","0":"0",".":"."})
+        total_numbers_and_vars = max([len(matrix_var_names) + 4, len(numeric_var_name) + 4])
+        base_rows = max([len(numeric_var_names),len(matrix_var_names),len(operators), total_numbers_and_vars])
+        self.num_rows = base_rows + 3
         self.num_cols = 7
+        #Define the operator keys
+        self.operators_keys = operators.keys()
+        #Define the basic columns
+        self.operator_col = self.num_cols - 1
+        self.numeric_names_col = self.operator_col - 1
+        self.matrix_names_col = self.numeric_names_col - 1
+        self.numbers_col = self.matrix_names_col -2
+        #Define the basic rows
+        self.operator_row = 1
+        self.numeric_names_row = 1
+        self.matrix_names_row = 1
+        self.numbers_row = max([self.numeric_names_row + len(numeric_var_name), 
+            self.matrix_names_row + len(self.matrix_var_names)])
+        self.command_row = self.num_row - 2
+        self.result_row = self.num_row - 1
+
         self.cur_command = ""
         self.calculator = GridspecLayout(self.num_rows, self.num_cols)
         self.output_cell = None
         self.exe_cell = None
         self.clr_cell = None
-        self.plus_cell = None
-        self.minus_cell = None
+        self.operator_cells = [None] * len(operators)
+        self.matrix_name_cells = [None] * len(matrix_var_names)
+        self.numeric_name_cells = [None] * len(numeric_var_names)
         self.A_cell = None
         self.B_cell = None
         self.C_cell = None
@@ -188,19 +209,14 @@ class calculator():
     def _on_clr_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command = ""
-    def _on_plus_clicked_(self, b):
-        self.output_cell.clear_output()
-        self.cur_command += "+"
-        with self.output_cell:
-            print(self.cur_command)
-    def _on_minus_clicked_(self, b):
-        self.output_cell.clear_output()
-        self.cur_command += "-"
-        with self.output_cell:
-            print(self.cur_command)
     def _on_variable_clicked_(self, b):
         self.output_cell.clear_output()
         self.cur_command += b.description
+        with self.output_cell:
+            print(self.cur_command)
+    def _on_operator_clicked_(self, b):
+        self.output_cell.clear_output()
+        self.cur_command += operators[b.description]
         with self.output_cell:
             print(self.cur_command)
 
@@ -209,26 +225,26 @@ class calculator():
         #Define the output cell
         self.output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
         for i in range(self.num_cols-1):
-            self.calculator[self.num_rows-1,i] = self.output_cell
+            self.calculator[self.command_row,i] = self.output_cell
         self.output_cell.clear_output()
         self.output_cell.append_stdout(self.cur_command)
         #Define the exe button
         self.exe_cell = Button(description="exe")
-        self.calculator[self.num_rows-1,self.num_cols-1] = self.exe_cell
+        self.calculator[self.command_row,self.operator_col] = self.exe_cell
         #Simple operations
+        operator_col = self.num_cols - 1
         self.clr_cell = Button(description="clr")
-        self.calculator[0,self.num_cols-1] = self.clr_cell
+        self.calculator[0,operator_col] = self.clr_cell
         self.clr_cell.on_click(self._on_clr_clicked_)
-        self.plus_cell = Button(description="+")
-        self.calculator[1,self.num_cols-1]=self.plus_cell
-        self.plus_cell.on_click(self._on_plus_clicked_)
-        self.minus_cell = Button(description="-")
-        self.calculator[2,self.num_cols-1]=self.minus_cell
-        self.minus_cell.on_click(self._on_minus_clicked_)
+        for i in range(len(operators)):
+            self.operator_cells[i] = Button(description=self.operators_keys[i])
+            self.calculator(self.operator_row + i,self.operator_col)
+            self.operator_cellsl[i].on_click(self._on_operator_clicked_)
+
         #Define the Matrix Variables
-        self.A_cell = Button(description="A")
-        self.calculator[1,self.num_cols-2] = self.A_cell
-        self.A_cell.on_click(self._on_variable_clicked_)
+        # self.A_cell = Button(description="A")
+        # self.calculator[1,self.num_cols-2] = self.A_cell
+        # self.A_cell.on_click(self._on_variable_clicked_)
 
 
    
