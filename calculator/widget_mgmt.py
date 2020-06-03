@@ -263,7 +263,7 @@ class calculator():
         self.numbers_cells[9] = Button(description = self.numbers[9])
         self.calculator[start_row + 1, self.numbers_col] = self.numbers_cells[9]
         self.numbers_cells[9].on_click(self._on_variable_clicked_)
-        self.numbers_cells[10] = Button(description = self.numbers[10])
+        self.numbers_cells[10] = Button(description = self.numbers[10],layout=Layout(width='auto'))
         self.calculator[start_row + 1, self.numbers_col+1:self.numbers_col+3] = self.numbers_cells[10]
         # self.calculator[start_row + 1, self.numbers_col+2] = self.numbers_cells[10]
         self.numbers_cells[10].on_click(self._on_variable_clicked_)
