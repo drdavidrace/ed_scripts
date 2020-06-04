@@ -209,17 +209,31 @@ class calculator():
     def _on_clr_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command = ""
+    #
     def _on_exe_clicked_(self,b):
-        #eventually add a check for ==
+        #eventually add a check for =
+        self.result_cell.clear_output()
         self.temp_val_1234 = None
         current_command = self.cur_command
-        print(current_command)
-        print(type(current_command))
-        print("self.temp_val_1234 = {}".format(current_command))
-        exec("self.temp_val_1234 = {}".format(current_command))
-        print(self.temp_val_1234)
-        with self.result_cell:
-            print(self.temp_val_1234)
+        if "=" in current_command:
+            command_vals = current_command.split("=")
+            if len(command_vals > 2):
+                with self.result_cell:
+                    print("Error:  There can only be one = in the command.")
+            else:
+                var_name = command_vals[0].strip()
+                if (var_name in numeric_var_names) or (var_name in matrix_var_names):
+                    exec("{}".format(current_command))
+                    with self.result_cell:
+                        print("Check the variable definition in the next cell.")
+                else:
+                    with self.result_cell:
+                        print("You must use one of the current variable names.")
+        else:
+            exec("self.temp_val_1234 = {}".format(current_command))
+            with self.result_cell:
+                print(self.temp_val_1234)
+    #
     def _on_variable_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command += b.description
