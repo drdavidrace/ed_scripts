@@ -217,12 +217,12 @@ class calculator():
         current_command = self.cur_command
         if "=" in current_command:
             command_vals = current_command.split("=")
-            if len(command_vals > 2):
+            if len(command_vals) > 2:
                 with self.result_cell:
                     print("Error:  There can only be one = in the command.")
             else:
                 var_name = command_vals[0].strip()
-                if (var_name in numeric_var_names) or (var_name in matrix_var_names):
+                if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
                     exec("{}".format(current_command))
                     with self.result_cell:
                         print("Check the variable definition in the next cell.")
