@@ -200,6 +200,8 @@ class calculator():
         self.matrix_name_cells = [None] * len(matrix_var_names)
         self.numeric_name_cells = [None] * len(numeric_var_names)
         self.numbers_cells = [None] * len(numbers)
+        #  Compute variables
+        self.temp_val_1234 = None
 
         self.build_interface()
         display(self.calculator)
@@ -209,15 +211,15 @@ class calculator():
         self.cur_command = ""
     def _on_exe_clicked_(self,b):
         #eventually add a check for ==
-        temp_val_1234 = None
+        self.temp_val_1234 = None
         current_command = self.cur_command
         print(current_command)
         print(type(current_command))
-        print("temp_val_1234 = {}".format(current_command))
-        exec("temp_val_1234 = {}".format(current_command))
-        print(temp_val_1234)
+        print("self.temp_val_1234 = {}".format(current_command))
+        exec("self.temp_val_1234 = {}".format(current_command))
+        print(self.temp_val_1234)
         with self.result_cell:
-            print(temp_val_1234)
+            print(self.temp_val_1234)
     def _on_variable_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command += b.description
