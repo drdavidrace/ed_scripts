@@ -212,6 +212,7 @@ class calculator():
         temp_val_1234 = None
         current_command = self.cur_command
         print(current_command)
+        print("temp_val_1234 = {}".format(current_command))
         exec("temp_val_1234 = {}".format(current_command))
         print(temp_val_1234)
         with self.result_cell:
