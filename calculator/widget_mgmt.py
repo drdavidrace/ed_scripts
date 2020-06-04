@@ -209,7 +209,7 @@ class calculator():
         self.cur_command = ""
     def _on_exe_clicked_(self,b):
         #eventually add a check for ==
-        temp_val_123 = None
+        temp_val_1234 = None
         current_command = self.cur_command
         exec("temp_val_1234 = {}".format(current_command))
         with self.result_cell:
