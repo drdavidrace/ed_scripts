@@ -207,6 +207,12 @@ class calculator():
     def _on_clr_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command = ""
+    def _on_exe_clicked_(self,b):
+        #eventually add a check for ==
+        current_command = self.current_command
+        exec("temp_val_1234 = {}".format(current_command))
+        with self.result_cell:
+            print(temp_val_1234)
     def _on_variable_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command += b.description
@@ -235,6 +241,7 @@ class calculator():
         #Define the exe button
         self.exe_cell = Button(description="exe")
         self.calculator[self.command_row,self.num_cols-1] = self.exe_cell
+        self.exec_cell.on_click(self._on_exe_clicked_)
         #Simple operations
         self.clr_cell = Button(description="clr")
         self.calculator[0,self.num_cols-1] = self.clr_cell
