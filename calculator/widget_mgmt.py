@@ -163,7 +163,7 @@ class calculator():
     """
     def __init__(self, numeric_var_names = ["a", "b", "c", "d", "e"], 
         matrix_var_names = ["A", "B", "C", "D", "E"], 
-        operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")"},
+        operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")","\\\\":"\\\\"},
         numbers = ["1","2","3","4","5","6","7","8","9","0","."] ):
         self.operators = operators
         self.numeric_var_names = numeric_var_names
@@ -192,7 +192,8 @@ class calculator():
 
         self.cur_command = ""
         self.calculator = GridspecLayout(self.num_rows, self.num_cols)
-        self.output_cell = None
+        self.command_cell = None
+        self.result_cell = None
         self.exe_cell = None
         self.clr_cell = None
         self.operator_cells = [None] * len(self.operators)
@@ -204,26 +205,33 @@ class calculator():
         display(self.calculator)
     #  On click actions
     def _on_clr_clicked_(self, b):
-        self.output_cell.clear_output()
+        self.command_cell.clear_output()
         self.cur_command = ""
     def _on_variable_clicked_(self, b):
-        self.output_cell.clear_output()
+        self.command_cell.clear_output()
         self.cur_command += b.description
-        with self.output_cell:
+        with self.command_cell:
             print(self.cur_command)
     def _on_operator_clicked_(self, b):
-        self.output_cell.clear_output()
+        self.command_cell.clear_output()
         self.cur_command += self.operators[b.description]
-        with self.output_cell:
+        with self.command_cell:
             print(self.cur_command)
 
     #Define the calculator interface
     def build_interface(self):
-        #Define the output cell
-        self.output_cell = Output(layout=Layout(width='auto',border='1px solid black'))
-        self.calculator[self.command_row,0:self.num_cols-1] = self.output_cell
-        self.output_cell.clear_output()
-        self.output_cell.append_stdout(self.cur_command)
+        #Define the command cell
+        self.command_cell = Output(layout=Layout(width='auto',border='1px solid black'))
+        self.calculator[self.command_row,0:self.num_cols-1] = self.command_cell
+        self.command_cell.clear_output()
+        with self.command_cell:
+            print("")
+        #Define the result cell
+        self.result_cell = Output(layout=Layout(width='auto',border='1px solid black'))
+        self.calculator[self.result_row,0:self.num_cols] = self.result_cell
+        self.result_cell.clear_output()
+        with self.result_cell:
+            print("")
         #Define the exe button
         self.exe_cell = Button(description="exe")
         self.calculator[self.command_row,self.num_cols-1] = self.exe_cell
