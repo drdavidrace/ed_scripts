@@ -202,6 +202,7 @@ class calculator():
         self.numbers_cells = [None] * len(numbers)
         #  Compute variables
         self.temp_val_1234 = None
+        self.a = None
 
         self.build_interface()
         display(self.calculator)
@@ -223,7 +224,7 @@ class calculator():
             else:
                 var_name = command_vals[0].strip()
                 if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
-                    exec("{}".format(current_command))
+                    exec("self.{} = {}".format(command_vals[0],command_vals[1]))
                     with self.result_cell:
                         print("Check the variable definition in the next cell.")
                 else:
