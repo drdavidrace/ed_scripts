@@ -211,7 +211,9 @@ class calculator():
         #eventually add a check for ==
         temp_val_1234 = None
         current_command = self.cur_command
+        print(current_command)
         exec("temp_val_1234 = {}".format(current_command))
+        print(temp_val_1234)
         with self.result_cell:
             print(temp_val_1234)
     def _on_variable_clicked_(self, b):
