@@ -170,7 +170,7 @@ class calculator():
         self.matrix_var_names = matrix_var_names
         self.numbers = numbers
         #Functions List
-        functions = {"cos":"sp.cos(", "sin":"sp.sin(","tan":"sp.tan(", "pi":"sp.pi", "e":"sp.e",
+        self.functions = {"cos":"sp.cos(", "sin":"sp.sin(","tan":"sp.tan(", "pi":"sp.pi", "e":"sp.e",
         "asin":"sp.asin(", "acos":"sp.acos(", "atan":"sp.atan(","atan2":"atan2(","exp":"sp.exp(","log":"sp.log("}
         #Compute the size
         total_numbers_and_vars = max([len(matrix_var_names) + 4, len(numeric_var_names) + 4])
@@ -265,7 +265,7 @@ class calculator():
             print(self.cur_command)
     def _on_function_clicked_(self, b):
         self.command_cell.clear_output()
-        self.cur_command += self.functions.[b.description]
+        self.cur_command += self.functions[b.description]
         with self.command_cell:
             print(self.cur_command)
 
