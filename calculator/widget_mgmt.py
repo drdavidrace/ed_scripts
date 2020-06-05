@@ -169,6 +169,9 @@ class calculator():
         self.numeric_var_names = numeric_var_names
         self.matrix_var_names = matrix_var_names
         self.numbers = numbers
+        #Functions List
+        functions = {"cos":"sp.cos(", "sin":"sp.sin(","tan":"sp.tan(", "pi":"sp.pi", "e":"sp.e",
+        "asin":"sp.asin(", "acos":"sp.acos(", "atan":"sp.atan(","atan2":"atan2(","exp":"sp.exp(","log":"sp.log("}
         #Compute the size
         total_numbers_and_vars = max([len(matrix_var_names) + 4, len(numeric_var_names) + 4])
         base_rows = max([len(numeric_var_names),len(matrix_var_names),len(self.operators), total_numbers_and_vars])
@@ -181,6 +184,8 @@ class calculator():
         self.numeric_names_col = self.operator_col - 1
         self.matrix_names_col = self.numeric_names_col - 1
         self.numbers_col = self.num_cols - 3
+        self.start_functions_col = 0
+        self.end_functions_col = self.numbers_col
         #Define the basic rows
         self.operator_row = 1
         self.numeric_names_row = 1
@@ -189,6 +194,7 @@ class calculator():
             self.matrix_names_row + len(matrix_var_names)])
         self.command_row = self.num_rows - 2
         self.result_row = self.num_rows - 1
+        self.functons_row = 0
 
         self.cur_command = ""
         self.calculator = GridspecLayout(self.num_rows, self.num_cols)
@@ -200,9 +206,19 @@ class calculator():
         self.matrix_name_cells = [None] * len(matrix_var_names)
         self.numeric_name_cells = [None] * len(numeric_var_names)
         self.numbers_cells = [None] * len(numbers)
+        self.function_cells = [None] * len(functions)
         #  Compute variables
         self.temp_val_1234 = None
         self.a = None
+        self.b = None
+        self.c = None
+        self.d = None
+        self.e = None
+        self.A = None
+        self.B = None
+        self.C = None
+        self.D = None
+        self.E = None
 
         self.build_interface()
         display(self.calculator)
@@ -210,6 +226,7 @@ class calculator():
     def _on_clr_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command = ""
+        self.result_cell.clear_output()
     #
     def _on_exe_clicked_(self,b):
         #eventually add a check for =
@@ -225,6 +242,7 @@ class calculator():
                 var_name = command_vals[0].strip()
                 if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
                     exec("self.{} = {}".format(command_vals[0],command_vals[1]))
+                    
                     with self.result_cell:
                         print("Check the variable definition in the next cell.")
                 else:
@@ -243,6 +261,11 @@ class calculator():
     def _on_operator_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command += self.operators[b.description]
+        with self.command_cell:
+            print(self.cur_command)
+    def _on_function_clicked_(self, b):
+        self.command_cell.clear_output()
+        self.cur_command += self.functions.[b.description]
         with self.command_cell:
             print(self.cur_command)
 
@@ -303,5 +326,15 @@ class calculator():
         self.calculator[start_row + 1, self.numbers_col+1:self.numbers_col+3] = self.numbers_cells[10]
         # self.calculator[start_row + 1, self.numbers_col+2] = self.numbers_cells[10]
         self.numbers_cells[10].on_click(self._on_variable_clicked_)
+        # Define the functions
+        i = 0
+        for f in functions:
+            i_row = i //  (self.end_functions_col - 1)
+            i_col = i - i_row * (self.end_functions_col -1)
+            self.function_cellsl[i] = Button(description=functions[f])
+            self.calculator[i_row,i_col] = self.function_cells[i]
+            self.function_cells[i].on_click(self._on_function_clicked_)
+            i += 1
+
 
    
