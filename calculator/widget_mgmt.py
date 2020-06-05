@@ -206,7 +206,7 @@ class calculator():
         self.matrix_name_cells = [None] * len(matrix_var_names)
         self.numeric_name_cells = [None] * len(numeric_var_names)
         self.numbers_cells = [None] * len(numbers)
-        self.function_cells = [None] * len(self. functions)
+        self.function_cells = [None] * len(self.functions)
         #  Compute variables
         self.temp_val_1234 = None
         self.a = None
