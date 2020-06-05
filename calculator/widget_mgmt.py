@@ -229,7 +229,7 @@ class calculator():
         self.cur_command = ""
         self.result_cell.clear_output()
     #
-    def _on_exe_clicked_(self,b):
+    def _on_exe_clicked_(self,btn):
         global a, b, c, d, e, A, B, C, D, E
         #eventually add a check for =
         self.result_cell.clear_output()
