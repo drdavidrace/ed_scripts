@@ -206,7 +206,7 @@ class calculator():
         self.matrix_name_cells = [None] * len(matrix_var_names)
         self.numeric_name_cells = [None] * len(numeric_var_names)
         self.numbers_cells = [None] * len(numbers)
-        self.function_cells = [None] * len(functions)
+        self.function_cells = [None] * len(self. functions)
         #  Compute variables
         self.temp_val_1234 = None
         self.a = None
@@ -328,10 +328,10 @@ class calculator():
         self.numbers_cells[10].on_click(self._on_variable_clicked_)
         # Define the functions
         i = 0
-        for f in functions:
+        for f in self.functions:
             i_row = i //  (self.end_functions_col - 1)
             i_col = i - i_row * (self.end_functions_col -1)
-            self.function_cellsl[i] = Button(description=functions[f])
+            self.function_cellsl[i] = Button(description=self.functions[f])
             self.calculator[i_row,i_col] = self.function_cells[i]
             self.function_cells[i].on_click(self._on_function_clicked_)
             i += 1
