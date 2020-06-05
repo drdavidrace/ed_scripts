@@ -331,7 +331,7 @@ class calculator():
         for f in self.functions:
             i_row = i //  (self.end_functions_col - 1)
             i_col = i - i_row * (self.end_functions_col -1)
-            self.function_cellsl[i] = Button(description=self.functions[f])
+            self.function_cells[i] = Button(description=self.functions[f])
             self.calculator[i_row,i_col] = self.function_cells[i]
             self.function_cells[i].on_click(self._on_function_clicked_)
             i += 1
