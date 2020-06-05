@@ -230,7 +230,7 @@ class calculator():
         self.result_cell.clear_output()
     #
     def _on_exe_clicked_(self,btn):
-        global a, b, c, d, e, A, B, C, D, E
+        # global a, b, c, d, e, A, B, C, D, E
         #eventually add a check for =
         self.result_cell.clear_output()
         self.temp_val_1234 = None
@@ -251,7 +251,7 @@ class calculator():
                     with self.result_cell:
                         print("You must use one of the current variable names.")
         else:
-            exec("self.temp_val_1234 = {}".format(current_command))
+            exec("self.temp_val_1234 = {}".format(current_command),{"a":a,"b":b})
             with self.result_cell:
                 print(self.temp_val_1234)
     #
