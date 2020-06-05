@@ -161,7 +161,7 @@ class calculator():
 
     current_expression and last_result are side effects of calculator.
     """
-    # global a, b, c, d, e, A, B, C, D, E
+    global a, b, c, d, e, A, B, C, D, E
     def __init__(self, numeric_var_names = ["a", "b", "c", "d", "e"], 
         matrix_var_names = ["A", "B", "C", "D", "E"], 
         operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")","\\\\":"\\\\"},
