@@ -165,6 +165,7 @@ class calculator():
         matrix_var_names = ["A", "B", "C", "D", "E"], 
         operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")","\\\\":"\\\\"},
         numbers = ["1","2","3","4","5","6","7","8","9","0","."] ):
+        global a,b,c,d,e,A,B,C,D,E
         self.operators = operators
         self.numeric_var_names = numeric_var_names
         self.matrix_var_names = matrix_var_names
@@ -229,6 +230,7 @@ class calculator():
         self.result_cell.clear_output()
     #
     def _on_exe_clicked_(self,btn):
+        global a,b,c,d,e,A,B,C,D,E
         #eventually add a check for =
         self.result_cell.clear_output()
         self.temp_val_1234 = None
@@ -242,8 +244,10 @@ class calculator():
                 var_name = command_vals[0].strip()
                 if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
                     exec("global a,b,c,d,e,A,B,C,D,E; {} = {}".format(command_vals[0],command_vals[1]))
-                    
+
                     with self.result_cell:
+                        print(command_vals[0])
+                        print(command_vals[1])
                         print("Check the variable definition in the next cell.")
                 else:
                     with self.result_cell:
