@@ -161,7 +161,6 @@ class calculator():
 
     current_expression and last_result are side effects of calculator.
     """
-    global a, b, c, d, e, A, B, C, D, E
     def __init__(self, numeric_var_names = ["a", "b", "c", "d", "e"], 
         matrix_var_names = ["A", "B", "C", "D", "E"], 
         operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")","\\\\":"\\\\"},
@@ -230,7 +229,6 @@ class calculator():
         self.result_cell.clear_output()
     #
     def _on_exe_clicked_(self,btn):
-        global a, b, c, d, e, A, B, C, D, E
         #eventually add a check for =
         self.result_cell.clear_output()
         self.temp_val_1234 = None
@@ -243,7 +241,7 @@ class calculator():
             else:
                 var_name = command_vals[0].strip()
                 if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
-                    exec("self.{} = {}".format(command_vals[0],command_vals[1]))
+                    exec("global a,b,c,d,e,A,B,C,D,E; {} = {}".format(command_vals[0],command_vals[1]))
                     
                     with self.result_cell:
                         print("Check the variable definition in the next cell.")
@@ -251,7 +249,7 @@ class calculator():
                     with self.result_cell:
                         print("You must use one of the current variable names.")
         else:
-            exec("self.temp_val_1234 = {}".format(current_command))
+            exec("global a,b,c,d,e,A,B,C,D,E;self.temp_val_1234 = {}".format(current_command))
             with self.result_cell:
                 print(self.temp_val_1234)
     #
