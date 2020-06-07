@@ -170,6 +170,8 @@ class calculator():
         self.numeric_var_names = numeric_var_names
         self.matrix_var_names = matrix_var_names
         self.numbers = numbers
+        self.all_var_names = self.numeric_var_names.append(self.matrix_var_names)
+        
         #Functions List
         self.functions = {"cos":"sp.cos(", "sin":"sp.sin(","tan":"sp.tan(", "pi":"sp.pi", "e":"sp.e",
         "asin":"sp.asin(", "acos":"sp.acos(", "atan":"sp.atan(","atan2":"atan2(","exp":"sp.exp(","log":"sp.log("}
@@ -240,7 +242,7 @@ class calculator():
                 var_name = command_vals[0].strip()
                 if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
                     work_string = current_command
-                    for x in self.numeric_var_names:
+                    for x in self.all_var_names:
                         search_pattern = " " + x + " "
                         work_string = work_string.replace(search_pattern, " self." + x + " ")
                     exec("{}".format(work_string))
@@ -253,7 +255,7 @@ class calculator():
         else:
             #replace the plain variable names with the globals names
             work_string = current_command
-            for x in self.numeric_var_names:
+            for x in self.all_var_names:
                 search_pattern = " " + x + " "
                 work_string = work_string.replace(search_pattern, " self." + x + " ")
             exec("self.temp_val_1234 = {}".format(work_string))
