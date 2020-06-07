@@ -170,7 +170,7 @@ class calculator():
         self.numeric_var_names = numeric_var_names
         self.matrix_var_names = matrix_var_names
         self.numbers = numbers
-        self.all_var_names = self.numeric_var_names.append(self.matrix_var_names)
+        self.all_var_names = self.numeric_var_names + self.matrix_var_names
         print(self.all_var_names)
         #Functions List
         self.functions = {"cos":"sp.cos(", "sin":"sp.sin(","tan":"sp.tan(", "pi":"sp.pi", "e":"sp.e",
