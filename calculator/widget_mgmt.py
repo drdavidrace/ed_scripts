@@ -171,7 +171,6 @@ class calculator():
         self.matrix_var_names = matrix_var_names
         self.numbers = numbers
         self.all_var_names = self.numeric_var_names + self.matrix_var_names
-        print(self.all_var_names)
         #Functions List
         self.functions = {"cos":"sp.cos(", "sin":"sp.sin(","tan":"sp.tan(", "pi":"sp.pi", "e":"sp.e",
         "asin":"sp.asin(", "acos":"sp.acos(", "atan":"sp.atan(","atan2":"atan2(","exp":"sp.exp(","log":"sp.log("}
@@ -264,6 +263,8 @@ class calculator():
                     print("Check the variable definition in the next cell.")
                 else:
                     print(self.temp_val_1234)
+        self.command_cell.clear_output()
+        self.cur_command = ""
     #
     def _on_variable_clicked_(self, b):
         self.command_cell.clear_output()
