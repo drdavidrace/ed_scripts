@@ -269,18 +269,16 @@ class calculator():
     def _on_variable_clicked_(self, b):
         self.command_cell.clear_output()
         self.cur_command += b.description
-        print(b.description, len(b.description))
-        print(self.cur_command)
         with self.command_cell:
             print(self.cur_command)
     def _on_operator_clicked_(self, b):
         self.command_cell.clear_output()
-        self.cur_command += self.operators[b.description]
+        self.cur_command += self.operators[(b.description).strip()]
         with self.command_cell:
             print(self.cur_command)
     def _on_function_clicked_(self, b):
         self.command_cell.clear_output()
-        self.cur_command += self.functions[b.description]
+        self.cur_command += self.functions[(b.description).strip()]
         with self.command_cell:
             print(self.cur_command)
 
