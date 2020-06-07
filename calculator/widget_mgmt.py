@@ -248,7 +248,7 @@ class calculator():
             work_string = current_command
             for x in self.numeric_var_names:
                 search_pattern = " " + x + " "
-                work_string = work_string.replace(search_pattern, " globals()[" + x + "] ")
+                work_string = work_string.replace(search_pattern, " globals()[\"" + x + "\"] ")
             with self.result_cell:
                 print(work_string)
             exec("self.temp_val_1234 = {}".format(work_string))
