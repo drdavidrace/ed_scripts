@@ -245,6 +245,7 @@ class calculator():
                         print("You must use one of the current variable names.")
         else:
             #replace the plain variable names with the globals names
+            print(globals())
             work_string = current_command
             for x in self.numeric_var_names:
                 search_pattern = " " + x + " "
