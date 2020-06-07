@@ -213,7 +213,7 @@ class calculator():
         xx = zip(self.numeric_var_names,[i for i in range(len(self.numeric_var_names))])
         for x in xx:
             exec("self.{} = sp.Float({})".format(x[0],x[1]))
-        xx = zip(self.numeric_var_names,[i for i in range(len(self.matrix_var_names))])
+        xx = zip(self.matrix_var_names,[i for i in range(len(self.matrix_var_names))])
         for x in xx:
             exec("self.{} = sp.Matrix([[{}]])".format(x[0],x[1]))
 
@@ -255,12 +255,12 @@ class calculator():
             for x in self.numeric_var_names:
                 search_pattern = " " + x + " "
                 work_string = work_string.replace(search_pattern, " self." + x + " ")
-            print(work_string)
-            with self.result_cell:
-                print(work_string)
             exec("self.temp_val_1234 = {}".format(work_string))
             with self.result_cell:
-                print(self.temp_val_1234)
+                if isinstance(self.temp_val_123,sp.Matrix):
+                    print("Check the variable definition in the next cell.")
+                else:
+                    print(self.temp_val_1234)
     #
     def _on_variable_clicked_(self, b):
         self.command_cell.clear_output()
