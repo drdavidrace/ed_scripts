@@ -165,7 +165,7 @@ class calculator():
         matrix_var_names = ["A", "B", "C", "D", "E"], 
         operators = {"+":"+", "-":"-","*":"*","/":"/","\\":"\\","^":"**","=":"=","(":"(",")":")","\\\\":"\\\\"},
         numbers = ["1","2","3","4","5","6","7","8","9","0","."] ):
-        global a,b,c,d,e,A,B,C,D,E
+
         self.operators = operators
         self.numeric_var_names = numeric_var_names
         self.matrix_var_names = matrix_var_names
@@ -210,16 +210,6 @@ class calculator():
         self.function_cells = [None] * len(self.functions)
         #  Compute variables
         self.temp_val_1234 = None
-        # self.a = None
-        # self.b = None
-        # self.c = None
-        # self.d = None
-        # self.e = None
-        # self.A = None
-        # self.B = None
-        # self.C = None
-        # self.D = None
-        # self.E = None
 
         self.build_interface()
         display(self.calculator)
@@ -230,7 +220,6 @@ class calculator():
         self.result_cell.clear_output()
     #
     def _on_exe_clicked_(self,btn):
-        global a,b,c,d,e,A,B,C,D,E
         #eventually add a check for =
         self.result_cell.clear_output()
         self.temp_val_1234 = None
@@ -243,17 +232,24 @@ class calculator():
             else:
                 var_name = command_vals[0].strip()
                 if (var_name in self.numeric_var_names) or (var_name in self.matrix_var_names):
-                    exec("global a,b,c,d,e,A,B,C,D,E; {} = {}".format(command_vals[0],command_vals[1]))
+                    work_string = current_command
+                    for x in self.numeric_var_names:
+                        search_pattern = " " + x + " "
+                        work_string = work_string.replace(search_pattern, " globals()[" + x + "] ")
+                    exec("{}".format(work_string))
 
                     with self.result_cell:
-                        print(command_vals[0])
-                        print(command_vals[1])
                         print("Check the variable definition in the next cell.")
                 else:
                     with self.result_cell:
                         print("You must use one of the current variable names.")
         else:
-            exec("global a,b,c,d,e,A,B,C,D,E;self.temp_val_1234 = {}".format(current_command))
+            #replace the plain variable names with the globals names
+            work_string = current_command
+            for x in self.numeric_var_names:
+                search_pattern = " " + x + " "
+                work_string = work_string.replace(search_pattern, " globals()[" + x + "] ")
+            exec("self.temp_val_1234 = {}".format(work_string))
             with self.result_cell:
                 print(self.temp_val_1234)
     #
@@ -301,16 +297,16 @@ class calculator():
             if i == len(self.numeric_var_names): #Warning this assume both sets of variables are same length
                 work_col += 1
                 base_row = self.operator_row - len(self.numeric_var_names)
-            self.operator_cells[i] = Button(description=self.operators_keys[i])
+            self.operator_cells[i] = Button(description=" " + self.operators_keys[i] + " ")
             self.calculator[base_row + i,work_col] = self.operator_cells[i]
             self.operator_cells[i].on_click(self._on_operator_clicked_)
         #Display the variables
         for i in range(len(self.numeric_var_names)):
-            self.numeric_name_cells[i] = Button(description=self.numeric_var_names[i])
+            self.numeric_name_cells[i] = Button(description= " " + self.numeric_var_names[i] + " ")
             self.calculator[self.numeric_names_row + i,self.numeric_names_col] = self.numeric_name_cells[i]
             self.numeric_name_cells[i].on_click(self._on_variable_clicked_)
         for i in range(len(self.matrix_var_names)):
-            self.matrix_name_cells[i] = Button(description=self.matrix_var_names[i])
+            self.matrix_name_cells[i] = Button(description=" " + self.matrix_var_names[i] + " ")
             self.calculator[self.matrix_names_row + i, self.matrix_names_col] = self.matrix_name_cells[i]
             self.matrix_name_cells[i].on_click(self._on_variable_clicked_)
         #Build the numbers keypad
