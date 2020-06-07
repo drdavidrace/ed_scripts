@@ -210,6 +210,12 @@ class calculator():
         self.function_cells = [None] * len(self.functions)
         #  Compute variables
         self.temp_val_1234 = None
+        xx = zip(self.numeric_var_names,[i for i in range(len(self.numeric_var_names))])
+        for x in xx:
+            exec("self.{} = sp.Float({})".format(x[0],x[1]))
+        xx = zip(self.numeric_var_names,[i for i in range(len(self.matrix_var_names))])
+        for x in xx:
+            exec("self.{} = sp.Matrix([[{}]])".format(x[0],x[1]))
 
         self.build_interface()
         display(self.calculator)
@@ -235,7 +241,7 @@ class calculator():
                     work_string = current_command
                     for x in self.numeric_var_names:
                         search_pattern = " " + x + " "
-                        work_string = work_string.replace(search_pattern, " globals()[" + x + "] ")
+                        work_string = work_string.replace(search_pattern, " self." + x + " ")
                     exec("{}".format(work_string))
 
                     with self.result_cell:
@@ -245,11 +251,10 @@ class calculator():
                         print("You must use one of the current variable names.")
         else:
             #replace the plain variable names with the globals names
-            print(globals())
             work_string = current_command
             for x in self.numeric_var_names:
                 search_pattern = " " + x + " "
-                work_string = work_string.replace(search_pattern, " globals()[\"" + x + "\"] ")
+                work_string = work_string.replace(search_pattern, " self." + x + " ")
             with self.result_cell:
                 print(work_string)
             exec("self.temp_val_1234 = {}".format(work_string))
