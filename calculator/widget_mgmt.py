@@ -209,6 +209,7 @@ class calculator():
         self.numbers_cells = [None] * len(numbers)
         self.function_cells = [None] * len(self.functions)
         #  Compute variables
+        
         self.temp_val_1234 = None
         xx = zip(self.numeric_var_names,[i for i in range(len(self.numeric_var_names))])
         for x in xx:
@@ -257,7 +258,7 @@ class calculator():
                 work_string = work_string.replace(search_pattern, " self." + x + " ")
             exec("self.temp_val_1234 = {}".format(work_string))
             with self.result_cell:
-                if isinstance(self.temp_val_123,sp.Matrix):
+                if isinstance(self.temp_val_1234,sp.Matrix):
                     print("Check the variable definition in the next cell.")
                 else:
                     print(self.temp_val_1234)
