@@ -50,7 +50,7 @@ from pandas import DataFrame
 from pprint import pprint, pformat
 #Packaging
 import pkg_resources
-__version__ = pkg_resources.require('ed_scripts')[0].version
+# __version__ = pkg_resources.require('ed_scripts')[0].version
 #default numpy types
 np_arrays = (np.ndarray)
 #  sentence elements
