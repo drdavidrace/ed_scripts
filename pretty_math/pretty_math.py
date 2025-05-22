@@ -48,9 +48,9 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 from pprint import pprint, pformat
-#Packaging
-import pkg_resources
-# __version__ = pkg_resources.require('ed_scripts')[0].version
+import importlib
+from importlib.metadata import version
+__version__ = version('ed_scripts')
 #default numpy types
 np_arrays = (np.ndarray)
 #  sentence elements
