@@ -11,9 +11,9 @@ import seaborn as sb
 import sklearn as skl
 import torch as T
 from in_array import in_array
-#
-import pkg_resources
-# __version__ = pkg_resources.require('ed_scripts')[0].version
+import importlib
+from importlib.metadata import version
+__version__ = version('ed_scripts')
 #
 def show_environment():
     print('Showing the environment setup --')
