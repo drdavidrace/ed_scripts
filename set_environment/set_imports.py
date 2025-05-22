@@ -13,7 +13,7 @@ import torch as T
 from in_array import in_array
 #
 import pkg_resources
-__version__ = pkg_resources.require('ed_scripts')[0].version
+# __version__ = pkg_resources.require('ed_scripts')[0].version
 #
 def show_environment():
     print('Showing the environment setup --')
