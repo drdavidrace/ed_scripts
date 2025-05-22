@@ -3,8 +3,11 @@ import re
 import numpy as np
 import sympy as syp
 from pprint import pprint
-import pkg_resources
+# import pkg_resources
 #__version__ = pkg_resources.require('ed_scripts')[0].version
+import importlib
+from importlib.metadata import version
+__version__ = version('ed_scripts')
 
 def matrix_float_syp(in_val=None):
 	"""
