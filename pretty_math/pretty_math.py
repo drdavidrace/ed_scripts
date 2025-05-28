@@ -35,7 +35,8 @@
 #   management engine that does automatic converstion from math to latex.
 ##################################################################
 #
-from IPython.display import display, HTML, Math, Latex
+import IPython.display as Display
+from IPython.display import display, HTML, Math, Latex, Pretty
 from IPython import get_ipython
 import typing
 import numbers
@@ -135,7 +136,7 @@ def display_j(in_list: list = None) -> int:
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_jup_math_eq_delim_)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
-        display(Math(full_sentence))
+        display(Pretty(full_sentence))
         return None
     except Exception as e:
         status = 2
