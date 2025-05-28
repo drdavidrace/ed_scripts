@@ -136,7 +136,7 @@ def display_j(in_list: list = None) -> int:
         #Obtain the latex
         status, full_sentence = _display_l_(in_list,_jup_math_eq_delim_)
         #Use display(Math) to output the latex of the sympy expression to the output of a compute cell
-        display(Pretty(full_sentence))
+        display(Math(full_sentence))
         return None
     except Exception as e:
         status = 2
